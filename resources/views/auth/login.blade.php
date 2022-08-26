@@ -27,13 +27,13 @@
     <meta name="msapplication-TileImage" content="{{ asset('favicon/ms-icon-144x144.png')}}">
     <meta name="theme-color" content="#ffffff">
     <!-- Vendors styles-->
-    <link rel="stylesheet" href="vendors/simplebar/css/simplebar.css">
-    <link rel="stylesheet" href="css/vendors/simplebar.css">
+    <link rel="stylesheet" href="{{ asset('vendors/simplebar/css/simplebar.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/vendors/simplebar.css')}}">
     <!-- Main styles for this application-->
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{ asset('css/style.css')}}" rel="stylesheet">
     <!-- We use those styles to show code examples, you should remove them in your application.-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/themes/prism.css">
-    <link href="css/examples.css" rel="stylesheet">
+    <link href="{{ asset('css/examples.css')}}" rel="stylesheet">
     <!-- Global site tag (gtag.js) - Google Analytics-->
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
     <script>
@@ -57,28 +57,32 @@
             <div class="card-group d-block d-md-flex row">
               <div class="card col-md-7 p-4 mb-0">
                 <div class="card-body">
-                  <h1>Login</h1>
+                  <form action="{{ route('login.verify') }}" method="post">
+                  @csrf
+                    <h1>Login</h1>
                   <p class="text-medium-emphasis">Sign In to your account</p>
                   <div class="input-group mb-3"><span class="input-group-text">
                       <svg class="icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-user')}}"></use>
                       </svg></span>
-                    <input class="form-control" type="text" placeholder="Username">
+                    <input class="form-control" type="email" name="email" placeholder="Email">
                   </div>
                   <div class="input-group mb-4"><span class="input-group-text">
                       <svg class="icon">
-                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-lock-locked')}}"></use>
                       </svg></span>
-                    <input class="form-control" type="password" placeholder="Password">
+                    <input class="form-control" type="password" name="contrasena" placeholder="Password">
                   </div>
                   <div class="row">
                     <div class="col-6">
-                      <button class="btn btn-primary px-4" type="button">Login</button>
+                      <button class="btn btn-primary px-4" type="input">Login</button>
                     </div>
                     <div class="col-6 text-end">
                       <button class="btn btn-link px-0" type="button">Forgot password?</button>
                     </div>
                   </div>
+                  </form>
+                  
                 </div>
               </div>
               <div class="card col-md-5 text-white bg-primary py-5">
