@@ -28,5 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/productor/index', 'ProductorController@index')->name('index');
 
+Route::get('/login', 'LoginApiController@index')->name('login');
+
 
 
