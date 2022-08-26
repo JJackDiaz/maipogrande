@@ -21,3 +21,12 @@ Route::get('/', function () {
 route::get('/datos', function () {
     return DB::select("select * from usuario");
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/productor/index', 'ProductorController@index')->name('index');
+
+
+
