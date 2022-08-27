@@ -19,17 +19,19 @@ class LoginApiController extends Controller
 
     public function loginVerify(Request $request)
     {
+        // $email = $request->email;
+        // $pass = md5($request->contrasena);
+        
+        $email = $request->has('email');
+        $pass = $request->has('contrasena');
+        $pa = md5($pass);
 
         $response = Http::post('http://localhost/apirest_mGrande/auth', [
-            'email' => $request->email,
-            'contrasena' => md5($request->contrasena)
+            'email' => 'jorge@gmail.com',
+            'contrasena' => '12345',
         ]);
 
-        dd($response->getBody()->getContents());
-        exit;
-
-        if ($response) {
-            $response->successful();
+        if ($response->successful()) {
             return redirect()->route('productor');
         }else{
             return view('auth.login')->withErrors(['invalid_credencials' => 'API NULL']);

@@ -14,7 +14,7 @@ route::get('/datos', function () {
 
     return $response = Http::post('http://localhost/apirest_mGrande/auth', [
     'email' => 'jorge@gmail.com',
-    'contrasena' => '12345',
+    'contrasena' => '123456',
     ]);
 });
 
