@@ -64,7 +64,23 @@
         </style>
     </head>
     <body>
-        
+        @if (Route::has('login'))
+                        <div class="top-right links">
+                            @auth
+                                <li class="d-flex">
+                                    <a href="{{ route('home') }}">
+                                        <button class="btn btn-outline-dark" type="submit">Home</button>
+                                    </a>
+                                </li>
+                            @else
+                            <li class="d-flex">
+                                <a href="{{ route('login') }}">
+                                    <button class="btn btn-outline-dark" type="submit">Login</button>
+                                </a>
+                            </li>
+                            @endauth
+                        </div>
+                    @endif
             <div class="content">
                 <div class="title m-b-md">
                     Laravel
