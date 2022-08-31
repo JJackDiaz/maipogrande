@@ -4,12 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-//Route::get('/', 'WelcomeController@index')->name('welcome');
-
-route::get('/', function () {
-
-    return view('home');
-});
+Route::get('/', 'WelcomeController@index')->name('welcome');
 
 // route::get('/datos', function () {
 
@@ -19,7 +14,9 @@ route::get('/', function () {
 Auth::routes();
 
 //protegidas
-// Route::middleware('auth')->group(function(){
-//     //Route::get('home', 'HomeController@index')->name('home');
-// });
+Route::middleware('auth')->group(function(){
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/productor', 'ProductorController@index')->name('productor.index');
+    Route::get('/usuario', 'UsuarioController@index')->name('usuario.index');
+});
 

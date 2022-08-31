@@ -3,16 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Usuario;
-use App\Productor;
-use DB;
 
-class ProductorController extends Controller
+class ProcesoVentaController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +13,7 @@ class ProductorController extends Controller
      */
     public function index()
     {
-        return view('productor.index');
+        //
     }
 
     /**

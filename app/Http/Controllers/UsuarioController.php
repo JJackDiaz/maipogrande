@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
-use App\Productor;
-use DB;
 
-class ProductorController extends Controller
+class UsuarioController extends Controller
 {
     public function __construct()
     {
@@ -20,7 +18,9 @@ class ProductorController extends Controller
      */
     public function index()
     {
-        return view('productor.index');
+        $usuarios = Usuario::all();
+        $cont = 1;
+        return view('usuario.index', compact('usuarios','cont'));
     }
 
     /**
