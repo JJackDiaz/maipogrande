@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Usuario;
+use App\TipoUsuario;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -35,11 +36,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-<<<<<<< HEAD
             'nombre_completo' => ['required', 'string', 'max:255'],
             'telefono' => ['required', 'string', 'max:255'],
-=======
->>>>>>> 94cdb6011bbf906d1e1b49e70c10a2afbfc563d9
             'email' => ['required', 'string', 'email', 'max:255','unique:usuario'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -47,15 +45,15 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        
-        return Usuario::create([
-<<<<<<< HEAD
+        $usuario = Usuario::create([
             'nombre_completo' => $data['nombre_completo'],
             'telefono' => $data['telefono'],
-=======
->>>>>>> 94cdb6011bbf906d1e1b49e70c10a2afbfc563d9
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $usuario->tipo_usuario()->attach(TipoUsuario::where("nombre", "administrador")->first());        
+        
+        return $usuario;
     }
 }

@@ -3,6 +3,8 @@
 namespace App;
 
 //use Illuminate\Database\Eloquent\Model;
+use App\Productor;
+use App\TipoUsuario;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -15,11 +17,9 @@ class Usuario extends Authenticatable
     protected $pk = 'id';
 
     protected $fillable = [
-<<<<<<< HEAD
-        'nombre_completo','telefono', 'email', 'password','id_tipo_usuario'
-=======
-        'email', 'password','id_tipo_usuario'
->>>>>>> 94cdb6011bbf906d1e1b49e70c10a2afbfc563d9
+
+        'id','nombre_completo','telefono', 'email', 'password','id_tipo_usuario'
+
     ];
 
     protected $hidden = [
@@ -35,9 +35,11 @@ class Usuario extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function productor()
+    public function tipo_usuario()
     {
-        //uno a muchos
-        return $this->hasMany('App\Productor');
+        //contiene un id de usuario
+        return $this->belongsTo('App\TipoUsuario');
     }
+
+
 }

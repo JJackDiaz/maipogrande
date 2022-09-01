@@ -12,7 +12,6 @@
                         @csrf
 
                         <div class="form-group row">
-<<<<<<< HEAD
                             <label for="nombre_completo" class="col-md-4 col-form-label text-md-right">{{ __('nombre_completo') }}</label>
 
                             <div class="col-md-6">
@@ -41,8 +40,6 @@
                         </div>
 
                         <div class="form-group row">
-=======
->>>>>>> 94cdb6011bbf906d1e1b49e70c10a2afbfc563d9
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
                             <div class="col-md-6">
