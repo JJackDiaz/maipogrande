@@ -15,7 +15,7 @@ class Usuario extends Authenticatable
     protected $pk = 'id';
 
     protected $fillable = [
-        'nombre','apellido','telefono', 'email', 'password','id_tipo_usuario'
+        'nombre_completo','telefono', 'email', 'password','id_tipo_usuario'
     ];
 
     protected $hidden = [
