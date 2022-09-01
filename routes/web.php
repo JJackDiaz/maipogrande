@@ -17,6 +17,8 @@ Auth::routes();
 Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/productor', 'ProductorController@index')->name('productor.index');
+    //usuario
     Route::get('/usuario', 'UsuarioController@index')->name('usuario.index');
+    Route::get('/usuario/show', 'UsuarioController@show')->name('usuario.show');
 });
 

@@ -18,6 +18,10 @@ class UsuarioController extends Controller
      */
     public function index()
     {
+        //Consultor
+        //administrador
+        //productor
+        //cliente
         $usuarios = Usuario::all();
         $cont = 1;
         return view('usuario.index', compact('usuarios','cont'));
@@ -30,7 +34,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -41,7 +45,17 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id=Auth::usuario()->id;
+        //admin
+        if ($usuario->id_tipo_usuario == 1) {
+            $request->nombre;
+            $request->apellido;
+            $request->telefono;
+            $request->$this->id;
+        }
+        $show = Corona::create($validatedData);
+   
+        return redirect('/coronas')->with('success', 'Corona Case is successfully saved');
     }
 
     /**
@@ -50,9 +64,9 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Usuario $usuario)
     {
-        //
+        return view('usuario.show',compact('usuario'));
     }
 
     /**
