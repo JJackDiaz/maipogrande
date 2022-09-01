@@ -15,7 +15,11 @@ class Usuario extends Authenticatable
     protected $pk = 'id';
 
     protected $fillable = [
+<<<<<<< HEAD
         'nombre_completo','telefono', 'email', 'password','id_tipo_usuario'
+=======
+        'email', 'password','id_tipo_usuario'
+>>>>>>> 94cdb6011bbf906d1e1b49e70c10a2afbfc563d9
     ];
 
     protected $hidden = [

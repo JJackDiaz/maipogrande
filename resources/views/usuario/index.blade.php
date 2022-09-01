@@ -16,6 +16,7 @@
             <th scope="col">Telefono</th>
             <th scope="col">Telefono</th>
             <th scope="col">Email</th>
+            <th scope="col">Opción</th>
           </tr>
         </thead>
         <tbody>
@@ -26,6 +27,11 @@
                 <td>{{ $u->telefono }}</td>
                 <td>{{ $u->telefono }}</td>
                 <td>{{ $u->email }}</td>
+                <td class="">
+                  <a href="{{ route('usuario.show') }}"><button type="button" class="btn btn-primary rounded-pill">Ver</button></a>
+                  <button type="button" class="btn btn-info rounded-pill">Editar</button>
+                  <button type="button" class="btn btn-danger rounded-pill">Eliminar</button>
+                </td>
             </tr>
             @endforeach
         </tbody>
