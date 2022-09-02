@@ -50,9 +50,7 @@ class RegisterController extends Controller
             'telefono' => $data['telefono'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-        ]);
-
-        $usuario->tipo_usuario()->attach(TipoUsuario::where("nombre", "administrador")->first());        
+        ]);   
         
         return $usuario;
     }

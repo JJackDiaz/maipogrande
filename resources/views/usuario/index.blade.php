@@ -6,8 +6,7 @@
     <li class="breadcrumb-item active"><span>Usuarios</span></li>
 @endsection
 @section('content')
-
-    <h1>Usuario</h1>
+  <h1>Usuario</h1>
     <table class="table table-success table-striped-columns">
         <thead>
           <tr>
@@ -28,7 +27,7 @@
                 <td>{{ $u->telefono }}</td>
                 <td>{{ $u->email }}</td>
                 <td class="">
-                  <a href="{{ route('usuario.show') }}"><button type="button" class="btn btn-primary rounded-pill">Ver</button></a>
+                  <a href="{{ route('usuario.show',$u->id) }}"><button type="button" class="btn btn-primary rounded-pill">Ver</button></a>
                   <button type="button" class="btn btn-info rounded-pill">Editar</button>
                   <button type="button" class="btn btn-danger rounded-pill">Eliminar</button>
                 </td>

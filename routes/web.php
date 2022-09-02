@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
-
 Route::get('/', 'WelcomeController@index')->name('welcome');
 
 // route::get('/datos', function () {
@@ -17,8 +15,14 @@ Auth::routes();
 Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/productor', 'ProductorController@index')->name('productor.index');
+    
+});
+
+Route::middleware('admin')->group(function(){
     //usuario
     Route::get('/usuario', 'UsuarioController@index')->name('usuario.index');
     Route::get('/usuario/show', 'UsuarioController@show')->name('usuario.show');
 });
+
+
 

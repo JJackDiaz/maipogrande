@@ -54,33 +54,12 @@
   <body>
     <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
       <div class="sidebar-brand d-none d-md-flex">
-        <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
-          <img href="{{ asset('images/logos/puesto.png') }}"></img>
-        </svg>
         <svg class="sidebar-brand-narrow" width="46" height="46" alt="CoreUI Logo">
-          <use xlink:href="{{ asset('images/logos/puesto.png') }}"></use>
+          <img class="float-end" src="{{ asset('images/logos/puesto.png') }}" style=width=50; height=60; ></img>
         </svg>
+        <h4 class="font-weight-bold text-bold bg-dark text-center">MAIPO GRANDE</h4>
       </div>
-      <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
-        <li class="nav-item"><a class="nav-link" href="index.html">
-            <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
-            </svg> Dashboard<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
-        <li class="nav-title">Menu</li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">
-          <svg class="nav-icon">
-            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-          </svg> Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('usuario.index') }}">
-            <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
-            </svg> Usuarios</a></li>
-        <li class="nav-item"><a class="nav-link" href="typography.html">
-            <svg class="nav-icon">
-              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
-            </svg> Solicitudes</a></li>
-
-      </ul>
+      @include('layouts.navbar')
       <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
     </div>
     <div class="wrapper d-flex flex-column min-vh-100 bg-light">
