@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
+use Illuminate\Support\Facades\Hash;
 
 class UsuarioController extends Controller
 {
@@ -34,7 +35,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return view('usuario.create');
     }
 
     /**
@@ -45,17 +46,26 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        $id=Auth::usuario()->id;
-        //admin
-        if ($usuario->id_tipo_usuario == 1) {
-            $request->nombre;
-            $request->apellido;
-            $request->telefono;
-            $request->$this->id;
-        }
-        $show = Corona::create($validatedData);
+        
+        $request->validate([
+            'nombre_completo' => ['required', 'string', 'max:255'],
+            'telefono' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:usuario'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            //'id_tipo_usuario' => ['required'],
+        ]);
+
+
+
+        Usuario::create([
+            'nombre_completo' => $request->nombre_completo,
+            'telefono' => $request->telefono,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'id_tipo_usuario' => $request->id_tipo_usuario,
+        ]);  
    
-        return redirect('/coronas')->with('success', 'Corona Case is successfully saved');
+        return redirect()->route('usuario.index')->with('success', 'Usuario creado');
     }
 
     /**
@@ -64,8 +74,9 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Usuario $usuario)
+    public function show($id)
     {
+        $usuario = Usuario::find($id);
         return view('usuario.show',compact('usuario'));
     }
 
@@ -75,9 +86,9 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Usuario $usuario)
     {
-        //
+        return view('usuario.edit', compact('usuario'));
     }
 
     /**
@@ -87,9 +98,12 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Usuario $usuario)
     {
-        //
+        
+        $usuario->update($request->all());
+
+        return redirect()->route('usuario.index')->with('success', 'Usuario editado');
     }
 
     /**
@@ -98,8 +112,10 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Usuario $usuario)
     {
-        //
+        $usuario->delete();
+
+        return redirect()->route('usuario.index')->with('success', 'Usuario editado');
     }
 }

@@ -41,6 +41,7 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255','unique:usuario'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+        
     }
 
     protected function create(array $data)

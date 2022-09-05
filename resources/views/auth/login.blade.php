@@ -66,8 +66,8 @@
                 <div class="card-body">
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
-                    <h1>Login</h1>
-                    <p class="text-medium-emphasis">Sign In to your account</p>
+                    <h1>Iniciar Sesión</h1>
+                    <p class="text-medium-emphasis">Entra en tu cuenta</p>
                     <div class="input-group mb-3"><span class="input-group-text">
                         <svg class="icon">
                           <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
@@ -82,14 +82,14 @@
                     </div>
                     <div class="row">
                       <div class="col-6">
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="btn btn-warning text-white">
                             {{ __('Login') }}
                         </button>
                       </div>
                       <div class="col-6 text-end">
                         @if (Route::has('password.request'))
                             <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('Forgot Password?') }}
+                                {{ __('Olvide contraseña') }}
                             </a>
                         @endif
                       </div>
@@ -97,12 +97,12 @@
                 </form>
                 </div>
               </div>
-              <div class="card col-md-5 text-white bg-primary py-5">
+              <div class="card col-md-5 text-white bg-warning py-5">
                 <div class="card-body text-center">
                   <div>
-                    <h2>Sign up</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <button class="btn btn-lg btn-outline-light mt-3" type="button">Register Now!</button>
+                    <!-- IMAGEN -->
+                    <img class="" src="{{ asset('images/logos/puesto.png') }}" style=width=230; height=230; ></img>
+                    <h3 class="text-uppercase">Miapo Grande</h3>
                   </div>
                 </div>
               </div>

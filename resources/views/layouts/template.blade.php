@@ -57,7 +57,7 @@
         <svg class="sidebar-brand-narrow" width="46" height="46" alt="CoreUI Logo">
           <img class="float-end" src="{{ asset('images/logos/puesto.png') }}" style=width=50; height=60; ></img>
         </svg>
-        <h4 class="font-weight-bold text-bold bg-dark text-center">MAIPO GRANDE</h4>
+        <h4 class="font-weight-bold text-warning bg-dark text-center">MAIPO GRANDE</h4>
       </div>
       @include('layouts.navbar')
       <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
@@ -74,9 +74,8 @@
               <use xlink:href="{{ asset('')}}brand/coreui.svg#full"></use>
             </svg></a>
           <ul class="header-nav d-none d-md-flex">
-            <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Configuración</a></li>
           </ul>
           <ul class="header-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#">
@@ -160,9 +159,8 @@
         </div>
       </header>
       <div class="body flex-grow-1 px-3">
-        <div class="container-lg">
-            @yield('content')
-        </div>
+        
+        @yield('content')
     </div>
     <!-- CoreUI and necessary plugins-->
     <script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>

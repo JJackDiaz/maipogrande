@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
-
+    // route::get('/', function () {
+    //     return DB::connection('oracle')->table(DB::raw("usuario"))->get();
+    // });
 // route::get('/datos', function () {
 
 //     return DB::connection('oracle')->table(DB::raw("usuario"))->get();
@@ -20,8 +22,7 @@ Route::middleware('auth')->group(function(){
 
 Route::middleware('admin')->group(function(){
     //usuario
-    Route::get('/usuario', 'UsuarioController@index')->name('usuario.index');
-    Route::get('/usuario/show', 'UsuarioController@show')->name('usuario.show');
+    Route::resource('usuario','UsuarioController');
 });
 
 
