@@ -1,7 +1,12 @@
 @extends('layouts.template')
+@section('title')
+    <title>Dashboard</title>
+@endsection
+@section('ruta')
+    <li class="breadcrumb-item active"><span>Home</span></li>
+@endsection
 
 @section('content')
-
 <div class="container-lg">
     <div class="row">
     <div class="col-sm-6 col-lg-3">

@@ -74,8 +74,12 @@
               <use xlink:href="{{ asset('')}}brand/coreui.svg#full"></use>
             </svg></a>
           <ul class="header-nav d-none d-md-flex">
-            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Configuración</a></li>
+            @if(Auth::user()->id_tipo_usuario==1)
+              <li class="nav-item nav-link text-uppercase">Administrador</li>
+            @elseif(Auth::user()->id_tipo_usuario==2)
+            <li class="nav-item nav-link text-uppercase">Consultor</li>
+            <!-- If con todos los usuario -->
+            @endif
           </ul>
           <ul class="header-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#">

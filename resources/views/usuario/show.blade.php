@@ -1,7 +1,6 @@
 @extends('layouts.template')
 
 @section('content')
-<<<<<<< Updated upstream
 <div class="row">
   <div class="col-sm-6">
     <div class="card">
@@ -33,7 +32,3 @@
 </div>
     
 @endsection
-=======
-
-@endsection
->>>>>>> Stashed changes
