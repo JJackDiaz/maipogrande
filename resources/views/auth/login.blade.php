@@ -89,7 +89,7 @@
                       <div class="col-6 text-end">
                         @if (Route::has('password.request'))
                             <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('Olvide contraseña') }}
+                                {{ __('Olvidé contraseña') }}
                             </a>
                         @endif
                       </div>
@@ -102,7 +102,7 @@
                   <div>
                     <!-- IMAGEN -->
                     <img class="" src="{{ asset('images/logos/puesto.png') }}" style=width=230; height=230; ></img>
-                    <h3 class="text-uppercase">Miapo Grande</h3>
+                    <h3 class="text-uppercase">Maipo Grande</h3>
                   </div>
                 </div>
               </div>

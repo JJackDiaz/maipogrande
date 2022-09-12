@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Usuario;
+use App\Contrato;
 use App\Productor;
 use DB;
 
@@ -23,69 +24,29 @@ class ProductorController extends Controller
         return view('productor.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function contrato()
     {
-        //
+        $contratos = Contrato::all();
+        $cont = 1;
+
+        return view('productor.contrato', compact('contratos','cont'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function aceptar_contrato($id)
     {
-        //
-    }
+        $now = new \DateTime();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        //$usuario = Contrato::find($id);
+        $contrato = Contrato::where('id', $id)
+        ->update(['fecha_firma' => $now->format('Y-m-d')]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        //dd($posts->toSql());
+        if($contrato) {
+            return redirect()->route('productor.contrato')->with('success', 'Contrato Aceptado');
+        }else{
+            return redirect()->route('productor.contrato')->with('success', 'Fallo');
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('productor.contrato')->with('success', 'Contrato Aceptado');
     }
 }

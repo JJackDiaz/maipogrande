@@ -1,9 +1,9 @@
 @extends('layouts.template')
 @section('title')
-    <title>Crear Usuarios</title>
+    <title>Editar Usuarios</title>
 @endsection
 @section('ruta')
-    <li class="breadcrumb-item active"><span>Crear Usuario</span></li>
+    <li class="breadcrumb-item active"><span>Editar Usuario</span></li>
 @endsection
 @section('content')
 <div class="row justify-content-center">

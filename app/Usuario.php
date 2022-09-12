@@ -40,4 +40,10 @@ class Usuario extends Authenticatable
         //contiene un id de usuario
         return $this->belongsTo('App\TipoUsuario');
     }
+
+    public function contrato()
+    {
+        //contiene un id de usuario
+        return $this->hasMany('App\Contrato');
+    }
 }

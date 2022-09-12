@@ -37,6 +37,7 @@
     <link href="{{ asset('css/examples.css') }}" rel="stylesheet">
     <!-- Global site tag (gtag.js) - Google Analytics-->
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-118965717-3"></script>
+    @yield('javascripts')
     <script>
       window.dataLayer = window.dataLayer || [];
 

@@ -1,13 +1,13 @@
 @extends('layouts.template')
 @section('title')
-    <title>Contratos</title>
+    <title>Transportista</title>
 @endsection
 @section('ruta')
-    <li class="breadcrumb-item active"><span>Contratos</span></li>
+    <li class="breadcrumb-item active"><span>Transportista</span></li>
 @endsection
 @section('content')
-    <h1>Productor Hola</h1>
-    {{-- <table class="table table-warning table-striped-columns">
+<h1>Transportista</h1>
+{{-- <table class="table table-warning table-striped-columns">
     <div class="col-12 text-left m-2">
       <a href="{{ route('usuario.create') }}" class="btn btn-warning rounded-pill text-white"> Crear Contrato</a>
     </div>
