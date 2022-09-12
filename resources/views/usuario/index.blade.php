@@ -27,7 +27,7 @@
                 <td>{{ $u->nombre_completo }}</td>
                 <td>{{ $u->telefono }}</td>
                 <td>{{ $u->email }}</td>
-                <td>{{ $u->id_tipo_usuario }}</td>
+                <td>{{ $u->tipo_usuario->nombre }}</td>
                 <td>
                 <form action="{{ route('usuario.destroy',$u->id) }}" method="POST">
    

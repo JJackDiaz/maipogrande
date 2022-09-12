@@ -19,7 +19,6 @@ class TipoUsuario extends Model
 
     public function usuario()
     {
-        //contiene un id de usuario
-        return $this->belongsToMany('App\Usuario')->withTimesTamps();
+        return $this->hasMany('App\Usuario')->withTimesTamps();
     }
 }

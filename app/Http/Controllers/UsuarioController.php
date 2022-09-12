@@ -19,10 +19,6 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //Consultor
-        //administrador
-        //productor
-        //cliente
         $usuarios = Usuario::all();
         $cont = 1;
         return view('usuario.index', compact('usuarios','cont'));

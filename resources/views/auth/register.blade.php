@@ -11,7 +11,7 @@
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
 
-                    <div class="form-group m-2">
+                    <div class="form-group row">
                         <label for="nombre_completo" class="col-md-4 col-form-label text-md-right">{{ __('nombre_completo') }}</label>
 
                         <div class="col-md-6">
@@ -25,7 +25,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group m-2">
+                    <div class="form-group row">
                         <label for="telefono" class="col-md-4 col-form-label text-md-right">{{ __('telefono') }}</label>
 
                         <div class="col-md-6">

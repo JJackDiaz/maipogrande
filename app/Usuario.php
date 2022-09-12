@@ -38,7 +38,7 @@ class Usuario extends Authenticatable
     public function tipo_usuario()
     {
         //contiene un id de usuario
-        return $this->belongsTo('App\TipoUsuario');
+        return $this->belongsTo('App\TipoUsuario','id_tipo_usuario');
     }
 
     public function contrato()
