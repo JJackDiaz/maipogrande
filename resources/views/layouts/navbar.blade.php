@@ -52,13 +52,23 @@
     @if(Auth::user()->id_tipo_usuario==6)
     <li class="nav-item"><a class="nav-link" href="{{ route('productor.index') }}">
         <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Productos</a>
+    </li> 
+    <li class="nav-item"><a class="nav-link" href="{{ route('productor.contrato') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-library') }}"></use>
+        </svg>Contratos</a>
     </li>
     <li class="nav-item"><a class="nav-link" href="{{ route('productor.contrato') }}">
         <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
-        </svg>Contratos</a>
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-vector') }}"></use>
+        </svg>Proceso Venta</a>
+    </li>
+    <li class="nav-item"><a class="nav-link" href="{{ route('productor.contrato') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-bank') }}"></use>
+        </svg>Ganancias</a>
     </li>
     @endif
     

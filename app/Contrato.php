@@ -11,7 +11,7 @@ class Contrato extends Model
 
     protected $fillable = [
 
-        'id','fecha_firma','fecha_termino', 'porc_comision', 'usuario_id','created_at','updated_at'
+        'id','fecha_firma','fecha_termino', 'porc_comision', 'usuario_id','is_active','created_at','updated_at'
 
     ];
 

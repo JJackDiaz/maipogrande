@@ -26,4 +26,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    //REDIRIGIR SEGUN TIPO USUARIO
+    public function authenticated($request , $user){
+        if($user->id_tipo_usuario==1){
+            return redirect()->route('usuario.index') ;
+        }
+        if($user->id_tipo_usuario==6){
+            return redirect()->route('productor.index') ;
+        }else{
+            return redirect()->route('welcome') ;
+        }
+    }
 }
