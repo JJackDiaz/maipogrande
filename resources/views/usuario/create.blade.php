@@ -20,10 +20,10 @@
                             <select name="id_tipo_usuario" id="id_tipo_usuario" value="id_tipo_usuario">
                                 <option value="1">Administrador</option>
                                 <option value="2">Consultor</option>
-                                <option value="opel">Cliente Externo</option>
-                                <option value="opel">Cliente Interno</option>
-                                <option value="audi">Transportista</option>
-                                <option value="audi">Consultor</option>
+                                <option value="3">Cliente Externo</option>
+                                <option value="4">Cliente Interno</option>
+                                <option value="5">Transportista</option>
+                                <option value="6">Consultor</option>
                             </select>
 
                             @error('id_tipo_usuario')

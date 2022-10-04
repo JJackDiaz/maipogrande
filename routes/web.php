@@ -30,10 +30,14 @@ Route::middleware('auth')->group(function(){
 // });
 
 Route::group(['prefix' => ''], function() {
-    //usuario
+    //usuarios
     Route::resource('usuario','UsuarioController');
+    Route::resource('proceso-venta','ProcesoVentaController');
+    //contratos
     Route::resource('contrato','ContratoController');
     Route::get('/ver-contrato', 'ContratoController@ver_pdf')->name('ver-pdf');
+    //solicitudes
+    Route::get('solicitud', 'SolicitudController@index')->name('solicitud.index');
 });
 
 

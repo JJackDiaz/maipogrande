@@ -77,11 +77,11 @@ class ContratoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Contrato $contrato)
     {
         return view('contrato.edit', compact('contrato'));
     }
-
+ 
     /**
      * Update the specified resource in storage.
      *

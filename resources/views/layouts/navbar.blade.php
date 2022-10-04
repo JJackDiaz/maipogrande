@@ -17,14 +17,14 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-address-book') }}"></use>
         </svg> Contratos</a>
     </li>
-    <li class="nav-item"><a class="nav-link" href="">
+    <li class="nav-item"><a class="nav-link" href="{{ route('proceso-venta.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-cash') }}"></use>
         </svg> Proceso Venta</a>
     </li>
-    <li class="nav-item"><a class="nav-link" href="typography.html">
+    <li class="nav-item"><a class="nav-link" href="{{ route('solicitud.index') }}">
         <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-book') }}"></use>
         </svg> Solicitudes</a>
     </li>
     <li class="nav-item"><a class="nav-link" href="typography.html">

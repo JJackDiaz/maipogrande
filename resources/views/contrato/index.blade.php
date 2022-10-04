@@ -34,7 +34,7 @@
               <form action="{{ route('contrato.destroy',$contrato->id) }}" method="POST">
                   <a class="btn btn-warning" href="{{ route('ver-pdf') }}">
                     <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-library') }}"></use>
+                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-print') }}"></use>
                     </svg></a>
                   </a>
                   <a class="btn btn-success" href="{{ route('contrato.edit',$contrato->id) }}">
