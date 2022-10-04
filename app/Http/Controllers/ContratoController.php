@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Contrato;
 use App\Usuario;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ContratoController extends Controller
 {
@@ -111,7 +112,7 @@ class ContratoController extends Controller
 
     public function ver_pdf(){
             
-        $pdf = \PDF::loadView('contrato.contratoPDF');
+        $pdf =  Pdf::loadView('contrato.contratoPDF');
 
         return $pdf->stream('contrato.pdf');
     }
