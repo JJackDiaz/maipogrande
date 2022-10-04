@@ -24,8 +24,11 @@
           <tr>
             <th scope="row"><?php echo $cont; $cont++; ?></th>
               <td>{{ $solicitud->cantidad }}</td>
+              <td>{{ $solicitud->producto }}</td>
+              <td>{{ $solicitud->estado }}</td>
+              <td>{{ $solicitud->cliente_id }}</td>
               <td>
-                <a class="btn btn-warning" href="{{ route('usuario.show',$u->id) }}">
+                <a class="btn btn-warning" href="">
                         <svg class="icon">
                           <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
                         </svg></a>
