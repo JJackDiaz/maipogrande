@@ -71,5 +71,24 @@
         </svg>Ganancias</a>
     </li>
     @endif
+
+    {{-- EXTERNO --}}
+    @if(Auth::user()->id_tipo_usuario==3)
+    <li class="nav-item"><a class="nav-link" href="{{ route('cliente_externo.solicitud') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
+        </svg>Solicitudes</a>
+    </li> 
+    <li class="nav-item"><a class="nav-link" href="{{ route('cliente_externo.business') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
+        </svg>Mis Empresas</a>
+    </li> 
+    <li class="nav-item"><a class="nav-link" href="{{ route('productor.index') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
+        </svg>Seguimiento</a>
+    </li> 
+    @endif
     
 </ul>

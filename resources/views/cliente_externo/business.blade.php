@@ -8,25 +8,27 @@
 @section('content')
 <table class="table table-warning table-striped-columns">
     <div class="col-12 text-left m-2">
+        <a href="{{ route('cliente_externo.create_business') }}" class="btn btn-warning rounded-pill text-white"> Crear Empresa</a>
+      </div>
+    <div class="col-12 text-left m-2">
     </div>
       <thead>
         <tr>
         <th scope="col">#</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Producto</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Cliente</th>
+          <th scope="col">Razon Social</th>
+          <th scope="col">Direcion</th>
+          <th scope="col">Ciudad</th>
           <th scope="col">Opción</th>
         </tr>
       </thead>
       <tbody>
-          @foreach ($solicitudes as $solicitud)
+          {{-- @foreach ($solicitudes as $solicitud) --}}
           <tr>
             <th scope="row"><?php echo $cont; $cont++; ?></th>
-              <td>{{ $solicitud->cantidad }}</td>
-              <td>{{ $solicitud->producto }}</td>
-              <td>{{ $solicitud->estado_id }}</td>
-              <td>{{ $solicitud->cliente_id }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td>
                 <form action="" method="POST">
    
@@ -53,7 +55,7 @@
               </form>
               </td>
           </tr>
-          @endforeach
+          {{-- @endforeach --}}
       </tbody>
 </table>
 

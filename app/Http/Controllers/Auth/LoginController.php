@@ -34,6 +34,9 @@ class LoginController extends Controller
         }
         if($user->id_tipo_usuario==6){
             return redirect()->route('productor.index') ;
+        }
+        if($user->id_tipo_usuario==3){
+            return redirect()->route('cliente_externo.solicitud') ;
         }else{
             return redirect()->route('welcome') ;
         }

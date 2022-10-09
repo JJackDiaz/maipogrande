@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//use Auth;
 
 Route::get('/', 'WelcomeController@index')->name('welcome');
+route::get('/404', function () {
+    return view('error.index');
+});
 
 Auth::routes();
 
@@ -11,7 +15,6 @@ Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
     //Transportista
     Route::get('/transportista', 'TransportistaController@index')->name('transportista.index');
-    
 });
 
 // Route::middleware('admin')->group(function(){
@@ -48,6 +51,16 @@ Route::group(['prefix' => 'productor'], function() {
     Route::post('/aceptar-contrato/{id}', 'ProductorController@aceptar_contrato')->name('productor.aceptar_contrato');
     Route::get('/mi-contrato', 'ContratoController@ver_pdf')->name('ver-pdf');
 });
+
+Route::group(['prefix' => 'externo'], function() {
+    //Productor
+    Route::get('/solicitudes', 'ClienteExternoController@solicitud')->name('cliente_externo.solicitud');
+    Route::get('/business', 'ClienteExternoController@business')->name('cliente_externo.business');
+    Route::get('/create-business', 'ClienteExternoController@create_business')->name('cliente_externo.create_business');
+    Route::get('/create/solicitud', 'solicitudController@create')->name('solicitud.create');
+    Route::get('/create', 'solicitudController@store')->name('solicitud.store');
+        
+    });
 
    /////////////////
   //PRUEBAS BD/////

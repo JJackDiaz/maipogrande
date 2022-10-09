@@ -79,6 +79,8 @@
               <li class="nav-item nav-link text-uppercase">Administrador</li>
             @elseif(Auth::user()->id_tipo_usuario==2)
             <li class="nav-item nav-link text-uppercase">Consultor</li>
+            @elseif(Auth::user()->id_tipo_usuario==3)
+            <li class="nav-item nav-link text-uppercase">Externo</li>
             @elseif(Auth::user()->id_tipo_usuario==6)
             <li class="nav-item nav-link text-uppercase">Productor</li>
             <!-- If con todos los usuario -->
