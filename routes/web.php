@@ -57,6 +57,7 @@ Route::group(['prefix' => 'externo'], function() {
     Route::get('/solicitudes', 'ClienteExternoController@solicitud')->name('cliente_externo.solicitud');
     Route::get('/business', 'ClienteExternoController@business')->name('cliente_externo.business');
     Route::get('/create-business', 'ClienteExternoController@create_business')->name('cliente_externo.create_business');
+    Route::post('/store-business', 'ClienteExternoController@store_business')->name('cliente_externo.store_business');
     Route::get('/create/solicitud', 'solicitudController@create')->name('solicitud.create');
     Route::get('/create', 'solicitudController@store')->name('solicitud.store');
         

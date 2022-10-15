@@ -15,48 +15,49 @@
       <thead>
         <tr>
         <th scope="col">#</th>
-          <th scope="col">Razon Social</th>
+          <th scope="col">Nombre o Razon Social</th>
           <th scope="col">Direcion</th>
           <th scope="col">Ciudad</th>
+          <th scope="col">Usuario</th>
           <th scope="col">Opción</th>
         </tr>
       </thead>
       <tbody>
-          {{-- @foreach ($solicitudes as $solicitud) --}}
+          @foreach ($empresas as $empresa)
           <tr>
             <th scope="row"><?php echo $cont; $cont++; ?></th>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>
-                <form action="" method="POST">
-   
-                  <a class="btn btn-warning" href="">
-                      <svg class="icon">
-                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
-                      </svg></a>
-                  </a>
-  
-                  <a class="btn btn-success" href="">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
-                    </svg></a>
-                  </a>
- 
-                  @csrf
-                  @method('DELETE')
-    
-                  <button type="submit" class="btn btn-danger">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-trash') }}"></use>
-                    </svg></a>
-                  </button>
-              </form>
-              </td>
-          </tr>
-          {{-- @endforeach --}}
-      </tbody>
+            <td>{{ $empresa->nombre_empresa }}</td>
+            <td>{{ $empresa->direccion }}</td>
+            <td>{{ $empresa->ciudad_id }}</td>
+            <td>{{ $empresa->usuario_id }}</td>
+            <td>
+            <form action="" method="POST">
+
+              <a class="btn btn-warning" href="">
+                  <svg class="icon">
+                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
+                  </svg></a>
+              </a>
+
+              <a class="btn btn-success" href="">
+                <svg class="icon">
+                  <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
+                </svg></a>
+              </a>
+
+              @csrf
+              @method('DELETE')
+
+              <button type="submit" class="btn btn-danger">
+                <svg class="icon">
+                  <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-trash') }}"></use>
+                </svg></a>
+              </button>
+          </form>
+          </td>
+      </tr>
+      @endforeach
+  </tbody>
 </table>
 
 
