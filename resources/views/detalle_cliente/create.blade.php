@@ -1,24 +1,24 @@
 @extends('layouts.template')
 @section('title')
-    <title>Crear Solicitud</title>
+    <title>Crear Usuarios</title>
 @endsection
 @section('ruta')
-    <li class="breadcrumb-item active"><span>Crear Solicitud</span></li>
+    <li class="breadcrumb-item active"><span>Registrar Empresa</span></li>
 @endsection
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('solicitud.store') }}">
+                <form method="POST" action="{{ route('detalle_cliente.store') }}">
                     @csrf
                     <div class="form-group row m-2">
-                        <label for="cantidad" class="col-md-4 col-form-label text-md-right">{{ __('Cantidad') }}</label>
+                        <label for="nombre_empresa" class="col-md-4 col-form-label text-md-right">{{ __('Nombre Empresa') }}</label>
 
                         <div class="col-md-6">
-                            <input id="cantidad" type="number" class="form-control @error('cantidad') is-invalid @enderror" name="cantidad" value="{{ old('cantidad') }}" required autocomplete="cantidad" autofocus>
+                            <input id="nombre_empresa" type="text" class="form-control @error('nombre_empresa') is-invalid @enderror" name="nombre_empresa" value="{{ old('nombre_empresa') }}" required autocomplete="nombre_empresa" autofocus>
 
-                            @error('cantidad')
+                            @error('nombre_empresa')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -27,32 +27,35 @@
                     </div>
 
                     <div class="form-group row m-2">
-                        <label for="producto" class="col-md-4 col-form-label text-md-right">{{ __('producto') }}</label>
+                        <label for="direccion" class="col-md-4 col-form-label text-md-right">{{ __('direccion') }}</label>
 
                         <div class="col-md-6">
-                            <input id="producto" type="text" class="form-control @error('producto') is-invalid @enderror" name="producto" value="{{ old('producto') }}" required autocomplete="producto" autofocus>
+                            <input id="direccion" type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion" autofocus>
 
-                            @error('producto')
+                            @error('direccion')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
                     </div>
-
-                    <!-- <div class="form-group row m-2">
-                        <label for="empresa" class="col-md-4 col-form-label text-md-right">{{ __('empresa') }}</label>
-
+                    <div class="form-group row m-2">
+                        <label for="ciudad_id" class="col-md-4 col-form-label text-md-right">{{ __('Ciudad') }}</label>
                         <div class="col-md-6">
-                            <input id="empresa" type="text" class="form-control @error('empresa') is-invalid @enderror" name="empresa" value="{{ old('empresa') }}" required autocomplete="empresa" autofocus>
+                            <select name="ciudad_id" id="ciudad_id" value="ciudad_id">
+                                <option value=''>Selecciona Ciudad</option>
+                                @foreach($ciudades as $ciudad)
+                                <option value="{{ $ciudad->id }}">{{ $ciudad->nombre_ci }} - {{ $ciudad->nombre }}</option>
+                                @endforeach
+                            </select>
 
-                            @error('empresa')
+                            @error('ciudad_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
                         </div>
-                    </div> -->
+                    </div>
 
                     <div class="form-group row m-2">
                         <div class="col-md-6 offset-md-4">

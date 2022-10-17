@@ -10,6 +10,6 @@ class Solicitud extends Model
     protected $pk = 'id';
 
     protected $fillable = [
-      'id','cantidad','producto','estado_id','cliente_id','created_at','updated_at'
+      'id','cantidad','producto','estado_id','usuario_id','created_at','updated_at'
     ];
 }

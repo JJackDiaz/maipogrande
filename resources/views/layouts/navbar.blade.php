@@ -74,12 +74,12 @@
 
     {{-- EXTERNO --}}
     @if(Auth::user()->id_tipo_usuario==3)
-    <li class="nav-item"><a class="nav-link" href="{{ route('cliente_externo.solicitud') }}">
+    <li class="nav-item"><a class="nav-link" href="{{ route('solicitud.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Solicitudes</a>
     </li> 
-    <li class="nav-item"><a class="nav-link" href="{{ route('cliente_externo.business') }}">
+    <li class="nav-item"><a class="nav-link" href="{{ route('detalle_cliente.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Mis Empresas</a>

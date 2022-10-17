@@ -23,7 +23,7 @@
                                 <option value="3">Cliente Externo</option>
                                 <option value="4">Cliente Interno</option>
                                 <option value="5">Transportista</option>
-                                <option value="6">Consultor</option>
+                                <option value="6">Productor</option>
                             </select>
 
                             @error('id_tipo_usuario')

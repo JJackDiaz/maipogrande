@@ -8,7 +8,7 @@
 @section('content')
 <table class="table table-warning table-striped-columns">
     <div class="col-12 text-left m-2">
-        <a href="{{ route('cliente_externo.create_business') }}" class="btn btn-warning rounded-pill text-white"> Crear Empresa</a>
+        <a href="{{ route('detalle_cliente.create') }}" class="btn btn-warning rounded-pill text-white"> Crear Empresa</a>
       </div>
     <div class="col-12 text-left m-2">
     </div>
@@ -31,15 +31,9 @@
             <td>{{ $empresa->ciudad_id }}</td>
             <td>{{ $empresa->usuario_id }}</td>
             <td>
-            <form action="" method="POST">
+            <form action="{{ route('detalle_cliente.destroy', $empresa->id) }}" method="post">
 
-              <a class="btn btn-warning" href="">
-                  <svg class="icon">
-                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
-                  </svg></a>
-              </a>
-
-              <a class="btn btn-success" href="">
+              <a class="btn btn-success" href="{{ route('detalle_cliente.edit',$empresa->id) }}">
                 <svg class="icon">
                   <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
                 </svg></a>

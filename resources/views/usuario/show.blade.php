@@ -21,6 +21,14 @@
           <p class="card-text">Administrador</p>
         @elseif($usuario->id_tipo_usuario == 2)
           <p class="card-text">Consultor</p>
+        @elseif($usuario->id_tipo_usuario == 3)
+          <p class="card-text">Externo</p>
+        @elseif($usuario->id_tipo_usuario == 4)
+          <p class="card-text">Interno</p>
+        @elseif($usuario->id_tipo_usuario == 5)
+          <p class="card-text">Transportista</p>
+        @elseif($usuario->id_tipo_usuario == 6)
+          <p class="card-text">Productor</p>
         <!-- If con todos los usuario -->
         @endif
       </div>

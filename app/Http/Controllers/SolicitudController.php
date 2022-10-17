@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Solicitud;
+use Auth;
 
 use Illuminate\Http\Request;
 
@@ -28,23 +29,71 @@ class SolicitudController extends Controller
     {
         
         $request->validate([
-            'nombre_completo' => ['required', 'string', 'max:255'],
-            'telefono' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:usuario'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            //'id_tipo_usuario' => ['required'],
+            'cantidad' => ['required', 'integer', 'max:255'],
+            'producto' => ['required', 'string', 'max:255'],
         ]);
 
 
 
-        Usuario::create([
-            'nombre_completo' => $request->nombre_completo,
-            'telefono' => $request->telefono,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'id_tipo_usuario' => $request->id_tipo_usuario,
+        Solicitud::create([
+            'cantidad' => $request->cantidad,
+            'producto' => $request->producto,
+            'usuario_id' => Auth::user()->id,
+            //Activo 1
+            'estado_id' => 1
         ]);  
    
-        return redirect()->route('usuario.index')->with('success', 'Usuario creado');
+        return redirect()->route('cliente_externo.solicitud')->with('success', 'Solicitud creada');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $solicitud = Solicitud::find($id);
+        return view('solicitud.show',compact('solicitud'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Solicitud $solicitud)
+    {
+        return view('solicitud.edit', compact('solicitud'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Solicitud $solicitud)
+    {
+        
+        $solicitud->update($request->all());
+
+        return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Solicitud $solicitud)
+    {
+        $solicitud->delete();
+
+        return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
     }
 }

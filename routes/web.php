@@ -46,20 +46,29 @@ Route::group(['prefix' => ''], function() {
 
 Route::group(['prefix' => 'productor'], function() {
     //Productor
+    //Productos
+    //Contrato
     Route::get('', 'ProductorController@index')->name('productor.index');
     Route::get('/contrato', 'ProductorController@contrato')->name('productor.contrato');
     Route::post('/aceptar-contrato/{id}', 'ProductorController@aceptar_contrato')->name('productor.aceptar_contrato');
     Route::get('/mi-contrato', 'ContratoController@ver_pdf')->name('ver-pdf');
+    //Proceso venta
+    //Ganancias
 });
 
 Route::group(['prefix' => 'externo'], function() {
-    //Productor
-    Route::get('/solicitudes', 'ClienteExternoController@solicitud')->name('cliente_externo.solicitud');
-    Route::get('/business', 'ClienteExternoController@business')->name('cliente_externo.business');
-    Route::get('/create-business', 'ClienteExternoController@create_business')->name('cliente_externo.create_business');
-    Route::post('/store-business', 'ClienteExternoController@store_business')->name('cliente_externo.store_business');
-    Route::get('/create/solicitud', 'solicitudController@create')->name('solicitud.create');
-    Route::get('/create', 'solicitudController@store')->name('solicitud.store');
+    //externo
+    //solicitud
+    Route::get('/solicitud', 'solicitudController@index')->name('solicitud.index');
+    Route::get('/solicitud/create', 'solicitudController@create')->name('solicitud.create');
+    Route::post('/solicitud', 'solicitudController@store')->name('solicitud.store');
+    Route::get('/solicitud/{solicitud}/show', 'solicitudController@show')->name('solicitud.show');
+    Route::get('/solicitud/{solicitud}/edit', 'solicitudController@edit')->name('solicitud.edit');
+    Route::post('/solicitud/{solicitud}', 'solicitudController@update')->name('solicitud.update');
+    Route::DELETE('/solicitud/{solicitud}', 'solicitudController@destroy')->name('solicitud.destroy');
+    //detalle_cliente
+    Route::resource('detalle_cliente','DetalleClienteController');
+
         
     });
 
