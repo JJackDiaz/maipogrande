@@ -1,43 +1,49 @@
 @extends('layouts.template')
 @section('title')
-    <title>MaipoGrande | Solicitud</title>
+    <title>Productos</title>
 @endsection
 @section('ruta')
-    <li class="breadcrumb-item active"><span>Solicitud</span></li>
+    <li class="breadcrumb-item active"><span>Productos</span></li>
 @endsection
 @section('content')
 <table class="table table-warning table-striped-columns">
     <div class="col-12 text-left m-2">
-        <a href="{{ route('solicitud.create') }}" class="btn btn-warning rounded-pill text-white"> Crear Solicitud</a>
+        <a href="create" class="btn btn-warning rounded-pill text-white"> Crear Productos</a>
       </div>
     <div class="col-12 text-left m-2">
     </div>
       <thead>
         <tr>
         <th scope="col">#</th>
-          <th scope="col">Cantidad</th>
-          <th scope="col">Producto</th>
-          <th scope="col">Estado</th>
-          <th scope="col">Cliente</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Cantidad (KG)</th>
+          <th scope="col">Calidad</th>
+          <th scope="col">precio</th>
+          <th scope="col">Fecha Cosecha</th>
+          <th scope="col">Precio Unitario</th>
+          <th scope="col">Vida util</th>
           <th scope="col">Opción</th>
         </tr>
       </thead>
       <tbody>
-          @foreach ($solicitudes as $solicitud)
+          @foreach ($productos as $Producto)
           <tr>
             <th scope="row"><?php echo $cont; $cont++; ?></th>
-              <td>{{ $solicitud->cantidad }}</td>
-              <td>{{ $solicitud->producto }}</td>
-              <td>{{ $solicitud->estado_id }}</td>
-              <td>{{ $solicitud->usuario_id }}</td>
+              <td>{{ $Producto->nombre }}</td>
+              <td>{{ $Producto->cantidad }}KG</td>
+              <td>{{ $Producto->calidad }}</td>
+              <td>${{ $Producto->precio }}</td>
+              <td>{{ $Producto->fecha_cosecha }}</td>
+              <td>${{ $Producto->precio_unitario }}</td>
+              <td>{{ $Producto->vida_util }}</td>
               <td>
-                <form action="{{ route('solicitud.destroy',$solicitud->id) }}" method="POST">
-                  <a class="btn btn-warning" href="{{ route('solicitud.show',$solicitud->id) }}">
+                <form action="destroy" method="POST">
+                  <a class="btn btn-warning" href="show">
                     <svg class="icon">
                       <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
                     </svg></a>
                   </a>
-                  <a class="btn btn-success" href="{{ route('solicitud.edit',$solicitud->id) }}">
+                  <a class="btn btn-success" href="edit">
                     <svg class="icon">
                       <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
                     </svg></a>
@@ -55,4 +61,5 @@
           @endforeach
       </tbody>
 </table>
+
 @endsection

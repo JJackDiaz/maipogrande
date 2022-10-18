@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Contrato;
 use App\Usuario;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Productor;
+use DB;
+use Auth;
+use Carbon;
+
 
 class ContratoController extends Controller
 {
@@ -19,7 +24,13 @@ class ContratoController extends Controller
         $contratos = Contrato::all();
         $cont = 1;
 
-        return view('contrato.index', compact('contratos','cont'));
+        //productor o admin
+        if(Auth::user()->id_tipo_usuario==6 || Auth::user()->id_tipo_usuario==1){        
+            return view('contrato.index', compact('contratos','cont'));
+        }else {
+            return view('error.index'); 
+        }
+
     }
 
     /**
@@ -31,7 +42,12 @@ class ContratoController extends Controller
     {
         $usuarios = Usuario::where('id_tipo_usuario', 6)->get();
 
-        return view('contrato.create', compact('usuarios'));
+        //productor o admin
+        if(Auth::user()->id_tipo_usuario==1){        
+            return view('contrato.create', compact('usuarios'));
+        }else {
+            return view('error.index'); 
+        }
     }
 
     /**
@@ -80,7 +96,12 @@ class ContratoController extends Controller
      */
     public function edit(Contrato $contrato)
     {
-        return view('contrato.edit', compact('contrato'));
+        //admin
+        if(Auth::user()->id_tipo_usuario==1){        
+            return view('contrato.edit', compact('contrato'));
+        }else {
+            return view('error.index'); 
+        }
     }
  
     /**
@@ -114,6 +135,50 @@ class ContratoController extends Controller
             
         $pdf =  Pdf::loadView('contrato.contratoPDF');
 
-        return $pdf->stream('contrato.pdf');
+        //productor o admin
+        if(Auth::user()->id_tipo_usuario==6 || Auth::user()->id_tipo_usuario==1){        
+            return $pdf->stream('contrato.pdf');
+        }else {
+            return view('error.index'); 
+        }
+    }
+
+    //Productor 
+    public function contrato()
+    {
+        $date = Carbon\Carbon::now();
+        $date = $date->format('d-m-Y');
+
+        $usuario_id = Auth::user()->id;
+        $contratos = Contrato::where('usuario_id', $usuario_id)->get();
+        ///dd($contratos);
+        $cont = 1;
+
+        //productor o admin
+        if(Auth::user()->id_tipo_usuario==6 || Auth::user()->id_tipo_usuario==1){        
+            return view('contrato.contrato', compact('contratos','cont','date'));
+        }else {
+            return view('error.index'); 
+        }
+    }
+
+    public function aceptar_contrato($id)
+    {
+        $now = new \DateTime();
+        //Busca el contrato
+        $contratos = Contrato::where('id', $id);
+        //dd($posts->toSql());
+
+        //Valida si existe el contrato
+        if($contratos) {
+            
+            $contrato = Contrato::where('id', $id)
+            ->update(['fecha_firma' => $now->format('Y-m-d'), 'is_active' => 'Y']);
+
+        }else{
+            return redirect()->route('contrato.contrato')->with('error', 'Fallo');
+        }
+
+        return redirect()->route('contrato.contrato')->with('success', 'Contrato Aceptado');
     }
 }

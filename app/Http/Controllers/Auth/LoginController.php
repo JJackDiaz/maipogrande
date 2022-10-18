@@ -29,14 +29,17 @@ class LoginController extends Controller
 
     //REDIRIGIR SEGUN TIPO USUARIO
     public function authenticated($request , $user){
+        //ADMIN
         if($user->id_tipo_usuario==1){
             return redirect()->route('home') ;
         }
+        //PRODUCTOR
         if($user->id_tipo_usuario==6){
-            return redirect()->route('productor.index') ;
+            return redirect()->route('producto.index') ;
         }
+        //EXTERNO
         if($user->id_tipo_usuario==3){
-            return redirect()->route('cliente_externo.solicitud') ;
+            return redirect()->route('solicitud.index') ;
         }else{
             return redirect()->route('welcome') ;
         }

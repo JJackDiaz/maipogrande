@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Solicitud;
+use App\Producto;
 use Auth;
 
 use Illuminate\Http\Request;
@@ -17,12 +18,23 @@ class SolicitudController extends Controller
 
         $solicitudes = Solicitud::all();
         $cont = 1;
-        return view('solicitud.index', compact('cont','solicitudes')); 
+
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return view('solicitud.index', compact('cont','solicitudes'));
+        }else {
+            return view('error.index'); 
+        }
     }
 
     public function create()
     {
-        return view('solicitud.create');
+        $productos = Producto::all();
+
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return view('solicitud.create', compact('productos'));
+        }else {
+            return view('error.index'); 
+        }
     }
 
     public function store(Request $request)
@@ -43,7 +55,11 @@ class SolicitudController extends Controller
             'estado_id' => 1
         ]);  
    
-        return redirect()->route('cliente_externo.solicitud')->with('success', 'Solicitud creada');
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return redirect()->route('solicitud.index')->with('success', 'Solicitud creada');
+        }else {
+            return view('error.index'); 
+        }
     }
 
     /**
@@ -55,7 +71,12 @@ class SolicitudController extends Controller
     public function show($id)
     {
         $solicitud = Solicitud::find($id);
-        return view('solicitud.show',compact('solicitud'));
+
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return view('solicitud.show',compact('solicitud'));
+        }else {
+            return view('error.index'); 
+        }
     }
 
     /**
@@ -66,7 +87,11 @@ class SolicitudController extends Controller
      */
     public function edit(Solicitud $solicitud)
     {
-        return view('solicitud.edit', compact('solicitud'));
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return view('solicitud.edit', compact('solicitud'));
+        }else {
+            return view('error.index'); 
+        }
     }
 
     /**
@@ -81,7 +106,11 @@ class SolicitudController extends Controller
         
         $solicitud->update($request->all());
 
-        return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
+        }else {
+            return view('error.index'); 
+        }
     }
 
     /**
@@ -94,6 +123,11 @@ class SolicitudController extends Controller
     {
         $solicitud->delete();
 
-        return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
+        }else {
+            return view('error.index'); 
+        }
     }
+
 }

@@ -47,11 +47,11 @@ Route::group(['prefix' => ''], function() {
 Route::group(['prefix' => 'productor'], function() {
     //Productor
     //Productos
+    Route::resource('producto','ProductoController');
     //Contrato
-    Route::get('', 'ProductorController@index')->name('productor.index');
-    Route::get('/contrato', 'ProductorController@contrato')->name('productor.contrato');
-    Route::post('/aceptar-contrato/{id}', 'ProductorController@aceptar_contrato')->name('productor.aceptar_contrato');
-    Route::get('/mi-contrato', 'ContratoController@ver_pdf')->name('ver-pdf');
+    Route::get('/contrato', 'ContratoController@contrato')->name('contrato.contrato');
+    Route::post('/aceptar-contrato/{id}', 'ContratoController@aceptar_contrato')->name('contrato.aceptar_contrato');
+    Route::get('/contrato-pdf', 'ContratoController@ver_pdf')->name('ver-pdf');
     //Proceso venta
     //Ganancias
 });

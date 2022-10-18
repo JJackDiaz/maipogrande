@@ -28,16 +28,20 @@
 
                     <div class="form-group row m-2">
                         <label for="producto" class="col-md-4 col-form-label text-md-right">{{ __('producto') }}</label>
-
                         <div class="col-md-6">
-                            <input id="producto" type="text" class="form-control @error('producto') is-invalid @enderror" name="producto" value="{{ old('producto') }}" required autocomplete="producto" autofocus>
-
-                            @error('producto')
+                            <select class="form-select" name="producto" id="producto" value="producto">
+                                <option value=''>Selecciona Usuario</option>
+                                @foreach($productos as $producto)
+                                <option value="{{ $producto->nombre }}">{{ $producto->nombre }}</option>
+                                @endforeach
+                            </select>
+                            
+                            @error('usuario_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-                        </div>
+                        </div>     
                     </div>
 
                     <!-- <div class="form-group row m-2">

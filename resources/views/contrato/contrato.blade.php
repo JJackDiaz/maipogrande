@@ -38,7 +38,7 @@
                 </a> -->
                 @if($contrato->is_active == 'N')
                 <div class="alert alert-success text-center p-1" role="alert">
-                  <form action="{{ route('productor.aceptar_contrato',$contrato->id) }}" method="POST">
+                  <form action="{{ route('contrato.aceptar_contrato',$contrato->id) }}" method="POST">
                       @csrf
                       <button type="submit" class="btn btn-success p-1">
                           <h6 class="text-white">Aceptar Contrato</h6>
