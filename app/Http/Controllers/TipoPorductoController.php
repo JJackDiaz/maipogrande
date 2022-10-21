@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-use App\Producto;
-use App\TipoProducto;
 
-class ProductoController extends Controller
+class TipoPorductoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,14 +13,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::all();
-        $cont = 1;
-
-        if(Auth::user()->id_tipo_usuario==6){        
-            return view('producto.index', compact('productos','cont'));
-        }else {
-            return view('error.index'); 
-        }
+        //
     }
 
     /**
@@ -33,10 +23,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-
-        $categorias = TipoProducto::all();
-
-        return view('producto.create', compact('categorias'));
+        //
     }
 
     /**
@@ -47,29 +34,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        var_dump($request);
-        exit;
-        $request->validate([
-            'nombre' => ['required', 'string', 'max:255'],
-            'cantidad' => ['required', 'integer', 'max:1000'],
-            'calidad' => ['required', 'string', 'max:50'],
-            'precio' => ['required', 'integer'],
-            'fecha_cosecha' => ['required', 'date'],
-            'precio_unitario' => ['required', 'integer'],
-            'id_tipo_pro' => ['required', 'integer'],
-        ]);
-
-
-        Producto::create([
-            'nombre' => $request->nombre,
-            'cantidad' => $request->cantidad,
-            'calidad' => $request->calidad,
-            'precio' => $request->precio,
-            'fecha_cosecha' => $request->fecha_cosecha,
-            'precio_unitario' => $request->precio_unitario,
-            'id_tipo_pro' => $request->id_tipo_pro,
-            'usuario_id' => Auth::user()->id
-        ]);  
+        //
     }
 
     /**

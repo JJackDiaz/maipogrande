@@ -25,8 +25,11 @@ class ContratoController extends Controller
         $cont = 1;
 
         //productor o admin
-        if(Auth::user()->id_tipo_usuario==6 || Auth::user()->id_tipo_usuario==1){        
+        if(Auth::user()->id_tipo_usuario==1){        
             return view('contrato.index', compact('contratos','cont'));
+        }
+        else if(Auth::user()->id_tipo_usuario==6){        
+            return view('contrato.contrato', compact('contratos','cont'));
         }else {
             return view('error.index'); 
         }

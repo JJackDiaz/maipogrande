@@ -1,20 +1,39 @@
 @extends('layouts.template')
 @section('title')
-    <title>Crear Solicitud</title>
+    <title>Crear Producto</title>
 @endsection
 @section('ruta')
-    <li class="breadcrumb-item active"><span>Crear Solicitud</span></li>
+    <li class="breadcrumb-item active"><span>Crear Producto</span></li>
 @endsection
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('solicitud.store') }}">
+                <form method="POST" action="{{ route('producto.store') }}">
                     @csrf
+                    <!-- id_tipo_pro -->
+                    <div class="form-group row m-2">
+                        <label for="id_tipo_pro" class="col-md-4 col-form-label text-md-right">{{ __('Tipo Producto') }}</label>
+                        <div class="col-md-6">
+                            <select class="form-select" name="id_tipo_pro" id="id_tipo_pro" value="id_tipo_pro">
+                                <option value=''>Selecciona Categoria</option>
+                                @foreach($categorias as $categoria)
+                                <option value="{{ $categoria->id }}">{{ $categoria->descrip_pro }}</option>
+                                @endforeach
+                            </select>
+                            
+                            @error('id_tipo_pro')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>     
+                    </div>
+
                     <!-- nombre -->
                     <div class="form-group row m-2">
-                        <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('nombre') }}</label>
+                        <label for="nombre" class="col-md-4 col-form-label text-md-right">{{ __('Nombre') }}</label>
                         <div class="col-md-6">
                             <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autocomplete="nombre" autofocus>
 
@@ -25,6 +44,7 @@
                             @enderror
                         </div>
                     </div>
+
                     <!-- cantidad -->
                     <div class="form-group row m-2">
                         <label for="cantidad" class="col-md-4 col-form-label text-md-right">{{ __('Cantidad') }}</label>
@@ -88,20 +108,6 @@
                             <input id="precio_unitario" type="number" class="form-control @error('precio_unitario') is-invalid @enderror" name="precio_unitario" value="{{ old('precio_unitario') }}" required autocomplete="precio_unitario" autofocus>
 
                             @error('precio_unitario')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- vida_util -->
-                    <div class="form-group row m-2">
-                        <label for="vida_util" class="col-md-4 col-form-label text-md-right">{{ __('Vida Util') }}</label>
-                        <div class="col-md-6">
-                            <input id="vida_util" type="date" class="form-control @error('vida_util') is-invalid @enderror" name="vida_util" value="{{ old('vida_util') }}" required autocomplete="vida_util" autofocus>
-
-                            @error('vida_util')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

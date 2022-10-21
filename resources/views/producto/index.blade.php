@@ -21,7 +21,6 @@
           <th scope="col">precio</th>
           <th scope="col">Fecha Cosecha</th>
           <th scope="col">Precio Unitario</th>
-          <th scope="col">Vida util</th>
           <th scope="col">Opción</th>
         </tr>
       </thead>
@@ -35,7 +34,6 @@
               <td>${{ $Producto->precio }}</td>
               <td>{{ $Producto->fecha_cosecha }}</td>
               <td>${{ $Producto->precio_unitario }}</td>
-              <td>{{ $Producto->vida_util }}</td>
               <td>
                 <form action="destroy" method="POST">
                   <a class="btn btn-warning" href="show">

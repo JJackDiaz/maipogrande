@@ -12,4 +12,10 @@ class Solicitud extends Model
     protected $fillable = [
       'id','cantidad','producto','estado_id','usuario_id','created_at','updated_at'
     ];
+
+    public function estado()
+    {
+        //contiene un id de usuario
+        return $this->belongsTo('App\Estado');
+    }
 }

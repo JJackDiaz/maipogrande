@@ -13,7 +13,7 @@ Auth::routes();
 //protegidas
 Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
-});
+
 
 // Route::middleware('admin')->group(function(){
 //     //usuario
@@ -30,32 +30,25 @@ Route::middleware('auth')->group(function(){
     
 // });
 
-Route::group(['prefix' => ''], function() {
     //usuarios
     Route::resource('usuario','UsuarioController');
     Route::resource('proceso-venta','ProcesoVentaController');
-    //contratos
+    //contratos+
     Route::resource('contrato','ContratoController');
     Route::get('/ver-contrato', 'ContratoController@ver_pdf')->name('ver-pdf');
-    //solicitudes
-    Route::get('solicitud', 'SolicitudController@index')->name('solicitud.index');
-});
-
-
-Route::group(['prefix' => 'productor'], function() {
-    //Productor
-    //Productos
-    Route::resource('producto','ProductoController');
-    //Contrato
+    Route::get('/index', 'ContratoController@index')->name('contrato.index');
     Route::get('/contrato', 'ContratoController@contrato')->name('contrato.contrato');
     Route::post('/aceptar-contrato/{id}', 'ContratoController@aceptar_contrato')->name('contrato.aceptar_contrato');
     Route::get('/contrato-pdf', 'ContratoController@ver_pdf')->name('ver-pdf');
+    //solicitudes
+    Route::get('solicitud', 'SolicitudController@index')->name('solicitud.index');
+
+    //Productos
+    Route::resource('producto','ProductoController');
     //Proceso venta
     //Ganancias
-});
 
-Route::group(['prefix' => 'externo'], function() {
-    //externo
+
     //solicitud
     Route::get('/solicitud', 'solicitudController@index')->name('solicitud.index');
     Route::get('/solicitud/create', 'solicitudController@create')->name('solicitud.create');
@@ -64,11 +57,11 @@ Route::group(['prefix' => 'externo'], function() {
     Route::get('/solicitud/{solicitud}/edit', 'solicitudController@edit')->name('solicitud.edit');
     Route::post('/solicitud/{solicitud}', 'solicitudController@update')->name('solicitud.update');
     Route::DELETE('/solicitud/{solicitud}', 'solicitudController@destroy')->name('solicitud.destroy');
+    Route::post('/solicitud/{solicitud}/pending', 'solicitudController@estado_pendiente')->name('solicitud.estado_pendiente');
     //detalle_cliente
     Route::resource('detalle_cliente','DetalleClienteController');
 
-        
-    });
+});  
 
    /////////////////
   //PRUEBAS BD/////

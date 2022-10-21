@@ -41,8 +41,8 @@ class SolicitudController extends Controller
     {
         
         $request->validate([
-            'cantidad' => ['required', 'integer', 'max:255'],
-            'producto' => ['required', 'string', 'max:255'],
+            'cantidad' => ['required', 'integer'],
+            'producto' => ['required', 'string'],
         ]);
 
 
@@ -51,7 +51,6 @@ class SolicitudController extends Controller
             'cantidad' => $request->cantidad,
             'producto' => $request->producto,
             'usuario_id' => Auth::user()->id,
-            //Activo 1
             'estado_id' => 1
         ]);  
    
@@ -122,6 +121,19 @@ class SolicitudController extends Controller
     public function destroy(Solicitud $solicitud)
     {
         $solicitud->delete();
+
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
+        }else {
+            return view('error.index'); 
+        }
+    }
+
+    public function estado_pendiente($id){
+
+        $Q1 = Solicitud::find($id);
+        $Q1->estado_id = 4;
+        $Q1->save();
 
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
             return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
