@@ -32,7 +32,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        return view('producto.create');
     }
 
     /**
@@ -43,7 +43,32 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //'nombre','cantidad','calidad','precio','fecha_cosecha','precio_unitario','vida_util'
+
+        $request->validate([
+            'nombre' => ['required', 'integer', 'max:255'],
+            'cantidad' => ['required', 'string', 'max:255'],
+            'calidad' => ['required', 'string', 'max:255'],
+            'precio' => ['required', 'string', 'max:255'],
+            'fecha_cosecha' => ['required', 'string', 'max:255'],
+            'precio_unitario' => ['required', 'string', 'max:255'],
+            'vida_util' => ['required', 'string', 'max:255'],
+        ]);
+
+        //PROBARRRRRRRRR
+
+        Producto::create([
+            'nombre' => $request->cantidad,
+            'cantidad' => $request->producto,
+            'calidad' => $request->producto,
+            'precio' => $request->producto,
+            'fecha_cosecha' => $request->producto,
+            'precio_unitario' => $request->producto,
+            'vida_util' => $request->producto,
+            'usuario_id' => Auth::user()->id,
+            //Activo 1
+            'estado_id' => 1
+        ]);  
     }
 
     /**

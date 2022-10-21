@@ -8,7 +8,7 @@
 @section('content')
 <table class="table table-warning table-striped-columns">
     <div class="col-12 text-left m-2">
-        <a href="create" class="btn btn-warning rounded-pill text-white"> Crear Productos</a>
+        <a href="{{ route('producto.create') }}" class="btn btn-warning rounded-pill text-white"> Crear Productos</a>
       </div>
     <div class="col-12 text-left m-2">
     </div>

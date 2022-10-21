@@ -13,8 +13,6 @@ Auth::routes();
 //protegidas
 Route::middleware('auth')->group(function(){
     Route::get('/home', 'HomeController@index')->name('home');
-    //Transportista
-    Route::get('/transportista', 'TransportistaController@index')->name('transportista.index');
 });
 
 // Route::middleware('admin')->group(function(){
