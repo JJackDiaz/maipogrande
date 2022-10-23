@@ -131,9 +131,22 @@ class SolicitudController extends Controller
 
     public function estado_pendiente($id){
 
-        $Q1 = Solicitud::find($id);
-        $Q1->estado_id = 4;
-        $Q1->save();
+        $pendiente = Solicitud::find($id);
+        $pendiente->estado_id = 2;
+        $pendiente->save();
+
+        if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
+            return redirect()->route('solicitud.index')->with('success', 'solicitud editado');
+        }else {
+            return view('error.index'); 
+        }
+    }
+
+    public function anular($id){
+
+        $pendiente = Solicitud::find($id);
+        $pendiente->estado_id = 3;
+        $pendiente->save();
 
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
             return redirect()->route('solicitud.index')->with('success', 'solicitud editado');

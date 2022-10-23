@@ -100,20 +100,6 @@
                             @enderror
                         </div>
                     </div>
-
-                    <!-- precio_unitario -->
-                    <div class="form-group row m-2">
-                        <label for="precio_unitario" class="col-md-4 col-form-label text-md-right">{{ __('Precio Unitario') }}</label>
-                        <div class="col-md-6">
-                            <input id="precio_unitario" type="number" class="form-control @error('precio_unitario') is-invalid @enderror" name="precio_unitario" value="{{ old('precio_unitario') }}" required autocomplete="precio_unitario" autofocus>
-
-                            @error('precio_unitario')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
                     
                     <div class="form-group row m-2">
                         <div class="col-md-6 offset-md-4">

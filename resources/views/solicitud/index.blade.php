@@ -62,19 +62,16 @@
               @else
               <form action="{{ route('solicitud.estado_pendiente',$solicitud->id) }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-danger">
+                <button type="submit" class="btn btn-success">
                   <svg class="icon">
                     <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-check') }}"></use>
                   </svg></a>
                 </button>
-              </form>
-              <form action="{{ route('solicitud.estado_pendiente',$solicitud->id) }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-danger">
+                <a class="btn btn-danger" href="{{ route('solicitud.anular',$solicitud->id) }}">
                   <svg class="icon">
-                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-x-circle') }}"></use>
+                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-x') }}"></use>
                   </svg></a>
-                </button>
+                </a>
               </form>
               @endif
               </td>

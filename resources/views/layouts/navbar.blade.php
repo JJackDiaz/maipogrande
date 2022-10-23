@@ -60,7 +60,7 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-library') }}"></use>
         </svg>Contratos</a>
     </li>
-    <li class="nav-item"><a class="nav-link" href="">
+    <li class="nav-item"><a class="nav-link" href="{{ route('proceso-venta.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-vector') }}"></use>
         </svg>Proceso Venta</a>
@@ -78,6 +78,11 @@
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Solicitudes</a>
+    </li> 
+    <li class="nav-item"><a class="nav-link" href="{{ route('proceso-venta.index') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
+        </svg>Proceso venta</a>
     </li> 
     <li class="nav-item"><a class="nav-link" href="{{ route('detalle_cliente.index') }}">
         <svg class="nav-icon">

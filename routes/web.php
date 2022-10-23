@@ -45,8 +45,9 @@ Route::middleware('auth')->group(function(){
 
     //Productos
     Route::resource('producto','ProductoController');
+    
     //Proceso venta
-    //Ganancias
+    Route::resource('proceso-venta','ProcesoVentaController');
 
 
     //solicitud
@@ -58,6 +59,7 @@ Route::middleware('auth')->group(function(){
     Route::post('/solicitud/{solicitud}', 'solicitudController@update')->name('solicitud.update');
     Route::DELETE('/solicitud/{solicitud}', 'solicitudController@destroy')->name('solicitud.destroy');
     Route::post('/solicitud/{solicitud}/pending', 'solicitudController@estado_pendiente')->name('solicitud.estado_pendiente');
+    Route::get('/solicitud/{solicitud}/anular', 'solicitudController@anular')->name('solicitud.anular');
     //detalle_cliente
     Route::resource('detalle_cliente','DetalleClienteController');
 

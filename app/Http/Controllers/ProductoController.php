@@ -47,15 +47,12 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        var_dump($request);
-        exit;
         $request->validate([
             'nombre' => ['required', 'string', 'max:255'],
             'cantidad' => ['required', 'integer', 'max:1000'],
             'calidad' => ['required', 'string', 'max:50'],
             'precio' => ['required', 'integer'],
             'fecha_cosecha' => ['required', 'date'],
-            'precio_unitario' => ['required', 'integer'],
             'id_tipo_pro' => ['required', 'integer'],
         ]);
 
@@ -66,10 +63,16 @@ class ProductoController extends Controller
             'calidad' => $request->calidad,
             'precio' => $request->precio,
             'fecha_cosecha' => $request->fecha_cosecha,
-            'precio_unitario' => $request->precio_unitario,
+            'precio_unitario' => $request->precio / $request->cantidad,
             'id_tipo_pro' => $request->id_tipo_pro,
             'usuario_id' => Auth::user()->id
-        ]);  
+        ]); 
+
+        if(Auth::user()->id_tipo_usuario==6){        
+            return redirect()->route('producto.index')->with('success', 'Solicitud creada');
+        }else {
+            return view('error.index'); 
+        }
     }
 
     /**
