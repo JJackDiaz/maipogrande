@@ -48,6 +48,12 @@ Route::middleware('auth')->group(function(){
     
     //Proceso venta
     Route::resource('proceso-venta','ProcesoVentaController');
+    Route::get('/proceso-venta/{solicitud}/create', 'ProcesoVentaController@crear_proceso_venta')->name('proceso-venta.crear_proceso_venta');
+    Route::get('participar/{id}', 'ProcesoVentaController@participar')->name('proceso-venta.participar');
+    Route::get('participar_proceso/{id}', 'ProcesoVentaController@participar_proceso')->name('proceso-venta.participar_proceso');
+    Route::get('participantes/{id}', 'ProcesoVentaController@participantes')->name('proceso-venta.participantes');
+    Route::get('procesamiento/{id}', 'ProcesoVentaController@procesamiento')->name('proceso-venta.procesamiento');
+
 
 
     //solicitud
@@ -58,7 +64,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/solicitud/{solicitud}/edit', 'solicitudController@edit')->name('solicitud.edit');
     Route::post('/solicitud/{solicitud}', 'solicitudController@update')->name('solicitud.update');
     Route::DELETE('/solicitud/{solicitud}', 'solicitudController@destroy')->name('solicitud.destroy');
-    Route::post('/solicitud/{solicitud}/pending', 'solicitudController@estado_pendiente')->name('solicitud.estado_pendiente');
+    Route::post('/solicitud/{solicitud}/activo', 'solicitudController@activo')->name('solicitud.activo');
     Route::get('/solicitud/{solicitud}/anular', 'solicitudController@anular')->name('solicitud.anular');
     //detalle_cliente
     Route::resource('detalle_cliente','DetalleClienteController');

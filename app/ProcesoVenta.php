@@ -10,12 +10,19 @@ class ProcesoVenta extends Model
     protected $pk = 'id';
 
     protected $fillable = [
-      'id','fecha','valor','id_solicitud','producto_id','usuario_id','estado_id','created_at','updated_at'
+      'id','estado','solicitud_proceso_id','created_at','updated_at'
     ];
 
-    public function producto()
+    public function solicitud()
     {
-      //contiene un id de usuario
-      return $this->belongsTo('App\Producto');
+        //contiene un id de usuario
+        return $this->belongsTo('App\Solicitud');
     }
+
+    public function proceso_producto()
+    {
+        //contiene un id de usuario
+        return $this->hasMany('App\ProcesoProducto');
+    }
+
 }

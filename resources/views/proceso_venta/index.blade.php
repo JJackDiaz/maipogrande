@@ -9,60 +9,67 @@
 <table class="table table-warning table-striped-columns">
   @if(Auth::user()->id_tipo_usuario==1)
     <div class="col-12 text-left m-2">
-        <a href="{{ route('proceso-venta.create') }}" class="btn btn-warning rounded-pill text-white"> Crear Proceso Venta</a>
+        <a href="{{ route('solicitud.index') }}" class="btn btn-warning rounded-pill text-white">Ver Solicitudes</a>
       </div>
+  @endif
+  @if(Session::has('error'))
+	  <div>{{Session::get('error')}}</div>
+  @endif
+  @if(Session::has('success'))
+	  <div>{{Session::get('success')}}</div>
   @endif
     <div class="col-12 text-left m-2">
     </div>
       <thead>
         <tr>
         <th scope="col">#</th>
-          <th scope="col">Fecha</th>
           <th scope="col">Solicitud</th>
-          <th scope="col">Producto</th>
           <th scope="col">Estado</th>
-          <th scope="col">Valor</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Producto</th>
           <th scope="col">Opción</th>
         </tr>
       </thead>
       <tbody>
           @foreach ($procesos as $proceso)
-          <tr>
-            <th scope="row"><?php echo $cont; $cont++; ?></th>
-              <td>{{ $proceso->fecha }}</td>
-              <td>{{ $proceso->id_solicitud }}</td>
-              <td>{{ $proceso->producto  }}</td>
-              <td>{{ $proceso->estado_id }}</td>
-              <td>{{ $proceso->valor }}</td>
-              <td>
-                <form action="destroy" method="POST">
+            <tr>
+              <th scope="row"><?php echo $cont; $cont++; ?></th>
+                <td>{{ $proceso->solicitud_proceso_id }}</td>
+                <td>{{ $proceso->estado  }}</td>
+                <td>{{ $proceso->cantidad  }}</td>
+                <td>{{ $proceso->producto  }}</td>
+                <td>
                   @if(Auth::user()->id_tipo_usuario==1)
-                  <a class="btn btn-warning" href="show">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
-                    </svg></a>
-                  </a>
-                  <a class="btn btn-success" href="edit">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
-                    </svg></a>
-                  </a>
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-trash') }}"></use>
-                    </svg></a>
-                  </button>
+                    <form action="{{ route('proceso-venta.destroy', $proceso->id) }}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <a class="btn btn-success" href="{{ route('proceso-venta.procesamiento', $proceso->id) }}">
+                        <svg class="icon">
+                          <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-check') }}"></use>
+                        </svg></a>
+                      </a>
+                      <a class="btn btn-warning" href="{{ route('proceso-venta.participantes' , $proceso->id) }}">
+                        <h6 class="text-white">Participantes</h6>
+                      </a>
+                      <button type="submit" class="btn btn-danger">
+                        <svg class="icon">
+                          <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-trash') }}"></use>
+                        </svg>
+                      </button>
+                    </form>
                   @elseif(Auth::user()->id_tipo_usuario==3)
-                  <a class="btn btn-success" href="edit">
-                    <h6 class="text-white">Pagar</h6>
-                  </a>
+                      <a class="btn btn-success" href="edit">
+                        <h6 class="text-white">Pagar</h6>
+                      </a>
+                  @elseif (Auth::user()->id_tipo_usuario == 6)
+                      <a class="btn btn-warning" href="{{ route('proceso-venta.participar', $proceso->id) }}">
+                        <h6 class="text-white">Participar</h6>
+                      </a>
                   @endif
-              </form>
-              </td>
-          </tr>
+                </td>
+            </tr>
           @endforeach
       </tbody>
 </table>
+
 @endsection

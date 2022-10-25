@@ -6,6 +6,7 @@ use App\Usuario;
 use App\Producto;
 use App\Solicitud;
 use App\Estado;
+use App\ProcesoProducto;
 use Auth;
 use DB;
 
@@ -20,13 +21,12 @@ class ProcesoVentaController extends Controller
      */
     public function index()
     {
-        //$procesos = ProcesoVenta::all();
-        $cont = 1;
-
         $procesos = DB::table('proceso_ven')
-        ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.id_solicitud')
-        ->where('solicitud_pro.estado_id', 2)
+        ->select('proceso_ven.id','proceso_ven.solicitud_proceso_id','proceso_ven.estado','solicitud_pro.cantidad','solicitud_pro.producto')
+        ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
         ->get();
+
+        $cont = 1;
 
         return view('proceso_venta.index', compact('procesos', 'cont'));
     }
@@ -100,17 +100,6 @@ class ProcesoVentaController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -139,8 +128,141 @@ class ProcesoVentaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ProcesoVenta $proceso_ventum)
     {
-        //
+        $proceso_ventum->delete();
+      
+        return redirect()->route('proceso-venta.index')->with('success', 'Porceso Eliminado');
     }
+
+    public function crear_proceso_venta($id){
+
+        $existencia = DB::table('proceso_ven')
+        ->where('solicitud_proceso_id', '=', $id)
+        ->get();
+
+        if (count($existencia) < 1) {
+            ProcesoVenta::create([
+                'estado' => 'activo',
+                'solicitud_proceso_id' => $id,
+            ]);
+            
+            return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');
+        }
+
+        
+        return redirect()->route('proceso-venta.index')->with('error', 'Proceso existente');
+    }
+
+    public function participar(Request $request){
+
+        $solicitud = $request->id;
+
+        $productos = Producto::where("usuario_id", Auth::user()->id)->get();
+        $cont = 1;
+
+        return view('proceso_venta.participar', compact('productos','cont','solicitud'));
+    }
+
+    public function participar_proceso($id ,Request $request){
+
+        $existencia = DB::table('proceso_producto')
+        ->where('producto_id', '=', $id)
+        ->get();
+
+        if (count($existencia) < 1) {
+            ProcesoProducto::create([
+                'estado' => 'N',
+                'proceso_ven_id' => $request->input('solicitud'),
+                'producto_id' => $id,
+            ]);
+
+            return redirect()->route('proceso-venta.index')->with('success', 'Participando');
+        }
+    
+        return redirect()->route('proceso-venta.index')->with('error', 'Ya estas participando');
+    
+    }
+    public function participantes($id){
+
+        $participantes = ProcesoProducto::where('proceso_ven_id', $id)->get();
+        $cont = 1;
+    
+        return view('proceso_venta.participantes', compact('participantes','cont'));
+    }
+
+
+    public function procesamiento($id){
+
+        //$participantes = ProcesoProducto::where('proceso_ven_id', $id)->get();
+
+        $participantes = DB::table('proceso_producto')
+        ->select('producto.cantidad as cant_prod',
+                'producto.precio',
+                'producto.id',
+                'solicitud_pro.cantidad as cant_soli'
+        )
+        ->join('producto', 'producto.id', '=', 'proceso_producto.producto_id')
+        ->join('proceso_ven', 'proceso_ven.id', '=', 'proceso_producto.proceso_ven_id')
+        ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
+        ->get();
+
+        foreach ($participantes as $participante) {
+
+            //Validar la cantidad
+            $cantidad_producto = $participante->cant_prod;
+            $cantidad_solicitud = $participante->cant_soli;
+
+            if ($cantidad_solicitud <= $cantidad_producto) {
+
+            //validar precios
+                $precios = ["id" => $participante->id ,"precio" => $participante->precio];
+                
+                if(!isset($menor)){
+                    $menor = json_encode($precios);
+                    
+                    var_dump($precios);
+                    exit;
+                    
+                    $id = (int)$precios['id'];
+                    
+                    if ($menor) {
+                        
+                        $proceso_producto = ProcesoProducto::where("producto_id", $id)->get();
+
+                        foreach ($proceso_producto as $proceso_producto) {
+                            
+                            $proceso_producto->estado = 'Y';
+                            $proceso_producto->save();
+                        }
+
+                        
+                    }
+                    
+                //Cantidades en producto
+                //precio unitario en producto
+                //editar estado del proceso de venta. 
+
+
+                }elseif($menor > json_encode($precios)){
+                    $menor = json_encode($precios);
+                    echo "Algo sucede". $menor;
+                }
+            }else{
+                //Validar si requiere de dos productores
+                echo "No alcanza";
+            }
+                   
+                   
+        }
+                
+        //echo 'El número menor es: ' . $menor;
+
+        
+
+        //retornar menor precio y cambiar estado
+        
+    }
+
+
 }

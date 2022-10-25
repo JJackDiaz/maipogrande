@@ -13,9 +13,9 @@ class Producto extends Model
       'id','nombre','cantidad','calidad','precio','fecha_cosecha','precio_unitario','id_tipo_pro','usuario_id','created_at','updated_at'
     ];
 
-    public function proceso_venta()
+    public function proceso_producto()
     {
         //contiene un id de usuario
-        return $this->hasMany('App\ProcesoVenta');
+        return $this->hasMany('App\ProcesoProducto');
     }
 }

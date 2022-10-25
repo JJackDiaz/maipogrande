@@ -18,4 +18,10 @@ class Solicitud extends Model
         //contiene un id de usuario
         return $this->belongsTo('App\Estado');
     }
+
+    public function proceso_venta()
+    {
+        //contiene muchos
+        return $this->hasMany('App\ProcesoVenta');
+    }
 }

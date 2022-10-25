@@ -16,7 +16,7 @@ class SolicitudController extends Controller
 
     public function index(){
 
-        $solicitudes = Solicitud::all();
+        $solicitudes = Solicitud::where("ESTADO_ID",1)->paginate(10);
         $cont = 1;
 
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
@@ -129,7 +129,7 @@ class SolicitudController extends Controller
         }
     }
 
-    public function estado_pendiente($id){
+    public function activo($id){
 
         $pendiente = Solicitud::find($id);
         $pendiente->estado_id = 2;

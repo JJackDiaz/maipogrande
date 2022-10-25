@@ -38,41 +38,47 @@
               @endif
               <td>
               @if (Auth::user()->id_tipo_usuario == 3)
-                <form action="{{ route('solicitud.destroy',$solicitud->id) }}" method="POST">
-                  
-                  <a class="btn btn-warning" href="{{ route('solicitud.show',$solicitud->id) }}">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
-                    </svg></a>
+                  <form action="{{ route('solicitud.destroy',$solicitud->id) }}" method="POST">
+                    
+                    <a class="btn btn-warning" href="{{ route('solicitud.show',$solicitud->id) }}">
+                      <svg class="icon">
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
+                      </svg></a>
+                    </a>
+                    
+                    <a class="btn btn-success" href="{{ route('solicitud.edit',$solicitud->id) }}">
+                      <svg class="icon">
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
+                      </svg></a>
+                    </a>
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">
+                      <svg class="icon">
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-trash') }}"></use>
+                      </svg></a>
+                    </button>
+                  </form>
+                @else
+                @if ($solicitud->estado_id == 1)  
+                  <form action="{{ route('solicitud.activo',$solicitud->id) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="btn btn-success">
+                      <svg class="icon">
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-check') }}"></use>
+                      </svg></a>
+                    </button>
+                    <a class="btn btn-danger" href="{{ route('solicitud.anular',$solicitud->id) }}">
+                      <svg class="icon">
+                        <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-x') }}"></use>
+                      </svg></a>
+                    </a>
+                  </form>
+                @elseif ($solicitud->estado_id == 2)
+                  <a class="btn btn-warning" href="{{ route('proceso-venta.crear_proceso_venta',$solicitud->id) }}">
+                    <h6 class="text-white">Crear Proceso Venta</h6>
                   </a>
-                  
-                  <a class="btn btn-success" href="{{ route('solicitud.edit',$solicitud->id) }}">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
-                    </svg></a>
-                  </a>
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-trash') }}"></use>
-                    </svg></a>
-                  </button>
-              </form>
-              @else
-              <form action="{{ route('solicitud.estado_pendiente',$solicitud->id) }}" method="POST">
-                @csrf
-                <button type="submit" class="btn btn-success">
-                  <svg class="icon">
-                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-check') }}"></use>
-                  </svg></a>
-                </button>
-                <a class="btn btn-danger" href="{{ route('solicitud.anular',$solicitud->id) }}">
-                  <svg class="icon">
-                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-x') }}"></use>
-                  </svg></a>
-                </a>
-              </form>
+                @endif
               @endif
               </td>
           </tr>
