@@ -177,6 +177,12 @@ class ProcesoVentaController extends Controller
                 'producto_id' => $id,
             ]);
 
+            if ($proceso) {
+                $producto = Producto::find($id);
+                $producto->codigo = $request->input('solicitud').'P';
+                $producto->save();
+            }
+
             return redirect()->route('proceso-venta.index')->with('success', 'Participando');
         }
     
@@ -194,11 +200,8 @@ class ProcesoVentaController extends Controller
     public function procesamiento($id){
         
         $participantes = DB::table('proceso_producto')
-        ->select('producto.cantidad as cant_prod',
-        'producto.precio',
-        'producto.id',
+        ->select(
         'solicitud_pro.cantidad as cant_soli',
-
         )
         ->join('producto', 'producto.id', '=', 'proceso_producto.producto_id')
         ->join('proceso_ven', 'proceso_ven.id', '=', 'proceso_producto.proceso_ven_id')
@@ -206,11 +209,32 @@ class ProcesoVentaController extends Controller
         ->where('proceso_ven_id', $id)
         ->get();
         
+        $productos = Producto::where('codigo', $id)
+        ->get();
+
         
-        $min = $participantes->min('precio');
+        $min = $productos->min('precio');
         
-        
-        return $min;
+        foreach ($productos as $key => $value) {
+            
+            $array = ['id' => $value->id , 'precio' => $value->precio];
+
+            if ($array['precio'] == $min) {
+
+                $id_producto = $array['id'];
+                $productos = Producto::find($id_producto);
+                
+
+                //SOLUCION LISTA EDITAR VALORES
+            }
+
+            $part = ProcesoProducto::where('producto_id', $id_producto);
+
+            var_dump($part);
+
+
+
+        }
         
     }
 

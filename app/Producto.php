@@ -10,7 +10,7 @@ class Producto extends Model
     protected $pk = 'id';
 
     protected $fillable = [
-      'id','nombre','cantidad','calidad','precio','fecha_cosecha','precio_unitario','id_tipo_pro','usuario_id','created_at','updated_at'
+      'id','codigo','nombre','cantidad','calidad','precio','fecha_cosecha','precio_unitario','id_tipo_pro','usuario_id','created_at','updated_at'
     ];
 
     public function proceso_producto()
