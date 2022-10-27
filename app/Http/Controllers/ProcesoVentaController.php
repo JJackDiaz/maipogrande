@@ -171,7 +171,7 @@ class ProcesoVentaController extends Controller
         ->get();
 
         if (count($existencia) < 1) {
-            ProcesoProducto::create([
+            $proceso = ProcesoProducto::create([
                 'estado' => 'N',
                 'proceso_ven_id' => $request->input('solicitud'),
                 'producto_id' => $id,
@@ -191,76 +191,26 @@ class ProcesoVentaController extends Controller
         return view('proceso_venta.participantes', compact('participantes','cont'));
     }
 
-
     public function procesamiento($id){
-
-        //$participantes = ProcesoProducto::where('proceso_ven_id', $id)->get();
-
+        
         $participantes = DB::table('proceso_producto')
         ->select('producto.cantidad as cant_prod',
-                'producto.precio',
-                'producto.id',
-                'solicitud_pro.cantidad as cant_soli'
+        'producto.precio',
+        'producto.id',
+        'solicitud_pro.cantidad as cant_soli',
+
         )
         ->join('producto', 'producto.id', '=', 'proceso_producto.producto_id')
         ->join('proceso_ven', 'proceso_ven.id', '=', 'proceso_producto.proceso_ven_id')
         ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
+        ->where('proceso_ven_id', $id)
         ->get();
-
-        foreach ($participantes as $participante) {
-
-            //Validar la cantidad
-            $cantidad_producto = $participante->cant_prod;
-            $cantidad_solicitud = $participante->cant_soli;
-
-            if ($cantidad_solicitud <= $cantidad_producto) {
-
-            //validar precios
-                $precios = ["id" => $participante->id ,"precio" => $participante->precio];
-                
-                if(!isset($menor)){
-                    $menor = json_encode($precios);
-                    
-                    var_dump($precios);
-                    exit;
-                    
-                    $id = (int)$precios['id'];
-                    
-                    if ($menor) {
-                        
-                        $proceso_producto = ProcesoProducto::where("producto_id", $id)->get();
-
-                        foreach ($proceso_producto as $proceso_producto) {
-                            
-                            $proceso_producto->estado = 'Y';
-                            $proceso_producto->save();
-                        }
-
-                        
-                    }
-                    
-                //Cantidades en producto
-                //precio unitario en producto
-                //editar estado del proceso de venta. 
-
-
-                }elseif($menor > json_encode($precios)){
-                    $menor = json_encode($precios);
-                    echo "Algo sucede". $menor;
-                }
-            }else{
-                //Validar si requiere de dos productores
-                echo "No alcanza";
-            }
-                   
-                   
-        }
-                
-        //echo 'El número menor es: ' . $menor;
-
         
-
-        //retornar menor precio y cambiar estado
+        
+        $min = $participantes->min('precio');
+        
+        
+        return $min;
         
     }
 
