@@ -179,7 +179,7 @@ class ProcesoVentaController extends Controller
 
             if ($proceso) {
                 $producto = Producto::find($id);
-                $producto->codigo = $request->input('solicitud').'P';
+                $producto->codigo = $request->input('solicitud');
                 $producto->save();
             }
 
@@ -200,15 +200,12 @@ class ProcesoVentaController extends Controller
     public function procesamiento($id){
         
         $participantes = DB::table('proceso_producto')
-        ->select(
-        'solicitud_pro.cantidad as cant_soli',
-        )
+        ->select('solicitud_pro.cantidad as cant_soli', 'solicitud_pro.id as id')
         ->join('producto', 'producto.id', '=', 'proceso_producto.producto_id')
         ->join('proceso_ven', 'proceso_ven.id', '=', 'proceso_producto.proceso_ven_id')
         ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
-        ->where('proceso_ven_id', $id)
-        ->get();
-        
+        ->where('proceso_ven_id', $id);
+
         $productos = Producto::where('codigo', $id)
         ->get();
 
@@ -216,23 +213,59 @@ class ProcesoVentaController extends Controller
         $min = $productos->min('precio');
         
         foreach ($productos as $key => $value) {
+
             
             $array = ['id' => $value->id , 'precio' => $value->precio];
-
+            
             if ($array['precio'] == $min) {
 
+                //producto LISTO
                 $id_producto = $array['id'];
                 $productos = Producto::find($id_producto);
+                //descontar productos
+                $productos->cantidad = 400;
+                //$productos->save();
                 
+                //proceso producto LISTO
+                $proceso_producto = ProcesoProducto::where('producto_id', $id_producto)->first();
+                $proceso_producto->estado = 'Y';
+                $proceso_producto->save();
 
-                //SOLUCION LISTA EDITAR VALORES
+                //proceso venta LISTO
+                $proceso = ProcesoVenta::where('id', $id)->first();
+                $proceso->estado = 'terminado';
+                $solicitud_id = $proceso->solicitud_proceso_id;
+                $proceso->save();
+
+                $solicitud = Solicitud::where('id', $solicitud_id)->first();
+                $solicitud->estado_id = 4;
+                
+                if ($solicitud->save()) {
+                    //cantidad solicitud
+                    $cantidad_solicitud = $solicitud->cantidad;
+                    //cantidad productos
+                    $cantidad_producto = $productos->cantidad;
+
+                    //Disminuye la cantidad en productos
+                    $productos->cantidad = ($cantidad_producto - $cantidad_solicitud);
+
+                    //precio unitario
+                    $precio_producto = $productos->precio_unitario;
+
+                    //disminuye el precio del producto
+                    $productos->precio = ($cantidad_solicitud * $precio_producto);
+
+                    $productos->save();
+                }
+
             }
 
-            $part = ProcesoProducto::where('producto_id', $id_producto);
-
-            var_dump($part);
-
-
+            //ARREGAR DESPUES SOLO PUEDE EL ADMIN
+            if(Auth::user()->id_tipo_usuario==1 || Auth::user()->id_tipo_usuario==6){        
+                return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');
+            }else {
+                return view('error.index'); 
+            }
 
         }
         

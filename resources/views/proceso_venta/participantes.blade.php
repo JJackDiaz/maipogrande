@@ -7,17 +7,6 @@
 @endsection
 @section('content')
 <h1 class="text-center fw-bold text-warning">PARTICIPANTES</h1>
-@php
-    foreach ($participantes as $key) {
-        $part = $key->proceso_ven_id;
-        $pro = $key->producto->id;
-    }
-@endphp
-@if(Auth::user()->id_tipo_usuario==1)
-    <div class="col-12 text-left m-2">
-        <a href="{{ url('procesamiento', $part) }}" class="btn btn-warning rounded-pill text-white">Terminar Proceso</a>
-      </div>
-@endif
 <table class="table table-warning table-striped-columns">
     <div class="col-12 text-left m-2">
     </div>

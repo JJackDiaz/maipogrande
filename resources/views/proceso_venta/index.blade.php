@@ -43,11 +43,13 @@
                     <form action="{{ route('proceso-venta.destroy', $proceso->id) }}" method="POST">
                       @csrf
                       @method('DELETE')
+                      @if($proceso->estado == 'activo')
                       <a class="btn btn-success" href="{{ route('proceso-venta.procesamiento', $proceso->id) }}">
                         <svg class="icon">
                           <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-check') }}"></use>
-                        </svg></a>
+                        </svg>
                       </a>
+                      @endif
                       <a class="btn btn-warning" href="{{ route('proceso-venta.participantes' , $proceso->id) }}">
                         <h6 class="text-white">Participantes</h6>
                       </a>
@@ -62,8 +64,11 @@
                         <h6 class="text-white">Pagar</h6>
                       </a>
                   @elseif (Auth::user()->id_tipo_usuario == 6)
-                      <a class="btn btn-warning" href="{{ route('proceso-venta.participar', $proceso->id) }}">
+                      <a class="btn btn-success" href="{{ route('proceso-venta.participar', $proceso->id) }}">
                         <h6 class="text-white">Participar</h6>
+                      </a>
+                      <a class="btn btn-warning" href="{{ route('proceso-venta.participantes' , $proceso->id) }}">
+                        <h6 class="text-white">Participantes</h6>
                       </a>
                   @endif
                 </td>
