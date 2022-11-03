@@ -10,7 +10,7 @@ class ProcesoProducto extends Model
     protected $pk = 'id';
 
     protected $fillable = [
-      'id','estado','producto_id','proceso_ven_id','created_at','updated_at'
+      'id','estado','valor','producto_id','proceso_ven_id','created_at','updated_at'
     ];
 
     public function proceso_venta()

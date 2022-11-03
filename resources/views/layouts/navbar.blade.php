@@ -27,7 +27,7 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-book') }}"></use>
         </svg> Solicitudes</a>
     </li>
-    <li class="nav-item"><a class="nav-link" href="typography.html">
+    <li class="nav-item"><a class="nav-link" href="{{ route('saldo.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
         </svg> Ingresar Venta Local</a>

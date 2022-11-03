@@ -18,4 +18,10 @@ class Producto extends Model
         //contiene un id de usuario
         return $this->hasMany('App\ProcesoProducto');
     }
+
+    public function saldo()
+    {
+        //contiene un id de usuario
+        return $this->hasMany('App\Saldo');
+    }
 }

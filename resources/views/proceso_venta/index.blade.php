@@ -23,10 +23,11 @@
       <thead>
         <tr>
         <th scope="col">#</th>
-          <th scope="col">Solicitud</th>
+          <th scope="col">Nº Solicitud</th>
           <th scope="col">Estado</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Producto</th>
+          <th scope="col">Precio Proceso</th>
           <th scope="col">Opción</th>
         </tr>
       </thead>
@@ -36,8 +37,9 @@
               <th scope="row"><?php echo $cont; $cont++; ?></th>
                 <td>{{ $proceso->solicitud_proceso_id }}</td>
                 <td>{{ $proceso->estado  }}</td>
-                <td>{{ $proceso->cantidad  }}</td>
+                <td>{{ $proceso->cantidad  }}KG</td>
                 <td>{{ $proceso->producto  }}</td>
+                <td>${{ $proceso->valor  }}</td>
                 <td>
                   @if(Auth::user()->id_tipo_usuario==1)
                     <form action="{{ route('proceso-venta.destroy', $proceso->id) }}" method="POST">
@@ -59,9 +61,9 @@
                         </svg>
                       </button>
                     </form>
-                  @elseif(Auth::user()->id_tipo_usuario==3)
-                      <a class="btn btn-success" href="edit">
-                        <h6 class="text-white">Pagar</h6>
+                  @elseif(Auth::user()->id_tipo_usuario==3 &&  $proceso->valor > 0)
+                      <a class="btn btn-success" href="{{ route('proceso-venta.checkout-proceso') }}">
+                        <h6 class="text-white">Checkout</h6>
                       </a>
                   @elseif (Auth::user()->id_tipo_usuario == 6)
                       <a class="btn btn-success" href="{{ route('proceso-venta.participar', $proceso->id) }}">

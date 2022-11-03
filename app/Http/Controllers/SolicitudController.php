@@ -16,7 +16,11 @@ class SolicitudController extends Controller
 
     public function index(){
 
-        $solicitudes = Solicitud::where("ESTADO_ID",1)->paginate(10);
+        if (Auth::user()->id_tipo_usuario==1) {
+            $solicitudes = Solicitud::paginate(10);
+        }elseif (Auth::user()->id_tipo_usuario==3) {
+            $solicitudes = Solicitud::where("usuario_id",Auth::user()->id)->paginate(10);
+        }
         $cont = 1;
 
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        

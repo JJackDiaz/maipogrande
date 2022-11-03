@@ -3,10 +3,26 @@
 use Illuminate\Support\Facades\Route;
 //use Auth;
 
-Route::get('/', 'WelcomeController@index')->name('welcome');
+//Route::get('/', 'WelcomeController@index')->name('welcome');
+route::get('/', function () {
+    return view('about');
+});
+//SHOP
+Route::get('/shop', 'CartController@shop')->name('shop');
+Route::get('/cart', 'CartController@cart')->name('cart.index');
+Route::post('/add', 'CartController@add')->name('cart.store');
+Route::post('/update', 'CartController@update')->name('cart.update');
+Route::post('/remove', 'CartController@remove')->name('cart.remove');
+Route::post('/clear', 'CartController@clear')->name('cart.clear');
+
 route::get('/404', function () {
     return view('error.index');
 });
+ 
+route::get('/pagar', function () {
+    return view('pagar');
+});
+
 
 Auth::routes();
 
@@ -53,8 +69,11 @@ Route::middleware('auth')->group(function(){
     Route::get('participar_proceso/{id}', 'ProcesoVentaController@participar_proceso')->name('proceso-venta.participar_proceso');
     Route::get('participantes/{id}', 'ProcesoVentaController@participantes')->name('proceso-venta.participantes');
     Route::get('procesamiento/{id}', 'ProcesoVentaController@procesamiento')->name('proceso-venta.procesamiento');
+    
+    Route::get('checkout-proceso', 'ProcesoVentaController@checkout_proceso')->name('proceso-venta.checkout-proceso');
 
-
+    //saldo
+    Route::get('/saldos', 'SaldoController@index')->name('saldo.index');
 
     //solicitud
     Route::get('/solicitud', 'solicitudController@index')->name('solicitud.index');
@@ -70,6 +89,13 @@ Route::middleware('auth')->group(function(){
     Route::resource('detalle_cliente','DetalleClienteController');
 
 });  
+
+//PAYPAL
+Route::get('/aaa', 'PayPalController@getIndex');
+Route::get('paypal/ec-checkout', 'PayPalController@getExpressCheckout');
+Route::get('paypal/ec-checkout-success', 'PayPalController@getExpressCheckoutSuccess');
+Route::get('paypal/adaptive-pay', 'PayPalController@getAdaptivePay');
+Route::post('paypal/notify', 'PayPalController@notify');
 
    /////////////////
   //PRUEBAS BD/////

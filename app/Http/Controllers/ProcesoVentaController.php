@@ -7,8 +7,10 @@ use App\Producto;
 use App\Solicitud;
 use App\Estado;
 use App\ProcesoProducto;
+use App\Saldo;
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 
@@ -22,112 +24,22 @@ class ProcesoVentaController extends Controller
     public function index()
     {
         $procesos = DB::table('proceso_ven')
-        ->select('proceso_ven.id','proceso_ven.solicitud_proceso_id','proceso_ven.estado','solicitud_pro.cantidad','solicitud_pro.producto')
+        ->select('proceso_producto.id as id_pp','proceso_producto.valor','proceso_ven.id','proceso_ven.solicitud_proceso_id','proceso_ven.estado','solicitud_pro.cantidad','solicitud_pro.producto')
+        ->join('proceso_producto', 'proceso_producto.proceso_ven_id', '=', 'proceso_ven.id')
         ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
+        ->where('proceso_producto.valor', '>',0)
         ->get();
 
         $cont = 1;
 
         return view('proceso_venta.index', compact('procesos', 'cont'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    
+    public function checkout_proceso()
     {
-        //$usuarios = Usuario::all();
-        $productos = Producto::all();
-        $solicitudes = Solicitud::all();
-
-        return view('proceso_venta.create', compact('productos','solicitudes'));
+        return view('proceso_venta.checkout');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'fecha' => ['required', 'date'],
-            'id_solicitud' => ['required', 'integer'],
-            'producto_id' => ['required', 'string'],
-        ]);
-
-        $solicitud = Solicitud::find($request->id_solicitud);
-        $producto = Producto::find($request->producto_id);
-
-        $valor = $producto->precio_unitario * $solicitud->cantidad;
-
-        $proceso = ProcesoVenta::create([
-            'fecha' => $request->fecha,
-            'id_solicitud' => $request->id_solicitud,
-            'producto_id' => $request->producto_id,
-            'estado_id' => 2,
-            'valor' => $valor,
-        ]);
-
-        if ($proceso) {
-            $solicitud->estado_id = 2;
-
-            if($solicitud->save()){
-
-                $cantidad_solicitud = $solicitud->cantidad;
-                $cantidad_producto = $producto->cantidad;
-
-                $producto->cantidad = ($cantidad_producto - $cantidad_solicitud);
-
-                $cantidad_solicitud = $solicitud->cantidad;
-                $precio_producto = $producto->precio_unitario;
-
-                $producto->precio = ($cantidad_solicitud * $precio_producto);
-
-                $producto->save();
-            }
-        }
-
-        //ARREGAR DESPUES SOLO PUEDE EL ADMIN
-        if(Auth::user()->id_tipo_usuario==1 || Auth::user()->id_tipo_usuario==6){        
-            return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');
-        }else {
-            return view('error.index'); 
-        }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(ProcesoVenta $proceso_ventum)
     {
         $proceso_ventum->delete();
@@ -199,17 +111,9 @@ class ProcesoVentaController extends Controller
 
     public function procesamiento($id){
         
-        $participantes = DB::table('proceso_producto')
-        ->select('solicitud_pro.cantidad as cant_soli', 'solicitud_pro.id as id')
-        ->join('producto', 'producto.id', '=', 'proceso_producto.producto_id')
-        ->join('proceso_ven', 'proceso_ven.id', '=', 'proceso_producto.proceso_ven_id')
-        ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
-        ->where('proceso_ven_id', $id);
-
         $productos = Producto::where('codigo', $id)
         ->get();
 
-        
         $min = $productos->min('precio');
         
         foreach ($productos as $key => $value) {
@@ -218,13 +122,9 @@ class ProcesoVentaController extends Controller
             $array = ['id' => $value->id , 'precio' => $value->precio];
             
             if ($array['precio'] == $min) {
-
-                //producto LISTO
+                
                 $id_producto = $array['id'];
                 $productos = Producto::find($id_producto);
-                //descontar productos
-                $productos->cantidad = 400;
-                //$productos->save();
                 
                 //proceso producto LISTO
                 $proceso_producto = ProcesoProducto::where('producto_id', $id_producto)->first();
@@ -253,18 +153,32 @@ class ProcesoVentaController extends Controller
                     $precio_producto = $productos->precio_unitario;
 
                     //disminuye el precio del producto
-                    $productos->precio = ($cantidad_solicitud * $precio_producto);
+                    $productos->precio = ($productos->cantidad * $precio_producto);
 
+                    $precio_total_proceso = $cantidad_solicitud * $precio_producto;
+
+                    $proceso_producto->valor = $precio_total_proceso;
+                    $proceso_producto->save();
                     $productos->save();
+
+                    if ($productos->save()) {
+                        //precio del proceso
+                        
+                        Saldo::create([
+                            'cantidad' => $productos->cantidad,
+                            'precio' => $productos->precio,
+                            'id_producto' => $productos->id,
+                            'estado' => 'pendiente',
+                        ]);
+                    }
+
+                    //ARREGAR DESPUES SOLO PUEDE EL ADMIN
+            
+                    return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');
+
+                    
                 }
 
-            }
-
-            //ARREGAR DESPUES SOLO PUEDE EL ADMIN
-            if(Auth::user()->id_tipo_usuario==1 || Auth::user()->id_tipo_usuario==6){        
-                return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');
-            }else {
-                return view('error.index'); 
             }
 
         }
