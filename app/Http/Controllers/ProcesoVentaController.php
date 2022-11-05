@@ -8,6 +8,7 @@ use App\Solicitud;
 use App\Estado;
 use App\ProcesoProducto;
 use App\Saldo;
+use App\VentaEx;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -23,21 +24,29 @@ class ProcesoVentaController extends Controller
      */
     public function index()
     {
+
         $procesos = DB::table('proceso_ven')
-        ->select('proceso_producto.id as id_pp','proceso_producto.valor','proceso_ven.id','proceso_ven.solicitud_proceso_id','proceso_ven.estado','solicitud_pro.cantidad','solicitud_pro.producto')
-        ->join('proceso_producto', 'proceso_producto.proceso_ven_id', '=', 'proceso_ven.id')
+        ->select('proceso_ven.valor','proceso_ven.id','proceso_ven.solicitud_proceso_id','proceso_ven.estado','solicitud_pro.cantidad','solicitud_pro.producto')
         ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
-        ->where('proceso_producto.valor', '>',0)
         ->get();
 
+
+
+        
         $cont = 1;
 
         return view('proceso_venta.index', compact('procesos', 'cont'));
     }
     
-    public function checkout_proceso()
+    public function checkout_proceso($id)
     {
-        return view('proceso_venta.checkout');
+
+        $venta_ex = VentaEx::where('proceso_ven_id', '=', $id)
+        ->join('proceso_producto', 'proceso_producto.id', '=', 'venta_ex.proceso_producto_id')
+        ->where('proceso_producto.estado', 'Y')
+        ->get();
+
+        return view('proceso_venta.checkout', compact('venta_ex'));
     }
 
     public function destroy(ProcesoVenta $proceso_ventum)
@@ -135,7 +144,7 @@ class ProcesoVentaController extends Controller
                 $proceso = ProcesoVenta::where('id', $id)->first();
                 $proceso->estado = 'terminado';
                 $solicitud_id = $proceso->solicitud_proceso_id;
-                $proceso->save();
+                
 
                 $solicitud = Solicitud::where('id', $solicitud_id)->first();
                 $solicitud->estado_id = 4;
@@ -158,6 +167,8 @@ class ProcesoVentaController extends Controller
                     $precio_total_proceso = $cantidad_solicitud * $precio_producto;
 
                     $proceso_producto->valor = $precio_total_proceso;
+                    $proceso->valor = $precio_total_proceso;
+                    $proceso->save();
                     $proceso_producto->save();
                     $productos->save();
 
@@ -170,6 +181,26 @@ class ProcesoVentaController extends Controller
                             'id_producto' => $productos->id,
                             'estado' => 'pendiente',
                         ]);
+
+                        $precio = $precio_total_proceso;
+                        $comision = (10*$precio_total_proceso)/100;
+                        $servicio = (5*$precio_total_proceso)/100;
+                        $aduana = (25*$precio_total_proceso)/100;
+
+                        $total = $comision + $servicio + $aduana + $precio;
+                        
+                        VentaEx::create([
+                            'numero_venta' => rand(2,50),
+                            'detalle' => 'Venta al extranjero',
+                            'comision' => $comision,
+                            'servicio' => $servicio,
+                            'aduana' => $aduana,
+                            'total_venta' => $total,
+                            'estado_ex' => 'pendiente',
+                            'proceso_producto_id' => $id,
+                        ]);
+
+                        
                     }
 
                     //ARREGAR DESPUES SOLO PUEDE EL ADMIN

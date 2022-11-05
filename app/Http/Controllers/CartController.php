@@ -22,7 +22,7 @@ class CartController extends Controller
     public function cart()  {
         $cartCollection = \Cart::getContent();
         //dd($cartCollection);
-        return view('cart')->withTitle('Maipo Grande | CART')->with(['cartCollection' => $cartCollection]);;
+        return view('cart')->withTitle('Maipo Grande | CART')->with(['cartCollection' => $cartCollection]);
     }
 
     public function add(Request $request){
@@ -82,4 +82,12 @@ class CartController extends Controller
         Cart::clear();
         return back()->with('success',"The shopping cart has successfully beed added to the shopping cart!");
     }
+
+
+    public function checkout(){
+
+        $cartCollection = \Cart::getContent();
+        return view('checkout')->with(['cartCollection' => $cartCollection]);
+    }
 }
+

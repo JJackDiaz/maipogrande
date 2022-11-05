@@ -49,8 +49,9 @@
     </li>
     @endif
     {{-- PRODUCTOR --}}
+    
     @if(Auth::user()->id_tipo_usuario==6)
-    <li class="nav-item"><a class="nav-link" href="{{ route('producto.index') }}">
+    <li class="nav-item"><a class="nav-link" href="{{ route('producto.index') }}" >
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Productos</a>
@@ -70,7 +71,7 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-bank') }}"></use>
         </svg>Ganancias</a>
     </li>
-    @endif
+        @endif
 
     {{-- EXTERNO --}}
     @if(Auth::user()->id_tipo_usuario==3)

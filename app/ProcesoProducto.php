@@ -24,4 +24,10 @@ class ProcesoProducto extends Model
         //contiene un id de usuario
         return $this->belongsTo('App\Producto');
     }
+
+    public function venta_ex()
+    {
+        //contiene un id de usuario
+        return $this->hasMany('App\VentaEx');
+    }
 }

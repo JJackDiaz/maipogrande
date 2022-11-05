@@ -9,7 +9,12 @@
 <body>
     <div class="container mt-5 text-center">
         <h2>Laravel 7 PayPal Integration Example</h2>
-        <a href="{{ url('aaa') }}" class="btn btn-primary mt-3">Pay $224 via Paypal</a>
+        <form action="{{ route('payment') }}" method="post">
+            @csrf
+            <input type="hidden" name="amount" value="200">
+
+            <button type="submit" class="btn btn-primary mt-3">Pay via Paypal</button>
+        </form>
     </div>
 </body>
 </html>

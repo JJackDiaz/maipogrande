@@ -17,7 +17,7 @@
 
     <!-------------------------Navigation--------------------->
 
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark ">
         <a href="index.html" class="navbar-brand"><img src="{{ asset('images/logos/puesto.png') }}" style="width:60px;height:60px;" class="rounded-right" alt="logo"
                 style="background-color:white;padding: 6px;"></a>
 
@@ -63,7 +63,50 @@
         </div>
     </nav>
         <!-- Section-->
-        
+        <section class="container mt-5">
+            <div class="card text-center">
+                <div class="card-header">
+                    
+                    Nº Venta
+                </div>
+                <div class="container">
+                    <div class="row align-items-start">
+                        <div class="col">
+                            
+                            <div class="card-body">
+                                <h5 class="card-title">Info</h5>
+                                <p class="card-text">Numero Venta</p>
+                                <p class="card-text">Detalle : </p>
+                                <p class="card-text">Estado : </p>
+                                <p class="card-text">ID Proceso : </p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card-body">
+                                <h5 class="card-title">Pagos</h5>
+                                <p class="card-text">Producto :</p>
+                                <p class="card-text">Comision </p>
+                    <p class="card-text">Servicios : </p>
+                    <p class="card-text">Aduana : </p>
+                    <h5 class="card-title">Total : </h5>
+                </div>
+            </div>
+            
+        </div>
+                <form action="" method="post" class="m-2">
+                    @csrf
+                    {{-- <input type="hidden" name="amount" value="{{ $venta->total_venta }}">
+                    <input type="hidden" name="id" value="{{ $venta->id }}"> --}}
+                    
+                    <button type="submit" class="btn btn-primary mt-3">Pagar via Paypal</button>
+                </form>
+            </div>
+            <div class="card-footer text-muted">
+                Maipo Grande
+            </div>
+        </div>
+    </section>
+
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

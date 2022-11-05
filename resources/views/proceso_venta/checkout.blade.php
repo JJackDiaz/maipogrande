@@ -3,42 +3,52 @@
     <title>MaipoGrande | Checkout</title>
 @endsection
 @section('ruta')
-    <li class="breadcrumb-item active"><span>Checkout #53435436541365</span></li>
+  @foreach ( $venta_ex as $venta )
+  <li class="breadcrumb-item active"><span>Checkout #{{$venta->numero_venta}}</span></li>
+  @endforeach
 @endsection
 @section('content')
 <div class="card text-center">
   <div class="card-header">
-    Nº Venta 6453543654136
+    @foreach ( $venta_ex as $venta )
+      Nº Venta {{$venta->numero_venta}}
+    @endforeach
   </div>
   <div class="container">
     <div class="row align-items-start">
         <div class="col">
+          @foreach ($venta_ex as $venta)
             <div class="card-body">
-                <h5 class="card-title">Detalle</h5>
-                <p class="card-text">Venta tomate.</p>
-                <p class="card-text">Venta tomate.</p>
-                <p class="card-text">Venta tomate.</p>
+                <h5 class="card-title">Info</h5>
+                <p class="card-text">Numero Venta : {{ $venta->numero_venta }}</p>
+                <p class="card-text">Detalle : {{ $venta->detalle }}</p>
+                <p class="card-text">Estado : {{ $venta->estado_ex }}</p>
+                <p class="card-text">ID Proceso : {{ $venta->proceso_producto_id }}</p>
             </div>
         </div>
-        <div class="col">
+          <div class="col">
             <div class="card-body">
-                <h5 class="card-title">Pagos</h5>
-                <p class="card-text">Precio.</p>
-                <p class="card-text">Iva.</p>
-                <p class="card-text">Comision.</p>
-                <p class="card-text">Servicios.</p>
-                <p class="card-text">Aduana.</p>
-                <h5 class="card-title">Total : $255555</h5>
+              <h5 class="card-title">Pagos</h5>
+              <p class="card-text">Producto : {{ $venta->proceso_producto->valor }}</p>
+              <p class="card-text">Comision : {{ $venta->comision }}</p>
+              <p class="card-text">Servicios : {{ $venta->servicio }}</p>
+              <p class="card-text">Aduana : {{ $venta->aduana }}</p>
+              <h5 class="card-title">Total : {{ $venta->total_venta }}</h5>
             </div>
+          </div>
+          
         </div>
-       
-    </div>
-    <div class="col m-2">
-        <a href="#" class="btn btn-primary">Pagar</a>
-    </div>
+        <form action="{{ route('payment')}}" method="post" class="m-2">
+          @csrf
+          <input type="hidden" name="amount" value="{{ $venta->total_venta }}">
+          <input type="hidden" name="id" value="{{ $venta->id }}">
+
+          <button type="submit" class="btn btn-primary mt-3">Pagar via Paypal</button>
+        </form>
+      @endforeach
   </div>
   <div class="card-footer text-muted">
-    2 days ago
+    Maipo Grande
   </div>
 </div>
 @endsection

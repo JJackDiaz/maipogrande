@@ -156,7 +156,7 @@
                         </ul>
                     </div>
                     <br><a href="{{ url('shop') }}" class="btn btn-dark">Continuar Comprando</a>
-                    <a href="/checkout" class="btn btn-success">Checkout</a>
+                    <a href="/checkout" class="btn btn-success">Pagar</a>
                 </div>
             @endif
         </div>

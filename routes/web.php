@@ -14,6 +14,7 @@ Route::post('/add', 'CartController@add')->name('cart.store');
 Route::post('/update', 'CartController@update')->name('cart.update');
 Route::post('/remove', 'CartController@remove')->name('cart.remove');
 Route::post('/clear', 'CartController@clear')->name('cart.clear');
+Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
 
 route::get('/404', function () {
     return view('error.index');
@@ -70,7 +71,7 @@ Route::middleware('auth')->group(function(){
     Route::get('participantes/{id}', 'ProcesoVentaController@participantes')->name('proceso-venta.participantes');
     Route::get('procesamiento/{id}', 'ProcesoVentaController@procesamiento')->name('proceso-venta.procesamiento');
     
-    Route::get('checkout-proceso', 'ProcesoVentaController@checkout_proceso')->name('proceso-venta.checkout-proceso');
+    Route::get('checkout-proceso/{id}', 'ProcesoVentaController@checkout_proceso')->name('proceso-venta.checkout-proceso');
 
     //saldo
     Route::get('/saldos', 'SaldoController@index')->name('saldo.index');
@@ -91,11 +92,17 @@ Route::middleware('auth')->group(function(){
 });  
 
 //PAYPAL
-Route::get('/aaa', 'PayPalController@getIndex');
-Route::get('paypal/ec-checkout', 'PayPalController@getExpressCheckout');
-Route::get('paypal/ec-checkout-success', 'PayPalController@getExpressCheckoutSuccess');
-Route::get('paypal/adaptive-pay', 'PayPalController@getAdaptivePay');
-Route::post('paypal/notify', 'PayPalController@notify');
+// Route::get('/aaa', 'PayPalController@getIndex');
+// Route::get('paypal/ec-checkout', 'PayPalController@getExpressCheckout');
+// Route::get('paypal/ec-checkout-success', 'PayPalController@getExpressCheckoutSuccess');
+// Route::get('paypal/adaptive-pay', 'PayPalController@getAdaptivePay');
+// Route::post('paypal/notify', 'PayPalController@notify');
+
+//Route::get('/aaa', [HomeController::class, 'index']);
+Route::post('pay', 'PaymentController@pay')->name('payment');
+Route::get('success/{id}', 'PaymentController@success');
+Route::get('error', 'PaymentController@error');
+
 
    /////////////////
   //PRUEBAS BD/////

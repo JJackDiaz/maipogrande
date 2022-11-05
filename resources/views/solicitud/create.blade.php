@@ -13,7 +13,7 @@
                 <form method="POST" action="{{ route('solicitud.store') }}">
                     @csrf
                     <div class="form-group row m-2">
-                        <label for="cantidad" class="col-md-4 col-form-label text-md-right">{{ __('Cantidad') }}</label>
+                        <label for="cantidad" class="col-md-4 col-form-label text-md-right">{{ __('Cantidad KG') }}</label>
 
                         <div class="col-md-6">
                             <input id="cantidad" type="number" class="form-control @error('cantidad') is-invalid @enderror" name="cantidad" value="{{ old('cantidad') }}" required autocomplete="cantidad" autofocus>
@@ -30,7 +30,7 @@
                         <label for="producto" class="col-md-4 col-form-label text-md-right">{{ __('producto') }}</label>
                         <div class="col-md-6">
                             <select class="form-select" name="producto" id="producto" value="producto">
-                                <option value=''>Selecciona Usuario</option>
+                                <option value=''>Selecciona Producto</option>
                                 @foreach($productos as $producto)
                                 <option value="{{ $producto->nombre }}">{{ $producto->nombre }}</option>
                                 @endforeach
