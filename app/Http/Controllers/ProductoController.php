@@ -16,7 +16,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::where("usuario_id", Auth::user()->id)->paginate(10);;
+        $productos = Producto::where("usuario_id", Auth::user()->id)->paginate(10);
         $cont = 1;
 
         if(Auth::user()->id_tipo_usuario==6){        

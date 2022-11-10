@@ -44,6 +44,38 @@
                         </div>     
                     </div>
 
+                    <div class="form-group row m-2">
+                        <label for="direccion" class="col-md-4 col-form-label text-md-right">{{ __('Direccion') }}</label>
+
+                        <div class="col-md-6">
+                            <input id="direccion" type="text" class="form-control @error('direccion') is-invalid @enderror" name="direccion" value="{{ old('direccion') }}" required autocomplete="direccion" autofocus>
+
+                            @error('direccion')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="form-group row m-2">
+                        <label for="ciudad_id" class="col-md-4 col-form-label text-md-right">{{ __('Ciudad') }}</label>
+                        <div class="col-md-6">
+                            <select class="form-select" name="ciudad_id" id="ciudad_id" value="ciudad_id">
+                                <option value=''>Selecciona Ciudad</option>
+                                @foreach($ciudades as $ciudad)
+                                <option value="{{ $ciudad->id }}">{{ $ciudad->nombre_ci }}</option>
+                                @endforeach
+                            </select>
+                            
+                            @error('ciudad_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>     
+                    </div>
+
                     <!-- <div class="form-group row m-2">
                         <label for="empresa" class="col-md-4 col-form-label text-md-right">{{ __('empresa') }}</label>
 

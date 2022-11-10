@@ -29,9 +29,9 @@
           <div class="col">
             <div class="card-body">
               <h5 class="card-title">Pagos</h5>
-              <p class="card-text">Producto : {{ $venta->proceso_producto->valor }}</p>
+              <p class="card-text">Producto : {{ $venta->valor }}</p>
               <p class="card-text">Comision : {{ $venta->comision }}</p>
-              <p class="card-text">Servicios : {{ $venta->servicio }}</p>
+              <p class="card-text">Transporte : {{ $venta->servicio }}</p>
               <p class="card-text">Aduana : {{ $venta->aduana }}</p>
               <h5 class="card-title">Total : {{ $venta->total_venta }}</h5>
             </div>

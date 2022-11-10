@@ -11,7 +11,7 @@ class SaldoController extends Controller
     public function index(){
 
         $saldos = DB::table('saldo')
-        ->join('producto', 'producto.id', '=', 'saldo.id_producto')
+        ->join('producto', 'producto.id', '=', 'saldo.producto_id')
         ->get();
 
         $cont = 1;

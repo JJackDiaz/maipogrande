@@ -30,22 +30,25 @@
                 <li class="nav-item"><a href="#port" class="nav-link ">Seguimiento</a></li>
                 <li class="nav-item"><a href="{{ url('shop') }}" class="nav-link ">Shop</a></li>
                 @if (Route::has('login'))
-                        <div class="top-right links">
-                            @auth
-                                <li class="d-flex">
-                                    <a href="{{ route('home') }}">
-                                        <button class="btn btn-outline-light" type="submit">Home</button>
-                                    </a>
-                                </li>
-                            @else
-                            <li class="d-flex">
-                                <a href="{{ route('login') }}">
-                                    <button class="btn btn-outline-light" type="submit">Login</button>
-                                </a>
-                            </li>
-                            @endauth
-                        </div>
-                    @endif
+                    <div class="top-right links">
+                        @auth
+                        <li class="d-flex">
+                            <form action="{{ route('logout') }}" method="post">
+                            @csrf
+                            <a href="">
+                                <button class="btn btn-outline-light" type="submit">{{ Auth::user()->nombre_completo }}</button>
+                            </a>
+                            </form>
+                        </li>
+                        @else
+                        <li class="d-flex">
+                            <a href="{{ route('login') }}">
+                                <button class="btn btn-outline-light" type="submit">Login</button>
+                            </a>
+                        </li>
+                        @endauth
+                    </div>
+                @endif
 
             </ul>
 

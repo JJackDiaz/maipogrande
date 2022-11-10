@@ -65,6 +65,7 @@ class PaymentController extends Controller
                 $payment->currency = env('PAYPAL_CURRENCY');
                 $payment->payment_status = $arr['state'];
                 $payment->venta_ex_id = $id;
+                //$payment->venta_lo_id = 'NULL';
 
                 if ($payment->save()) {
                     

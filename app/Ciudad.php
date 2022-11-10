@@ -15,11 +15,6 @@ class Ciudad extends Model
 
     ];
 
-    public function detalle_cliente()
-    {
-        return $this->hasMany('App\DetalleCliente');
-    }
-
     public function pais()
     {
         return $this->belongsTo('App\Pais');

@@ -42,11 +42,11 @@
                 @if (Route::has('login'))
                         <div class="top-right links">
                             @auth
-                                <li class="d-flex">
-                                    <a href="{{ route('home') }}">
-                                        <button class="btn btn-outline-light" type="submit">Home</button>
-                                    </a>
-                                </li>
+                            <li class="d-flex">
+                                <a href="{{ route('login') }}">
+                                    <button class="btn btn-outline-light" type="submit">{{ Auth::user()->nombre_completo }}</button>
+                                </a>
+                            </li>
                             @else
                             <li class="d-flex">
                                 <a href="{{ route('login') }}">
@@ -65,6 +65,12 @@
         <!-- Section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
+                @if(Session::has('error'))
+                <div>{{Session::get('error')}}</div>
+                @endif
+                @if(Session::has('success'))
+                    <div>{{Session::get('success')}}</div>
+                @endif
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     @foreach($saldos as $saldo)
                         <div class="col mb-5">
@@ -77,17 +83,19 @@
                                         <!-- Product name-->
                                         <h5 class="fw-bolder">{{ $saldo->nombre }}</h5>
                                         <!-- Product price-->
-                                        ${{ $saldo->precio_unitario }}
+                                        ${{ $saldo->precio_unitario }} <br>
+                                        Cantidad: {{ $saldo->cantidad }}
                                     </div>
                                 </div>
                                 <!-- Product actions-->
                                 <form action="{{ route('cart.store') }}" method="POST">
                                         {{ csrf_field() }}
                                         <input type="hidden" value="{{ $saldo->id }}" id="id" name="id">
-                                        <input type="hidden" value="{{ $saldo->id_producto }}" id="id_producto" name="id_producto">
+                                        <input type="hidden" value="{{ $saldo->producto_id }}" id="producto_id" name="producto_id">
                                         <input type="hidden" value="{{ $saldo->nombre }}" id="nombre" name="nombre">
                                         <input type="hidden" value="{{ $saldo->precio_unitario }}" id="precio" name="precio">
                                         <input type="hidden" value="1" id="cantidad" name="cantidad">
+                                        <input type="hidden" value="{{ $saldo->id }}" id="id_saldo" name="id_saldo">
                                         <div class="card-footer" style="background-color: white;">
                                               <div class="row">
                                                 <button class="btn btn-secondary btn-sm" class="tooltip-test" title="add to cart">

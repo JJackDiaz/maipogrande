@@ -10,7 +10,7 @@ class Saldo extends Model
     protected $pk = 'id';
 
     protected $fillable = [
-      'id','estado','cantidad','descripcion','precio','id_producto','created_at','updated_at'
+      'id','estado','cantidad','descripcion','precio','producto_id','created_at','updated_at'
     ];
 
     public function producto()
@@ -19,3 +19,4 @@ class Saldo extends Model
         return $this->belongsTo('App\Producto');
     }
 }
+

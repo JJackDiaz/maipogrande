@@ -32,11 +32,16 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
         </svg> Ingresar Venta Local</a>
     </li>
-    <li class="nav-item"><a class="nav-link" href="typography.html">
+    <li class="nav-item"><a class="nav-link" href="{{ route('subasta.index') }}">
         <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
-        </svg> Subastas</a>
-    </li>
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
+        </svg>Subastas</a>
+    </li> 
+    <li class="nav-item"><a class="nav-link" href="{{ route('subasta.index') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-cart') }}"></use>
+        </svg>Pedidos</a>
+    </li> 
     <li class="nav-item"><a class="nav-link" href="typography.html">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
@@ -84,17 +89,27 @@
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Proceso venta</a>
-    </li> 
-    <li class="nav-item"><a class="nav-link" href="{{ route('detalle_cliente.index') }}">
-        <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
-        </svg>Mis Empresas</a>
-    </li> 
+    </li>
     <li class="nav-item"><a class="nav-link" href="">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Seguimiento</a>
     </li> 
     @endif
+
+    {{-- TRANSPORTISTA --}}
+    @if(Auth::user()->id_tipo_usuario==5)
+        <li class="nav-item"><a class="nav-link" href="{{ route('transporte.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
+            </svg>Mi Transporte</a>
+        </li> 
+        <li class="nav-item"><a class="nav-link" href="{{ route('subasta.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-book') }}"></use>
+            </svg>Subastas</a>
+        </li> 
+    @endif
+
     
 </ul>

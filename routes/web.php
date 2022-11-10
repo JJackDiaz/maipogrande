@@ -1,27 +1,21 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-//use Auth;
 
 //Route::get('/', 'WelcomeController@index')->name('welcome');
 route::get('/', function () {
     return view('about');
-});
+})->name('welcome');
+
 //SHOP
-Route::get('/shop', 'CartController@shop')->name('shop');
-Route::get('/cart', 'CartController@cart')->name('cart.index');
-Route::post('/add', 'CartController@add')->name('cart.store');
-Route::post('/update', 'CartController@update')->name('cart.update');
-Route::post('/remove', 'CartController@remove')->name('cart.remove');
-Route::post('/clear', 'CartController@clear')->name('cart.clear');
-Route::get('/checkout', 'CartController@checkout')->name('cart.checkout');
+Route::get('shop', 'CartController@shop')->name('shop');
+Route::post('add', 'CartController@add')->name('cart.store');
+Route::post('update', 'CartController@update')->name('cart.update');
+Route::post('remove', 'CartController@remove')->name('cart.remove');
+Route::post('clear', 'CartController@clear')->name('cart.clear');
 
 route::get('/404', function () {
     return view('error.index');
-});
- 
-route::get('/pagar', function () {
-    return view('pagar');
 });
 
 
@@ -86,24 +80,33 @@ Route::middleware('auth')->group(function(){
     Route::DELETE('/solicitud/{solicitud}', 'solicitudController@destroy')->name('solicitud.destroy');
     Route::post('/solicitud/{solicitud}/activo', 'solicitudController@activo')->name('solicitud.activo');
     Route::get('/solicitud/{solicitud}/anular', 'solicitudController@anular')->name('solicitud.anular');
-    //detalle_cliente
-    Route::resource('detalle_cliente','DetalleClienteController');
+
+    //subasta Externo
+    Route::resource('subasta','SubastaExternoController');
+    Route::get('/crear-subasta/{id}', 'SubastaExternoController@crear_subasta')->name('crear_subasta');
+    Route::get('/subasta-participantes/{id}', 'SubastaExternoController@subasta_participantes')->name('subasta.participantes');
+    Route::get('/participar/{id}', 'SubastaExternoController@participar')->name('subasta.participar');
+    Route::post('/subasta-participar/{id}', 'SubastaExternoController@subasta_participar')->name('subasta.subasta-participar');
+    Route::get('/subasta-seleccion/{id}', 'SubastaExternoController@seleccion_subasta')->name('subasta.seleccion');
+
+    //transporte
+    Route::resource('transporte','TransporteController');
+
+    //carrito
+    Route::get('cart', 'CartController@cart')->name('cart.index');
+    Route::get('checkout/{id}', 'CartController@checkout')->name('cart.checkout');
 
 });  
 
 //PAYPAL
-// Route::get('/aaa', 'PayPalController@getIndex');
-// Route::get('paypal/ec-checkout', 'PayPalController@getExpressCheckout');
-// Route::get('paypal/ec-checkout-success', 'PayPalController@getExpressCheckoutSuccess');
-// Route::get('paypal/adaptive-pay', 'PayPalController@getAdaptivePay');
-// Route::post('paypal/notify', 'PayPalController@notify');
-
-//Route::get('/aaa', [HomeController::class, 'index']);
 Route::post('pay', 'PaymentController@pay')->name('payment');
 Route::get('success/{id}', 'PaymentController@success');
 Route::get('error', 'PaymentController@error');
 
-
+//PAYPAL SHOP
+Route::post('pay-shop', 'PaymentShopController@pay')->name('payment-shop');
+Route::get('success-shop/{id}', 'PaymentShopController@success');
+Route::get('error-shop', 'PaymentShopController@error');
    /////////////////
   //PRUEBAS BD/////
  /////////////////

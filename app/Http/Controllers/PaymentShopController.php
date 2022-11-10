@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Payment;
+use App\VentaLo;
+use App\ProcesoProducto;
+use App\ProcesoVenta;
+use Cart;
 use Illuminate\Http\Request;
+use Omnipay\Omnipay;
 
 class PaymentShopController extends Controller
 {
@@ -59,9 +65,16 @@ class PaymentShopController extends Controller
                 $payment->amount = $arr['transactions'][0]['amount']['total'];
                 $payment->currency = env('PAYPAL_CURRENCY');
                 $payment->payment_status = $arr['state'];
-                $payment->venta_ex_id = $id;
+                $payment->venta_lo_id =  $id;
 
-                $payment->save();
+                if ($payment->save()) {
+                    
+                    $venta = VentaLo::find($id);
+                    $venta->estado_ex = 'completedo';
+                    $proceso_producto_id = $venta->proceso_producto_id;
+                    Cart::clear();
+                    $venta->save();
+                }
 
                 //return "Payment is Successfull. Your Transaction Id is : " . $arr['id'];
 

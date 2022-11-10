@@ -20,6 +20,7 @@
           <th scope="col">Cantidad</th>
           <th scope="col">Producto</th>
           <th scope="col">Estado</th>
+          <th scope="col">Dirección</th>
           @if (Auth::user()->id_tipo_usuario == 1)
             <th scope="col">Cliente</th>
           @endif
@@ -33,6 +34,7 @@
               <td>{{ $solicitud->cantidad }}</td>
               <td>{{ $solicitud->producto }}</td>
               <td>{{ $solicitud->estado->estado}}</td>
+              <td>{{ $solicitud->direccion}}</td>
               @if (Auth::user()->id_tipo_usuario == 1)
                 <td>{{ $solicitud->usuario_id }}</td>
               @endif

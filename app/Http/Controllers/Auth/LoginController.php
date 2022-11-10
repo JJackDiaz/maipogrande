@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 
 class LoginController extends Controller
 {
@@ -40,8 +41,17 @@ class LoginController extends Controller
         //EXTERNO
         if($user->id_tipo_usuario==3){
             return redirect()->route('solicitud.index') ;
-        }else{
-            return redirect()->route('welcome') ;
         }
+
+        //TRANSPORTISTA
+        if($user->id_tipo_usuario==5){
+            return redirect()->route('transporte.index');
+        }
+        
+        //local
+        if($user->id_tipo_usuario==4){
+            return redirect()->route('shop') ;
+        }
+
     }
 }

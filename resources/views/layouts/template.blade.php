@@ -76,13 +76,20 @@
             </svg></a>
           <ul class="header-nav d-none d-md-flex">
             @if(Auth::user()->id_tipo_usuario==1)
-              <li class="nav-item nav-link text-uppercase">Administrador</li>
+              <li class="nav-item nav-link text-uppercase">Rol: Administrador</li>
+              <li class="nav-item nav-link text-uppercase">CORREO:{{ Auth::user()->email }}</li>
             @elseif(Auth::user()->id_tipo_usuario==2)
-            <li class="nav-item nav-link text-uppercase">Consultor</li>
+            <li class="nav-item nav-link text-uppercase">Rol: Consultor</li>
+            <li class="nav-item nav-link text-uppercase">CORREO: {{ Auth::user()->email }}</li>
             @elseif(Auth::user()->id_tipo_usuario==3)
-            <li class="nav-item nav-link text-uppercase">Externo</li>
+            <li class="nav-item nav-link text-uppercase">Rol: Externo</li>
+            <li class="nav-item nav-link text-uppercase">CORREO: {{ Auth::user()->email }}</li>
+            @elseif(Auth::user()->id_tipo_usuario==5)
+            <li class="nav-item nav-link text-uppercase">Rol: Transportista</li>
+            <li class="nav-item nav-link text-uppercase">CORREO: {{ Auth::user()->email }}</li>
             @elseif(Auth::user()->id_tipo_usuario==6)
-            <li class="nav-item nav-link text-uppercase">Productor</li>
+            <li class="nav-item nav-link text-uppercase">Rol: Productor</li>
+            <li class="nav-item nav-link text-uppercase">CORREO: {{ Auth::user()->email }}</li>
             <!-- If con todos los usuario -->
             @endif
           </ul>

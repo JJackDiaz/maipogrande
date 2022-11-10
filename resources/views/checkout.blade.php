@@ -42,11 +42,11 @@
                 @if (Route::has('login'))
                         <div class="top-right links">
                             @auth
-                                <li class="d-flex">
-                                    <a href="{{ route('home') }}">
-                                        <button class="btn btn-outline-light" type="submit">Home</button>
-                                    </a>
-                                </li>
+                            <li class="d-flex">
+                                <a href="{{ route('login') }}">
+                                    <button class="btn btn-outline-light" type="submit">{{ Auth::user()->nombre_completo }}</button>
+                                </a>
+                            </li>
                             @else
                             <li class="d-flex">
                                 <a href="{{ route('login') }}">
@@ -66,40 +66,39 @@
         <section class="container mt-5">
             <div class="card text-center">
                 <div class="card-header">
-                    
-                    Nº Venta
+                   Factura
                 </div>
                 <div class="container">
                     <div class="row align-items-start">
                         <div class="col">
-                            
+                    @foreach ($venta_lo as $item)    
                             <div class="card-body">
                                 <h5 class="card-title">Info</h5>
-                                <p class="card-text">Numero Venta</p>
-                                <p class="card-text">Detalle : </p>
-                                <p class="card-text">Estado : </p>
-                                <p class="card-text">ID Proceso : </p>
+                                <p class="card-text">Numero Venta {{ $item->numero_venta }}</p>
+                                <p class="card-text">Detalle : {{ $item->detalle }}</p>
+                                <p class="card-text">Estado : {{ $item->estado_ex }}</p>
                             </div>
+                            
                         </div>
                         <div class="col">
                             <div class="card-body">
                                 <h5 class="card-title">Pagos</h5>
-                                <p class="card-text">Producto :</p>
-                                <p class="card-text">Comision </p>
-                    <p class="card-text">Servicios : </p>
-                    <p class="card-text">Aduana : </p>
-                    <h5 class="card-title">Total : </h5>
+                                <p class="card-text">Producto : ${{ $item->total_venta - $item->comision - $item->servicio - $item->iva }}</p>
+                                <p class="card-text">Comision : ${{ $item->comision }}</p>
+                                <p class="card-text">Servicios : ${{ $item->servicio }}</p>
+                                <p class="card-text">Iva : ${{ $item->iva }}</p>
+                                <h5 class="card-title">Total : ${{ $item->total_venta }}</h5>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            
-        </div>
-                <form action="" method="post" class="m-2">
+                <form action="{{ route('payment-shop')}}" method="post" class="m-2">
                     @csrf
-                    {{-- <input type="hidden" name="amount" value="{{ $venta->total_venta }}">
-                    <input type="hidden" name="id" value="{{ $venta->id }}"> --}}
+                    <input type="hidden" name="amount" value="{{ $item->total_venta }}">
+                    <input type="hidden" name="id" value="{{ $item->id }}">
                     
-                    <button type="submit" class="btn btn-primary mt-3">Pagar via Paypal</button>
+                    <button type="submit" class="btn btn-primary mt-3">Pagar ${{ $item->total_venta }} via Paypal</button>
                 </form>
+                @endforeach
             </div>
             <div class="card-footer text-muted">
                 Maipo Grande

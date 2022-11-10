@@ -42,11 +42,12 @@
                 @if (Route::has('login'))
                         <div class="top-right links">
                             @auth
-                                <li class="d-flex">
-                                    <a href="{{ route('home') }}">
-                                        <button class="btn btn-outline-light" type="submit">Home</button>
-                                    </a>
-                                </li>
+                            <li class="d-flex">
+                            <form action="{{ route('logout') }}" method="post" class="d-flex">
+                                    @csrf
+                                    <button class="btn btn-outline-light" type="submit">{{ Auth::user()->nombre_completo }}</button> 
+                                </form>
+                            </li>
                             @else
                             <li class="d-flex">
                                 <a href="{{ route('login') }}">
@@ -61,9 +62,6 @@
             </ul>
 
         </div>
-
-
-
     </nav>
     <div class="container" style="margin-top: 80px">
         <nav aria-label="breadcrumb">
@@ -102,15 +100,14 @@
             <div class="col-lg-7">
                 <br>
                 @if(\Cart::getTotalQuantity()>0)
-                    <h4>{{ \Cart::getTotalQuantity()}} Product(s) In Your Cart</h4><br>
+                    <h4>{{ \Cart::getTotalQuantity()}} Producto(s) En Tu Carrito</h4><br>
                 @else
                     <h4>No Product(s) In Your Cart</h4><br>
-                    <a href="{{ url('shop') }}" class="btn btn-dark">Continue Shopping</a>
+                    <a href="{{ url('shop') }}" class="btn btn-dark">Continuar Comprando</a>
                 @endif
 
                 @foreach($cartCollection as $item)
                     <div class="row">
-                        
                         <div class="col-lg-5">
                             <p>
                                 <b><a href="/shop/{{ $item->attributes->slug }}">{{ $item->name }}</a></b><br>
@@ -121,18 +118,8 @@
                         </div>
                         <div class="col-lg-4">
                             <div class="row">
-                                <form action="{{ route('cart.update') }}" method="POST">
-                                    {{ csrf_field() }}
-                                    <div class="form-group row">
-                                        <input type="hidden" value="{{ $item->id}}" id="id" name="id">
-                                        <input type="hidden" class="form-control form-control-sm" value="{{ $item->price }}" name="price">
-                                        <input type="number" class="form-control form-control-sm" value="{{ $item->cantidad }}"
-                                               id="cantidad" name="cantidad" style="width: 70px; margin-right: 10px;" hidden>
-                                        <!-- <button class="btn btn-secondary btn-sm" style="margin-right: 25px;"><i class="fa fa-edit"></i></button> -->
-                                    </div>
-                                </form>
                                 <form action="{{ route('cart.remove') }}" method="POST">
-                                    {{ csrf_field() }}
+                                    @csrf
                                     <input type="hidden" value="{{ $item->id }}" id="id" name="id">
                                     <button class="btn btn-dark btn-sm" style="margin-right: 10px;"><i class="fa fa-trash"></i></button>
                                 </form>
@@ -143,7 +130,7 @@
                 @endforeach
                 @if(count($cartCollection)>0)
                     <form action="{{ route('cart.clear') }}" method="POST">
-                        {{ csrf_field() }}
+                        @csrf
                         <button class="btn btn-secondary btn-md">Eliminar Carrito</button>
                     </form>
                 @endif
@@ -156,7 +143,10 @@
                         </ul>
                     </div>
                     <br><a href="{{ url('shop') }}" class="btn btn-dark">Continuar Comprando</a>
-                    <a href="/checkout" class="btn btn-success">Pagar</a>
+                    <a href="{{ url('/checkout/'. rand(3,150)) }}" class="btn btn-success">Pagar</a>
+                    <p></p>
+                    <p>ALERTA: Al seleccionar pagar no podras cancelar la compra</p>
+                    <p></p>
                 </div>
             @endif
         </div>

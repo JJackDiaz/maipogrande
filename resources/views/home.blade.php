@@ -13,10 +13,7 @@
         <div class="card mb-4 text-white bg-primary">
         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
             <div>
-            <div class="fs-4 fw-semibold">26K <span class="fs-6 fw-normal">(-12.4%
-                <svg class="icon">
-                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
-                </svg>)</span></div>
+            <div class="fs-4 fw-semibold">{{ $count }} <span class="fs-6 fw-normal"></span></div>
             <div>Usuarios</div>
             </div>
             <div class="dropdown">
@@ -42,7 +39,7 @@
                 <svg class="icon">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
                 </svg>)</span></div>
-            <div>Income</div>
+            <div>Ventas Locales</div>
             </div>
             <div class="dropdown">
             <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -67,7 +64,7 @@
                 <svg class="icon">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
                 </svg>)</span></div>
-            <div>Conversion Rate</div>
+            <div>Porcentaje ventas</div>
             </div>
             <div class="dropdown">
             <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -88,11 +85,11 @@
         <div class="card mb-4 text-white bg-danger">
         <div class="card-body pb-0 d-flex justify-content-between align-items-start">
             <div>
-            <div class="fs-4 fw-semibold">44K <span class="fs-6 fw-normal">(-23.6%
+            <div class="fs-4 fw-semibold">$100.200 <span class="fs-6 fw-normal">(-23.6%
                 <svg class="icon">
                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
                 </svg>)</span></div>
-            <div>Sessions</div>
+            <div>Venta Extranjero</div>
             </div>
             <div class="dropdown">
             <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

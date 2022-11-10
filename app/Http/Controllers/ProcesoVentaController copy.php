@@ -42,15 +42,6 @@ class ProcesoVentaController extends Controller
     {
 
         $venta_ex = VentaEx::where('proceso_ven_id', '=', $id)
-        ->select('venta_ex.id',
-        'venta_ex.numero_venta',
-        'venta_ex.detalle',
-        'venta_ex.comision',
-        'venta_ex.servicio',
-        'venta_ex.aduana',
-        'venta_ex.total_venta',
-        'venta_ex.estado_ex',
-        'proceso_producto.valor')
         ->join('proceso_producto', 'proceso_producto.id', '=', 'venta_ex.proceso_producto_id')
         ->where('proceso_producto.estado', 'Y')
         ->get();
@@ -151,7 +142,7 @@ class ProcesoVentaController extends Controller
 
                 //proceso venta LISTO
                 $proceso = ProcesoVenta::where('id', $id)->first();
-                $proceso->estado = 'subastando';
+                $proceso->estado = 'terminado';
                 $solicitud_id = $proceso->solicitud_proceso_id;
                 
 
@@ -190,8 +181,29 @@ class ProcesoVentaController extends Controller
                             'producto_id' => $productos->id,
                             'estado' => 'pendiente',
                         ]);
+
+                        $precio = $precio_total_proceso;
+                        $comision = (10*$precio_total_proceso)/100;
+                        $servicio = (5*$precio_total_proceso)/100;
+                        $aduana = (25*$precio_total_proceso)/100;
+
+                        $total = $comision + $servicio + $aduana + $precio;
+                        
+                        VentaEx::create([
+                            'numero_venta' => rand(2,50),
+                            'detalle' => 'Venta al extranjero',
+                            'comision' => $comision,
+                            'servicio' => $servicio,
+                            'aduana' => $aduana,
+                            'total_venta' => $total,
+                            'estado_ex' => 'pendiente',
+                            'proceso_producto_id' => $id,
+                        ]);
+
                         
                     }
+
+                    //ARREGAR DESPUES SOLO PUEDE EL ADMIN
             
                     return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');
 
@@ -203,6 +215,10 @@ class ProcesoVentaController extends Controller
         }
         
     }
+
+    public function crear_subasta(){
+        
+    } 
 
 
 }
