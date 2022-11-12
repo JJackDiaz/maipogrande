@@ -35,9 +35,14 @@
     <li class="nav-item"><a class="nav-link" href="{{ route('subasta.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
-        </svg>Subastas</a>
+        </svg>Subastas Externo</a>
     </li> 
-    <li class="nav-item"><a class="nav-link" href="{{ route('subasta.index') }}">
+    <li class="nav-item"><a class="nav-link" href="{{ route('subasta_local.index') }}">
+        <svg class="nav-icon">
+            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
+        </svg>Subastas Local</a>
+    </li> 
+    <li class="nav-item"><a class="nav-link" href="{{ route('pedido.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-cart') }}"></use>
         </svg>Pedidos</a>
@@ -107,7 +112,20 @@
         <li class="nav-item"><a class="nav-link" href="{{ route('subasta.index') }}">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-book') }}"></use>
-            </svg>Subastas</a>
+            </svg>Subastas Externo</a>
+        </li> 
+        <li class="nav-item"><a class="nav-link" href="{{ route('subasta_local.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-book') }}"></use>
+            </svg>Subastas Local</a>
+        </li> 
+    @endif
+
+    @if(Auth::user()->id_tipo_usuario==4)
+        <li class="nav-item"><a class="nav-link" href="{{ route('pedido.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
+            </svg>Mis Pedidos</a>
         </li> 
     @endif
 

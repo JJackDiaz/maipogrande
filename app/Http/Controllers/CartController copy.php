@@ -145,5 +145,7 @@ class CartController extends Controller
 
         return view('checkout', compact('venta_lo'))->with(['cartCollection' => $cartCollection]);
     }
+
+
 }
 

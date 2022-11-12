@@ -89,12 +89,27 @@ Route::middleware('auth')->group(function(){
     Route::post('/subasta-participar/{id}', 'SubastaExternoController@subasta_participar')->name('subasta.subasta-participar');
     Route::get('/subasta-seleccion/{id}', 'SubastaExternoController@seleccion_subasta')->name('subasta.seleccion');
 
+     //subasta Local
+     Route::resource('subasta_local','SubastaLocalController');
+     Route::get('/crear-subasta-local/{id}', 'SubastaLocalController@crear_subasta_local')->name('crear_subasta_local');
+     Route::get('/subasta-participantes-local/{id}', 'SubastaLocalController@subasta_participantes_local')->name('subasta.participantes-local');
+     Route::get('/participar-local/{id}', 'SubastaLocalController@participar_local')->name('subasta.participar-local');
+     Route::post('/subasta-participar-local/{id}', 'SubastaLocalController@subasta_participar_local')->name('subasta.subasta-participar-local');
+     Route::get('/subasta-seleccion-local/{id}', 'SubastaLocalController@seleccion_subasta_local')->name('subasta.seleccion-local');
+
     //transporte
     Route::resource('transporte','TransporteController');
+
+    //perdidos
+    Route::resource('pedido','PedidoController');
 
     //carrito
     Route::get('cart', 'CartController@cart')->name('cart.index');
     Route::get('checkout/{id}', 'CartController@checkout')->name('cart.checkout');
+    
+
+    Route::get('crear_pedido/{id}', 'CartController@crear_pedido')->name('cart.crear_pedido');
+    Route::post('store_pedido/{id}', 'CartController@store_pedido')->name('cart.store_pedido');
 
 });  
 
@@ -104,9 +119,11 @@ Route::get('success/{id}', 'PaymentController@success');
 Route::get('error', 'PaymentController@error');
 
 //PAYPAL SHOP
-Route::post('pay-shop', 'PaymentShopController@pay')->name('payment-shop');
-Route::get('success-shop/{id}', 'PaymentShopController@success');
-Route::get('error-shop', 'PaymentShopController@error');
+Route::post('pay-shop', 'PaymentShopController@pay_shop')->name('payment-shop');
+Route::get('success-shop/{id}', 'PaymentShopController@success_shop');
+Route::get('error-shop', 'PaymentShopController@error_shop');
+
+
    /////////////////
   //PRUEBAS BD/////
  /////////////////

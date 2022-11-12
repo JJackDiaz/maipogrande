@@ -21,15 +21,15 @@ class PaymentShopController extends Controller
         $this->gateway->setTestMode(true);
     }
 
-    public function pay(Request $request)
+    public function pay_shop(Request $request)
     {
         try {
 
             $response = $this->gateway->purchase(array(
                 'amount' => $request->amount,
                 'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => url('success', $request->id),
-                'cancelUrl' => url('error')
+                'returnUrl' => url('success-shop', $request->id),
+                'cancelUrl' => url('error-shop')
             ))->send();
 
             if ($response->isRedirect()) {
@@ -44,7 +44,7 @@ class PaymentShopController extends Controller
         }
     }
 
-    public function success(Request $request, $id)
+    public function success_shop(Request $request, $id)
     {
         if ($request->input('paymentId') && $request->input('PayerID')) {
             $transaction = $this->gateway->completePurchase(array(
@@ -70,8 +70,7 @@ class PaymentShopController extends Controller
                 if ($payment->save()) {
                     
                     $venta = VentaLo::find($id);
-                    $venta->estado_ex = 'completedo';
-                    $proceso_producto_id = $venta->proceso_producto_id;
+                    $venta->estado_lo = 'completed';
                     Cart::clear();
                     $venta->save();
                 }
@@ -90,7 +89,7 @@ class PaymentShopController extends Controller
         }
     }
 
-    public function error()
+    public function error_shop()
     {
         return 'User declined the payment!';   
     }

@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Subasta;
-use App\SubastaExterno;
+use App\SubastaLocal;
 use App\Transporte;
-use App\ProcesoProducto;
-use App\ProcesoVenta;
-use App\VentaEx;
+use App\DetallePedido;
+use App\Pedido;
+use App\VentaLo;
 use Carbon\Carbon; 
 use DB;
 
-class SubastaExternoController extends Controller
+class SubastalocalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,11 +22,11 @@ class SubastaExternoController extends Controller
      */
     public function index()
     {
-        $subastas = Subasta::whereNull('detalle_pedido_id')->get();
+        $subastas = Subasta::whereNull('proceso_producto_id')->get();
         $cont = 1;
 
         if(Auth::user()->id_tipo_usuario==5 || Auth::user()->id_tipo_usuario==1){        
-            return view('subasta.index', compact('cont','subastas'));
+            return view('subasta_local.index', compact('cont','subastas'));
         }else {
             return view('error.index'); 
         }
@@ -98,109 +98,115 @@ class SubastaExternoController extends Controller
         //
     }
 
-    public function crear_subasta($id)
+    public function crear_subasta_local($id)
     {
 
-        $solicitud = DB::table('proceso_producto')
-        ->where('proceso_producto.id', '=', $id)
-        ->join('proceso_ven', 'proceso_ven.id', '=', 'proceso_producto.proceso_ven_id')
-        ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
+        $detalle_pedido = DB::table('detalle_pedido')
+        ->where('detalle_pedido.numero_pedido', '=', $id)
         ->get();
 
-        foreach ($solicitud as $key) {
+        foreach ($detalle_pedido as $key) {
+            $pedido_id = $key->id;
             $direccion = $key->direccion;
         }
+
         Subasta::create([
-            'fecha_inicio' => Carbon::now(),
-            'fecha_fin' => new Carbon('tomorrow'),
-            'tipo' => 'venta externa',
-            'estado' => 'activo',
             'direccion' => $direccion,
-            'proceso_producto_id' => $id,
+            'estado' => 'activo',
+            'fecha_inicio' => Carbon::now(),
+            'tipo' => 'venta externa',
+            'detalle_pedido_id' => $pedido_id,
         ]);
 
 
         return redirect()->route('subasta.index')->with('success', 'Subasta creada');
     }
 
-    public function subasta_participantes($id){
+    public function subasta_participantes_local($id){
 
-        $participantes = SubastaExterno::where('subasta_trans_id', $id)->get();
+        $participantes = SubastaLocal::where('subasta_trans_id', $id)->get();
         $cont = 0;
 
-        return view('subasta.participantes', compact('participantes','cont'));
+        return view('subasta_local.participantes', compact('participantes','cont'));
 
     }
 
-    public function participar($id){
+    public function participar_local($id){
 
         $transportes = Transporte::where("usuario_id", Auth::user()->id)->get();
         $cont = 0;
         $id_subasta = $id;
 
-        return view('subasta.participar', compact('transportes','cont','id_subasta'));
+        return view('subasta_local.participar_local', compact('transportes','cont','id_subasta'));
 
     }
 
-    public function subasta_participar($id, Request $request){
+    public function subasta_participar_local($id, Request $request){
 
-        $existencia = DB::table('subasta_transporte_externo')
+        $existencia = DB::table('subasta_transporte_local')
         ->where('transporte_id', '=', $id)
         ->get();
 
         if (count($existencia) < 1) {
-            $subasta_externo = SubastaExterno::create([
+            $subasta_externo = SubastaLocal::create([
                 'valor' => $request->input('precio'),
                 'estado' => 'N', 
                 'subasta_trans_id' => $request->input('subasta_tran_id'),
                 'transporte_id' => $request->input('transporte_id'),
             ]);
 
-            return redirect()->route('subasta.index')->with('success', 'Participando');
+            return redirect()->route('subasta_local.index')->with('success', 'Participando');
         }
     
-        return redirect()->route('subasta.index')->with('error', 'Ya estas participando');
+        return redirect()->route('subasta_local.index')->with('error', 'Ya estas participando');
     }
 
-    public function seleccion_subasta($id){
+    //falta
+    public function seleccion_subasta_local($id){
 
         //trae id de subasta externo
-        $subastaExterno = SubastaExterno::find($id);
-        $subasta = Subasta::find($subastaExterno->subasta_trans_id);
-        $proceso = ProcesoProducto::find($subasta->proceso_producto_id);
-        $proceso_venta = ProcesoVenta::find($proceso->proceso_ven_id);
+        $subastaLocal = SubastaLocal::find($id);
+        $subasta = Subasta::find($subastaLocal->subasta_trans_id);
+        $detalle_pedido = DetallePedido::find($subasta->detalle_pedido_id);
 
-        $subastaExterno->estado = 'Y';
+        $subastaLocal->estado = 'Y';
         //$subastaExterno->save();
-
         $subasta->estado = 'subastado';
         //$subasta->save();
+        $detalle_pedido->estado = 'subastado';
+        
+        $pedido = Pedido::where('numero_pedido', $detalle_pedido->numero_pedido)->get();
+        
+        $precio = 0;
+        foreach ($pedido as $value) {
+            
+            $value->estado = 'subastado';
+            $value->save();
+            $precio += $value->precio;
+            $numero_venta = $value->numero_venta;
+            
+        }
 
-        $proceso_venta->estado = 'subastado';
-        $proceso->valor = $proceso->valor + $subastaExterno->valor;
-        //$proceso->save();
-
-        $precio = $proceso->valor;
+        $precio = $precio;
         $comision = (10*$precio)/100;
-        $servicio = ((2*$precio)/100)+$subastaExterno->valor;
-        $aduana = (25*$precio)/100;
+        $servicio = ((2*$precio)/100)+$subastaLocal->valor;
+        $iva = (19*$precio)/100;
 
-        $total = $comision + $servicio + $aduana + $precio;
+        $total = $comision + $servicio + $iva + $precio;
 
-        if ($subastaExterno->save() && $subasta->save() && $proceso->save() && $proceso_venta->save()) {
+        if ($subastaLocal->save() && $subasta->save() && $detalle_pedido->save()) {
             # code...
-            VentaEx::create([
-                'numero_venta' => rand(2,50),
-                'detalle' => 'Venta al extranjero',
+            VentaLo::create([
+                'numero_venta' => $numero_venta,
+                'detalle' => 'Venta Nacional',
                 'comision' => $comision,
                 'servicio' => $servicio,
-                'aduana' => $aduana,
+                'iva' => $iva,
                 'total_venta' => $total,
-                'estado_ex' => 'pendiente',
-                'proceso_producto_id' => $proceso->id,
+                'estado_lo' => 'pendiente',
             ]);
         }
-        return redirect()->route('subasta.index')->with('success', 'Subasta Terminada');
+        return redirect()->route('subasta_local.index')->with('success', 'Subasta Terminada');
 
     }
 

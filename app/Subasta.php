@@ -10,6 +10,6 @@ class Subasta extends Model
     protected $pk = 'id';
 
     protected $fillable = [
-      'id','direccion','fecha_inicio','fecha_fin','tipo','estado','proceso_producto_id','created_at','updated_at'
+      'id','direccion','fecha_inicio','tipo','estado','proceso_producto_id','detalle_pedido_id','created_at','updated_at'
     ];
 }

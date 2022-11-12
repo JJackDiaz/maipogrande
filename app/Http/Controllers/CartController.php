@@ -6,7 +6,10 @@ use Illuminate\Http\Request;
 use App\Saldo;
 use App\Producto;
 use App\VentaLo;
+use App\DetallePedido;
+use App\Pedido;
 use DB;
+use Auth;
 use Cart;
 
 class CartController extends Controller
@@ -24,13 +27,16 @@ class CartController extends Controller
     public function cart(){
         
         $cartCollection = \Cart::getContent();
+        
         return view('cart', ['cartCollection' => $cartCollection]);
     }
 
     public function add(Request $request){
        
         $producto = Producto::find($request->producto_id);
-        
+
+        $saldo = Saldo::where('producto_id', $producto->id)->first();
+
         $request->validate([
             'id' => 'required',
 
@@ -44,13 +50,13 @@ class CartController extends Controller
         ]);
 
         Cart::add(
-            $request->producto_id,
+            $saldo->id,
             $request->nombre,
             $request->precio,
             $request->cantidad,
            
         );
-        return back()->with('success',"$producto->nombre ¡se ha agregado con éxito al carrito!");
+        return back()->with('success',"$saldo->id, ¡se ha agregado con éxito al carrito!");
    
     }
 
@@ -144,6 +150,77 @@ class CartController extends Controller
         $venta_lo = VentaLo::where('numero_venta',$id)->get();
 
         return view('checkout', compact('venta_lo'))->with(['cartCollection' => $cartCollection]);
+    }
+
+    public function crear_pedido($id){
+
+        $cartCollection = array(\Cart::getContent());
+
+        $existencia = DB::table('pedido')
+        ->where('numero_pedido', '=', $id)
+        ->get();
+
+        foreach ($cartCollection as $key => $value) {
+            //echo $key+1 . $value;
+            if (count($existencia) < 1) {
+
+                if ($key+1 != null && $key+1 == 1) {
+
+                    Pedido::create([
+                        'numero_pedido' => $id,
+                        'precio' => $value[$key+1]['price'],
+                        'cantidad' => $value[$key+1]['quantity'],
+                        'estado' => 'revisando',
+                        'saldo_id' => $value[$key+1]['id'],
+                        'usuario_id' => Auth::user()->id,
+                    ]);
+                }
+
+                if (!empty($key+2) && $key+2 == 2) {
+
+                    Pedido::create([
+                        'numero_pedido' => $id,
+                        'precio' => $value[$key+2]['price'],
+                        'cantidad' => $value[$key+2]['quantity'],
+                        'estado' => 'revisando',
+                        'saldo_id' => $value[$key+2]['id'],
+                        'usuario_id' => Auth::user()->id,
+                    ]);
+
+                }
+                
+
+            }
+        }
+
+        return view('crear_pedido', compact('id'));
+        
+
+    }
+
+    public function store_pedido(Request $request){
+
+        $request->validate([
+            'direccion' => ['required', 'string'],
+            'comuna' => ['required', 'string'],
+            'numero' => ['required', 'string'],
+            'telefono' => ['required', 'string'],
+            'email' => ['required', 'string'],
+        ]);
+
+
+        DetallePedido::create([
+            'numero_pedido' => $request->id,
+            'direccion' => $request->direccion,
+            'comuna' => $request->comuna,
+            'numero' => $request->numero,
+            'telefono' => $request->telefono,
+            'comentario' => $request->comentario,
+            'estado' => 'pendiente',
+            'usuario_id' => Auth::user()->id
+        ]);
+      
+        return redirect()->route('pedido.index')->with('success', 'Pedido creado');
     }
 }
 

@@ -3,13 +3,13 @@
     <title>MaipoGrande | Subastas</title>
 @endsection
 @section('ruta')
-    <li class="breadcrumb-item active"><span>Subastas</span></li>
+    <li class="breadcrumb-item active"><span>Subastas Local</span></li>
 @endsection
 @section('content')
 <table class="table table-warning table-striped-columns">
   @if(Auth::user()->id_tipo_usuario==1)
     <div class="col-12 text-left m-2">
-        <a href="{{ route('subasta.create') }}" class="btn btn-warning rounded-pill text-white">Crear Subasta</a>
+        <a href="{{ route('subasta_local.create') }}" class="btn btn-warning rounded-pill text-white">Crear Subasta Local</a>
       </div>
   @endif
   @if(Session::has('error'))
@@ -39,10 +39,10 @@
                 <td>{{ $subasta->fecha_inicio }}</td>
                 <td>{{ $subasta->tipo  }}</td>
                 <td>{{ $subasta->estado  }}</td>
-                <td>{{ $subasta->proceso_producto_id  }}</td>
+                <td>{{ $subasta->detalle_pedido_id  }}</td>
                 <td>
                   @if(Auth::user()->id_tipo_usuario==5)
-                  <a class="btn btn-success" href="{{ route('subasta.participar', $subasta->id ) }}">
+                  <a class="btn btn-success" href="{{ route('subasta.participar-local', $subasta->id ) }}">
                     <h6 class="text-white">Participar</h6>
                   </a>
                   @endif
@@ -50,7 +50,7 @@
                     <form action="destroy" method="POST">
                       @csrf
                       @method('DELETE')
-                      <a class="btn btn-warning" href="{{ route('subasta.participantes', $subasta->id ) }}">
+                      <a class="btn btn-warning" href="{{ route('subasta.participantes-local', $subasta->id ) }}">
                         <h6 class="text-white">Participantes</h6>
                       </a>
                       <button type="submit" class="btn btn-danger">

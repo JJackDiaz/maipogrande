@@ -11,6 +11,6 @@ class VentaLo extends Model
 
     protected $fillable = [
 
-        'id','numero_venta','detalle', 'comision', 'servicio','iva','total_venta','estado_ex','id_saldo','created_at', 'updated_at'
+        'id','numero_venta','detalle', 'comision', 'servicio','iva','total_venta','estado_lo','pedido_id','created_at', 'updated_at'
     ];
 }

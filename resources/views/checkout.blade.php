@@ -76,7 +76,7 @@
                                 <h5 class="card-title">Info</h5>
                                 <p class="card-text">Numero Venta {{ $item->numero_venta }}</p>
                                 <p class="card-text">Detalle : {{ $item->detalle }}</p>
-                                <p class="card-text">Estado : {{ $item->estado_ex }}</p>
+                                <p class="card-text">Estado : {{ $item->estado_lo }}</p>
                             </div>
                             
                         </div>

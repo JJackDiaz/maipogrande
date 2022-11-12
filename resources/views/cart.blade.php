@@ -143,9 +143,9 @@
                         </ul>
                     </div>
                     <br><a href="{{ url('shop') }}" class="btn btn-dark">Continuar Comprando</a>
-                    <a href="{{ url('/checkout/'. rand(3,150)) }}" class="btn btn-success">Pagar</a>
+                    <a href="{{ route('cart.crear_pedido', rand(3,1000)) }}" class="btn btn-success">Crear Pedido</a>
                     <p></p>
-                    <p>ALERTA: Al seleccionar pagar no podras cancelar la compra</p>
+                    <p>ALERTA: Al seleccionar crear el pedido no podras cancelar </p>
                     <p></p>
                 </div>
             @endif
