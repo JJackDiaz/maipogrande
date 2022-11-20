@@ -179,6 +179,7 @@ class ProcesoVentaController extends Controller
                     $proceso->valor = $precio_total_proceso;
                     $proceso->save();
                     $proceso_producto->save();
+                    $productos->calidad = 'normal';
                     $productos->save();
 
                     if ($productos->save()) {

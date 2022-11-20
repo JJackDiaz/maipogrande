@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Solicitud;
-use App\Ciudad;
+use App\Pais;
 use App\Producto;
 use Auth;
 
@@ -34,10 +34,10 @@ class SolicitudController extends Controller
     public function create()
     {
         $productos = Producto::all();
-        $ciudades = Ciudad::all();
+        $paises = Pais::all();
 
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
-            return view('solicitud.create', compact('productos','ciudades'));
+            return view('solicitud.create', compact('productos','paises'));
         }else {
             return view('error.index'); 
         }
@@ -50,7 +50,7 @@ class SolicitudController extends Controller
             'cantidad' => ['required', 'integer'],
             'producto' => ['required', 'string'],
             'direccion' => ['required', 'string'],
-            'ciudad_id' => ['required', 'integer'],
+            'pais_id' => ['required', 'integer'],
         ]);
 
 
@@ -58,7 +58,7 @@ class SolicitudController extends Controller
             'cantidad' => $request->cantidad,
             'producto' => $request->producto,
             'direccion' => $request->direccion,
-            'ciudad_id' => $request->ciudad_id,
+            'pais_id' => $request->pais_id,
             'usuario_id' => Auth::user()->id,
             'estado_id' => 1
         ]);  

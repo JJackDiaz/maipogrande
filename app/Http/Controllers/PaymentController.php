@@ -15,9 +15,11 @@ class PaymentController extends Controller
 
     public function __construct() {
         $this->gateway = Omnipay::create('PayPal_Rest');
-        $this->gateway->setClientId(env('PAYPAL_CLIENT_ID'));
-        $this->gateway->setSecret(env('PAYPAL_CLIENT_SECRET'));
-        $this->gateway->setTestMode(true);
+        $this->gateway->initialize(array(
+            'clientId' => 'AZ_wXmzWdmDP54FVe3vSATkzWv0BsODrX-bhIKTi2uWCBmzkQzgBxgeK078P8PlzleE4G909fiTGgKOD',
+            'secret'   => 'EHwfWyfvatG9N29PS9O7CspFz0T5gFMxluUak1m7hH8GxeexD8-f6yNjR9Yxn8miyQHYGQ_tXm3OQn4K',
+            'testMode' => true, // Or false when you are ready for live transactions
+        ));
     }
 
     public function pay(Request $request)
@@ -25,10 +27,10 @@ class PaymentController extends Controller
         try {
 
             $response = $this->gateway->purchase(array(
-                'amount' => $request->amount,
-                'currency' => env('PAYPAL_CURRENCY'),
-                'returnUrl' => url('success', $request->id),
-                'cancelUrl' => url('error')
+                'amount' => (int)$request->amount,
+                'currency' => 'USD',
+                'returnUrl' => route('success', $request->id),
+                'cancelUrl' => route('error')
             ))->send();
 
             if ($response->isRedirect()) {

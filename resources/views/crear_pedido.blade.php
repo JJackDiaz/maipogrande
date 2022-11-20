@@ -40,8 +40,9 @@
                     </a>
                 </li>
                 @if (Route::has('login'))
-                        <div class="top-right links">
+                        
                             @auth
+                            <li class="nav-item"><a href="{{ route('pedido.index') }}" class="nav-link ">Mis Pedidos</a></li>
                             <li class="d-flex">
                             <form action="{{ route('logout') }}" method="post" class="d-flex">
                                     @csrf
@@ -55,7 +56,7 @@
                                 </a>
                             </li>
                             @endauth
-                        </div>
+                    
                     @endif
                 <!-- <li class="nav-item"><a href="#contact" class="nav-link ">Login</a></li> -->
 
@@ -125,7 +126,7 @@
                         <div class="form-group row m-2">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('email') }}</label>
                             <div class="col-md-6">
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
     
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">

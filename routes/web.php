@@ -2,7 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Mail\AlertaMailable;
+
 //Route::get('/', 'WelcomeController@index')->name('welcome');
+route::get('alerta', function () {
+
+    $correo = new AlertaMailable;
+
+    Mail::to('jorgejackdiaz@gmail.com')->send($correo);
+    return "mensaje enviado";
+});
+
 route::get('/', function () {
     return view('about');
 })->name('welcome');
@@ -60,7 +70,7 @@ Route::middleware('auth')->group(function(){
     //Proceso venta
     Route::resource('proceso-venta','ProcesoVentaController');
     Route::get('/proceso-venta/{solicitud}/create', 'ProcesoVentaController@crear_proceso_venta')->name('proceso-venta.crear_proceso_venta');
-    Route::get('participar/{id}', 'ProcesoVentaController@participar')->name('proceso-venta.participar');
+    Route::get('participar/{id?}', 'ProcesoVentaController@participar')->name('proceso-venta.participar');
     Route::get('participar_proceso/{id}', 'ProcesoVentaController@participar_proceso')->name('proceso-venta.participar_proceso');
     Route::get('participantes/{id}', 'ProcesoVentaController@participantes')->name('proceso-venta.participantes');
     Route::get('procesamiento/{id}', 'ProcesoVentaController@procesamiento')->name('proceso-venta.procesamiento');
@@ -85,7 +95,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('subasta','SubastaExternoController');
     Route::get('/crear-subasta/{id}', 'SubastaExternoController@crear_subasta')->name('crear_subasta');
     Route::get('/subasta-participantes/{id}', 'SubastaExternoController@subasta_participantes')->name('subasta.participantes');
-    Route::get('/participar/{id}', 'SubastaExternoController@participar')->name('subasta.participar');
+    Route::get('/participar-externo/{id}', 'SubastaExternoController@participar')->name('subasta.participar');
     Route::post('/subasta-participar/{id}', 'SubastaExternoController@subasta_participar')->name('subasta.subasta-participar');
     Route::get('/subasta-seleccion/{id}', 'SubastaExternoController@seleccion_subasta')->name('subasta.seleccion');
 
@@ -115,13 +125,13 @@ Route::middleware('auth')->group(function(){
 
 //PAYPAL
 Route::post('pay', 'PaymentController@pay')->name('payment');
-Route::get('success/{id}', 'PaymentController@success');
-Route::get('error', 'PaymentController@error');
+Route::get('/success/{id}', 'PaymentController@success')->name('success');
+Route::get('/error', 'PaymentController@error')->name('error');
 
 //PAYPAL SHOP
-Route::post('pay-shop', 'PaymentShopController@pay_shop')->name('payment-shop');
-Route::get('success-shop/{id}', 'PaymentShopController@success_shop');
-Route::get('error-shop', 'PaymentShopController@error_shop');
+Route::post('pay-shop', 'PaymentShopController@pay')->name('payment-shop');
+Route::get('success-shop/{id}', 'PaymentShopController@success')->name('success-shop');;
+Route::get('error-shop', 'PaymentShopController@error')->name('error-shop');;
 
 
    /////////////////

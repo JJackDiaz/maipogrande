@@ -126,12 +126,13 @@ class CartController extends Controller
                     }
 
                     //ir a saldo con ese id y disminuir
-                    $saldos = Saldo::where('producto_id',$item->id)->get();
+                    $saldos = Saldo::where('producto_id',$producto->id)->get();
 
+                    dd($saldos);
+                
                     foreach ($saldos as $key => $saldo) {
                         if ($saldo->cantidad > 0) {
-                            # code...
-                            $saldo->cantidad = $producto->cantidad;
+                            $saldo->cantidad = $saldo->cantidad - $item->quantity;
                             $saldo->descripcion = 'Venta Local';
                             $saldo->save();
                         }else{

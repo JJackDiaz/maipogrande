@@ -10,7 +10,9 @@ use App\Transporte;
 use App\DetallePedido;
 use App\Pedido;
 use App\VentaLo;
-use Carbon\Carbon; 
+use Carbon\Carbon;
+use App\Mail\AlertaMailable;
+use Mail;
 use DB;
 
 class SubastalocalController extends Controller
@@ -110,6 +112,12 @@ class SubastalocalController extends Controller
             $direccion = $key->direccion;
         }
 
+        $existencia = DB::table('subasta_trans')
+        ->where('detalle_pedido_id', '=', $pedido_id)
+        ->get();
+
+        if (count($existencia) < 1) {
+
         Subasta::create([
             'direccion' => $direccion,
             'estado' => 'activo',
@@ -118,14 +126,18 @@ class SubastalocalController extends Controller
             'detalle_pedido_id' => $pedido_id,
         ]);
 
+        return redirect()->route('subasta_local.index')->with('success', 'Suabsta Creada');
 
-        return redirect()->route('subasta.index')->with('success', 'Subasta creada');
+        }
+
+
+        return redirect()->route('subasta_local.index')->with('error', 'Subasta existente');
     }
 
     public function subasta_participantes_local($id){
 
         $participantes = SubastaLocal::where('subasta_trans_id', $id)->get();
-        $cont = 0;
+        $cont = 1;
 
         return view('subasta_local.participantes', compact('participantes','cont'));
 
@@ -134,7 +146,7 @@ class SubastalocalController extends Controller
     public function participar_local($id){
 
         $transportes = Transporte::where("usuario_id", Auth::user()->id)->get();
-        $cont = 0;
+        $cont = 1;
         $id_subasta = $id;
 
         return view('subasta_local.participar_local', compact('transportes','cont','id_subasta'));
@@ -143,11 +155,6 @@ class SubastalocalController extends Controller
 
     public function subasta_participar_local($id, Request $request){
 
-        $existencia = DB::table('subasta_transporte_local')
-        ->where('transporte_id', '=', $id)
-        ->get();
-
-        if (count($existencia) < 1) {
             $subasta_externo = SubastaLocal::create([
                 'valor' => $request->input('precio'),
                 'estado' => 'N', 
@@ -155,10 +162,8 @@ class SubastalocalController extends Controller
                 'transporte_id' => $request->input('transporte_id'),
             ]);
 
-            return redirect()->route('subasta_local.index')->with('success', 'Participando');
-        }
-    
-        return redirect()->route('subasta_local.index')->with('error', 'Ya estas participando');
+        return redirect()->route('subasta_local.index')->with('success', 'Participando');
+        
     }
 
     //falta
@@ -197,7 +202,7 @@ class SubastalocalController extends Controller
         if ($subastaLocal->save() && $subasta->save() && $detalle_pedido->save()) {
             # code...
             VentaLo::create([
-                'numero_venta' => $numero_venta,
+                'numero_venta' => $detalle_pedido->numero_pedido,
                 'detalle' => 'Venta Nacional',
                 'comision' => $comision,
                 'servicio' => $servicio,
@@ -205,6 +210,10 @@ class SubastalocalController extends Controller
                 'total_venta' => $total,
                 'estado_lo' => 'pendiente',
             ]);
+
+            $correo = new AlertaMailable;
+            Mail::to($detalle_pedido->email)->send($correo);
+
         }
         return redirect()->route('subasta_local.index')->with('success', 'Subasta Terminada');
 

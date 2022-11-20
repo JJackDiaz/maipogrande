@@ -30,14 +30,15 @@
                 <li class="nav-item"><a href="#port" class="nav-link ">Seguimiento</a></li>
                 <li class="nav-item"><a href="{{ url('shop') }}" class="nav-link ">Shop</a></li>
                 @if (Route::has('login'))
-                    <div class="top-right links">
+                    
                         @auth
-                        <li class="d-flex">
+                        <li class="nav-item"><a href="{{ route('pedido.index') }}" class="nav-link ">Mis Pedidos</a></li>
+                        <li class="nav-item" class="nav-link">
                             <form action="{{ route('logout') }}" method="post">
                             @csrf
-                            <a href="">
+                            
                                 <button class="btn btn-outline-light" type="submit">{{ Auth::user()->nombre_completo }}</button>
-                            </a>
+                          
                             </form>
                         </li>
                         @else
@@ -47,7 +48,7 @@
                             </a>
                         </li>
                         @endauth
-                    </div>
+                
                 @endif
 
             </ul>
@@ -83,12 +84,14 @@
                 </div>
                 <div class="col-xs-12 col-sm-6 text-center">
                     <h3 class="mb-4">Nosotros</h3>
-                    <p class="lead ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Lorem ipsum dolor sit
-                        amet, consectetur adipisicing elit. Ut aliquam explicabo, corrupti ipsa sapiente necessitatibus
-                        quae id ducimus corporis sunt!
+                    <p class="lead "> La empresa “Maipo Grande”, agrupa empresas dedicadas a la producción de frutas en la zona metropolitana
+                        sur. La misión de la empresa es facilitar la comercialización de los productos de sus diferentes clientes en el
+                        mercado extranjero y local. <h6>Disfruta con tu Fruta!!!</h6>
                     </p>
 
-                    <button class="btn btn-outline-danger btn-sm mt-4" type="button">Shop</button>
+                    <a href="{{ route('shop') }}" class="btn btn-outline-danger btn-sm mt-4">
+                        Tienda
+                    </a>
                 </div>
             </div>
         </div>
@@ -101,7 +104,7 @@
     <section id="team" class="padding">
 
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-12 text-center">
                     <h3 class="display-4 mb-4">Ofertas</h3>
                     <hr class="my-4">
@@ -117,136 +120,7 @@
                     </div>
 
                 </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-
-                    <div class="card">
-                        <img src="img/team1.png" alt="img" class="img-fluid">
-                        <div class="card-body">
-                            <h2 class="card-title">Jack Maa</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet.</p>
-                            <a href="#" class="card-link stretched-link">Know more</a>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-
-                    <div class="card">
-                        <img src="img/team2.png" alt="img" class="img-fluid">
-                        <div class="card-body">
-                            <h2 class="card-title">Jack Maa</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet.</p>
-                            <a href="#" class="card-link stretched-link">Know more</a>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-
-                    <div class="card">
-                        <img src="img/team3.png" alt="img" class="img-fluid">
-                        <div class="card-body">
-                            <h2 class="card-title">Jack Maa</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet.</p>
-                            <a href="#" class="card-link stretched-link">Know more</a>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-
-                    <div class="card">
-                        <img src="img/team2.png" alt="img" class="img-fluid">
-                        <div class="card-body">
-                            <h2 class="card-title">Jack Maa</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet.</p>
-                            <a href="#" class="card-link stretched-link">Know more</a>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6">
-
-                    <div class="card">
-                        <img src="img/team3.png" alt="img" class="img-fluid">
-                        <div class="card-body">
-                            <h2 class="card-title">Jack Maa</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet.</p>
-                            <a href="#" class="card-link stretched-link">Know more</a>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-
-                    <div class="card">
-                        <img src="img/team4.jpg" alt="img" class="img-fluid">
-                        <div class="card-body">
-                            <h2 class="card-title">Jack Maa</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet.</p>
-                            <a href="#" class="card-link stretched-link">Know more</a>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6">
-
-                    <div class="card">
-                        <img src="img/team5.jpg" alt="img" class="img-fluid">
-                        <div class="card-body">
-                            <h2 class="card-title">Jack Maa</h2>
-                            <p class="card-text">Lorem ipsum dolor sit amet.</p>
-                            <a href="#" class="card-link stretched-link">Know more</a>
-
-                        </div>
-                    </div>
-
-
-
-
-
-                </div>
-
-
-
-
-
-
-            </div>
-
-        </div>
-
-
+            </div> --}}
     </section>
 
 
@@ -257,17 +131,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
-                    <div class="">
-                        <img src="{{ asset('images/logos/puesto.png') }}" alt="img" style="width:400px;height:600;" class="img-fluid">
+                    <div class="mt-5">
+                        <img src="{{ asset('images/delivery/delivery.png') }}" alt="img" style="width:400px;height:600;" class="img-fluid">
                     </div>
 
                 </div>
 
                 <div class="col-md-6 col-sm-12 pad">
-                    <h3>Sobre Nuestros Productos</h3>
-                    <p>Adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                        minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat
-
+                    <h3>Delivery</h3>
+                    <p>Pide desde casa, te llevamos tu fruta hasta la puerta de tu hogar. Maipo Grande gestiona tu transporte con nuestros procesos 
+                        logisticos. Contamos con los mejores precios, no lo dudes Maipo Grande a tu servicio.
                     </p>
 
                     <button class="btn btn-outline-secondary ">Read More</button>
@@ -299,67 +172,28 @@
                     <hr class="my-4">
 
                 </div>
-
-
-                <div class="col-xs-12 col-md-6 " id="contact" class="one">
-
-
-                    <form class="mb-sm-4" id="for">
-
-
-                        <div class="form-group">
-                            <label for="exampleFormControlInput2">Name</label>
-                            <input type="name" class="form-control" id="exampleFormControlInput2"
-                                placeholder="User Name">
+                    
+                    <div class="col-xs-12 col-md-6 " id="contact" class="one">
+                        <div class="form-group text-center">
+                            <br>
+                            <label class="bold">Email</label>
+                            <h5>contacto@maipogrande.cl</h5>
+                            <br>
+                            <label for="">Telefono</label>
+                            <h5>222 666 5555 222</h5>
+                            <br>
+                            <label for="">Direccion</label>
+                            <h5>Ramón Subercaseaux 736</h5>
                         </div>
-
-
-                        <div class="form-group">
-                            <label for="exampleFormControlInput1">Email address</label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1"
-                                placeholder="name@example.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="exampleFormControlTextarea1">Message</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn btn-info">Submit</button>
-                    </form>
-
-
-
-
-                </div>
-
+                    </div>
+ 
+                
 
 
                 <div class="col-xs-12 col-md-6" id="contact" class="two">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115806.34359550575!2d91.79094155131145!3d24.899747201107232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x375054d3d270329f%3A0xf58ef93431f67382!2sSylhet!5e0!3m2!1sen!2sbd!4v1516883061409"
-                        width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m24!1m12!1m3!1d4977.539675263938!2d-70.5715805140476!3d-33.628410145131994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m9!3e6!4m3!3m2!1d-33.6329087!2d-70.5646375!4m3!3m2!1d-33.6330063!2d-70.5643253!5e0!3m2!1ses-419!2scl!4v1668354438138!5m2!1ses-419!2scl" width="800" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
 
@@ -375,7 +209,7 @@
             <div class="row">
 
                 <div class="col-12 text-center bg-light text-dark">
-                    <h3>Copyright &copy; w3.com</h3>
+                    <h3>Copyright &copy;2022 maipogrande.com</h3>
 
                 </div>
 

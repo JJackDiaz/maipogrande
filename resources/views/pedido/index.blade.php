@@ -41,7 +41,7 @@
                 <td>{{ $pedido->estado  }}</td>
                 <td>{{ $pedido->saldo_id }}</td>
                 <td>
-                  @if(Auth::user()->id_tipo_usuario==1)
+                  @if(Auth::user()->id_tipo_usuario==1 && $pedido->estado == 'revisando')
                   <a class="btn btn-warning" href="{{ route('crear_subasta_local' , $pedido->numero_pedido) }}">
                     <h6>Crear Subasta</h6>
                   </a>
@@ -50,7 +50,11 @@
                   <a class="btn btn-warning" href="{{ route('cart.checkout' , $pedido->numero_pedido) }}">
                     <h6>Checkout</h6>
                   </a>
-                  @else
+                  @elseif(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'pagado')
+                  <a class="btn btn-warning" href="">
+                    <h6>Recibido</h6>
+                  </a>
+                  @elseif(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'revisando')
                   <h6>Procesando</h6>
                   @endif
                 </td>

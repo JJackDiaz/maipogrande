@@ -95,58 +95,6 @@ class CartController extends Controller
 
         $cartCollection = \Cart::getContent();
 
-        $precio = \Cart::getTotal();
-        $comision = (5*$precio)/100;
-        $servicio = (2*$precio)/100;
-        $iva = (19*$precio)/100;
-
-        $total = $comision + $servicio + $iva + $precio;
-        
-        $existencia = DB::table('venta_lo')
-        ->where('numero_venta', '=', $id)
-        ->get();
-
-        if (count($existencia) < 1) {
-
-            VentaLo::create([
-                'numero_venta' => $id,
-                'detalle' => 'Venta local',
-                'servicio' => $servicio,
-                'comision' => $comision,
-                'iva' => $iva,
-                'estado_ex' => 'pendiente',
-                'total_venta' => $total,
-            ]);
-            
-            foreach ($cartCollection as $item) {
-                //id_producto y disminuir
-                $productos = Producto::where('id',$item->id)->get();
-
-                foreach ($productos as $key => $producto) {
-                    
-                    if ($producto->cantidad > 0) {
-                    $producto->cantidad = ($producto->cantidad - $item->quantity);
-                    $producto->save();
-                    }else{
-                        echo 'No quedan productos';
-                    }
-
-                    //ir a saldo con ese id y disminuir
-                    $saldos = Saldo::where('producto_id',$item->id)->get();
-
-                    foreach ($saldos as $key => $saldo) {
-                        if ($saldo->cantidad > 0) {
-                            # code...
-                            $saldo->cantidad = $producto->cantidad;
-                            $saldo->descripcion = 'Venta Local';
-                            $saldo->save();
-                        }else{
-                            echo 'No quedan productos';
-                        }
-                    }
-                }
-            }
-        }
         $venta_lo = VentaLo::where('numero_venta',$id)->get();
 
         return view('checkout', compact('venta_lo'))->with(['cartCollection' => $cartCollection]);
@@ -161,36 +109,49 @@ class CartController extends Controller
         ->get();
 
         foreach ($cartCollection as $key => $value) {
-            //echo $key+1 . $value;
-            if (count($existencia) < 1) {
 
-                if ($key+1 != null && $key+1 == 1) {
+            foreach ($value as $key) {
+                foreach ($key as $aa) {
 
-                    Pedido::create([
-                        'numero_pedido' => $id,
-                        'precio' => $value[$key+1]['price'],
-                        'cantidad' => $value[$key+1]['quantity'],
-                        'estado' => 'revisando',
-                        'saldo_id' => $value[$key+1]['id'],
-                        'usuario_id' => Auth::user()->id,
-                    ]);
-                }
+                    $productos = Producto::where('id',$key['id'])->get();
 
-                if (!empty($key+2) && $key+2 == 2) {
+                    foreach ($productos as $producto) {
+                        if ($producto->cantidad > 0) {
+                            $producto->cantidad = ($producto->cantidad - $key['quantity']);
+                            $producto->save();
+                            }else{
+                                echo 'No quedan productos';
+                            }
+                    }
 
-                    Pedido::create([
-                        'numero_pedido' => $id,
-                        'precio' => $value[$key+2]['price'],
-                        'cantidad' => $value[$key+2]['quantity'],
-                        'estado' => 'revisando',
-                        'saldo_id' => $value[$key+2]['id'],
-                        'usuario_id' => Auth::user()->id,
-                    ]);
 
-                }
+                    $saldos = Saldo::where('producto_id',$producto->id)->get();
                 
+                    foreach ($saldos as $saldo) {
+                        if ($saldo->cantidad > 0) {
+                            $saldo->cantidad = $producto->cantidad;
+                            $saldo->descripcion = 'Venta Local';
+                            $saldo->save();
+                        }else{
+                            echo 'No quedan productos';
+                        }
+                    }
+                    
 
+                    if (count($existencia) < 1) {
+                        Pedido::create([
+                            'numero_pedido' => $id,
+                            'precio' => $key['price'],
+                            'cantidad' => $key['quantity'],
+                            'estado' => 'revisando',
+                            'saldo_id' => $key['id'],
+                            'usuario_id' => Auth::user()->id,
+                        ]);
+                        break;
+                    }
+                }
             }
+           
         }
 
         return view('crear_pedido', compact('id'));
@@ -214,6 +175,7 @@ class CartController extends Controller
             'direccion' => $request->direccion,
             'comuna' => $request->comuna,
             'numero' => $request->numero,
+            'email' => $request->email,
             'telefono' => $request->telefono,
             'comentario' => $request->comentario,
             'estado' => 'pendiente',

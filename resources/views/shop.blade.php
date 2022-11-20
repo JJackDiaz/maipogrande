@@ -40,9 +40,9 @@
                     </a>
                 </li>
                 @if (Route::has('login'))
-                        <div class="top-right links">
                             @auth
-                            <li class="d-flex">
+                            <li class="nav-item"><a href="{{ route('pedido.index') }}" class="nav-link ">Mis Pedidos</a></li>
+                            <li class="nav-item" class="nav-link">
                                 <a href="{{ route('login') }}">
                                     <button class="btn btn-outline-light" type="submit">{{ Auth::user()->nombre_completo }}</button>
                                 </a>
@@ -53,8 +53,7 @@
                                     <button class="btn btn-outline-light" type="submit">Login</button>
                                 </a>
                             </li>
-                            @endauth
-                        </div>
+                            @endauth     
                     @endif
                 <!-- <li class="nav-item"><a href="#contact" class="nav-link ">Login</a></li> -->
 
