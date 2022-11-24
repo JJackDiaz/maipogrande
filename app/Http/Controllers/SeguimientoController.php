@@ -9,7 +9,7 @@ class SeguimientoController extends Controller
 {
     public function seguimiento(Request $request){
 
-        $externo = $request->numero_seguimiento;
+        $externo = $request->numero_solictud;
         $local = $request->numero_pedido;
 
         if ($local) {
@@ -28,10 +28,15 @@ class SeguimientoController extends Controller
             }
         return view('seguimiento.seguimiento');
 
-        }else {
-
-            return view('seguimiento.seguimiento');
         }
-    
+        if(isset($externo)){
+
+            $aaa = $request->numero_solictud;
+
+
+            return view('seguimiento.seguimiento', compact('aaa'));
+        }
+
+        return view('seguimiento.seguimiento');
     }
 }

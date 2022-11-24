@@ -18,6 +18,7 @@
                     <button type="submit" class="btn btn-primary">Consultar</button>
                 </form>
             </div>
+            <h1>{{ isset($aaa) ? $aaa : '' }}</h1>
             <div class="progress m-2">
                 <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow=75" aria-valuemin="0" aria-valuemax="100" style="width: 35%">Subastado</div>
             </div>
