@@ -30,9 +30,6 @@ class ProcesoVentaController extends Controller
         ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
         ->get();
 
-
-
-        
         $cont = 1;
 
         return view('proceso_venta.index', compact('procesos', 'cont'));
@@ -88,10 +85,15 @@ class ProcesoVentaController extends Controller
 
         $solicitud = $request->id;
 
+        $soli = Solicitud::find($solicitud);
+        $cantidad = $soli->cantidad;
+
+        //var_dump($cantidad);exit;
+
         $productos = Producto::where("usuario_id", Auth::user()->id)->get();
         $cont = 1;
 
-        return view('proceso_venta.participar', compact('productos','cont','solicitud'));
+        return view('proceso_venta.participar', compact('productos','cont','solicitud', 'cantidad'));
     }
 
     public function participar_proceso($id ,Request $request){

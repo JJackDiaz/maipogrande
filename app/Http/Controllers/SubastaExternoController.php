@@ -102,16 +102,18 @@ class SubastaExternoController extends Controller
     {
 
         $solicitud = DB::table('proceso_ven')
+        ->select('direccion' ,'proceso_ven.id')
         ->where('proceso_ven.solicitud_proceso_id', '=', $id)
         ->join('solicitud_pro', 'solicitud_pro.id', '=', 'proceso_ven.solicitud_proceso_id')
         ->get();
 
         foreach ($solicitud as $key) {
             $direccion = $key->direccion;
+            $proceso_ven = $key->id;
         }
-
+        
         $proceso_producto = DB::table('proceso_producto')
-        ->where('proceso_producto.proceso_ven_id', '=', $id)->get();
+        ->where('proceso_producto.proceso_ven_id', '=', $proceso_ven)->get();
 
         foreach ($proceso_producto as $key) {
             $id_proceso_producto = $key->id;
@@ -119,7 +121,6 @@ class SubastaExternoController extends Controller
         
         Subasta::create([
             'fecha_inicio' => Carbon::now(),
-            'fecha_fin' => new Carbon('tomorrow'),
             'tipo' => 'venta externa',
             'estado' => 'activo',
             'direccion' => $direccion,

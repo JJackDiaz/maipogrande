@@ -23,6 +23,7 @@
           <th scope="col">#</th>
             <th scope="col">Nombre</th>
             <th scope="col">Cantidad</th>
+            <th scope="col">Cantidad Solicitud</th>
             <th scope="col">Calidad</th>
             <th scope="col">Precio</th>
             <th scope="col">Opción</th>
@@ -33,15 +34,23 @@
               <tr>
                 <th scope="row"><?php echo $cont; $cont++; ?></th>
                   <td>{{ $producto->nombre }}</td>
-                  <td>{{ $producto->nombre }}</td>
+                  <td>{{ $producto->cantidad }}KG</td>
+                  <td>{{ $cantidad }}KG</td>
                   <td>{{ $producto->calidad }}</td>
-                  <td>{{ $producto->precio }}</td>
+                  <td>${{ $producto->precio }}</td>
                   <td>
                     <form action="{{ route('proceso-venta.participar_proceso',$producto->id) }}" method="get">
                         <input type="text" value="{{ $solicitud }}" hidden name="solicitud">
-                        <button type="submit" class="btn btn-danger">
+                        @if ($cantidad <= $producto->cantidad && $producto->cantidad > 0)
+                          <button type="submit" class="btn btn-danger">
                             <h6 class="text-white">Seleccionar</h6>
-                        </button>
+                          </button>
+                        @else
+                          <div class="alert alert-primary" role="alert">
+                            Insuficiente cantidad!
+                          </div>
+                        @endif
+                        
                     </form>
                   </td>
               </tr>

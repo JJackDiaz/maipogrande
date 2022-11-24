@@ -56,7 +56,7 @@
                         <h6 class="text-white">Participantes</h6>
                       </a>
                       @if( $proceso->estado == 'subastando')  
-                        <a class="btn btn-success" href="{{ route('crear_subasta' , $proceso->id) }}">
+                        <a class="btn btn-success" href="{{ route('crear_subasta' , $proceso->solicitud_proceso_id) }}">
                           <h6 class="text-white">Crear Subasta</h6>
                         </a>
                       @endif
@@ -70,12 +70,18 @@
                     @if ($proceso->estado == 'subastando')
                       <h6>Su pedido esta en proceso de subasta</h6>
                     @else
-                      <a class="btn btn-success" href="{{ route('proceso-venta.checkout-proceso', $proceso->id) }}">
-                        <h6 class="text-white">Checkout</h6>
-                      </a>
+                      @if ($proceso->estado == 'pagado')
+                        <div class="alert alert-primary" role="alert">
+                          Pagado!
+                        </div>
+                      @else
+                        <a class="btn btn-success" href="{{ route('proceso-venta.checkout-proceso', $proceso->id) }}">
+                          <h6 class="text-white">Ir a Pagar</h6>
+                        </a>
                       @endif
+                    @endif
                   @elseif (Auth::user()->id_tipo_usuario == 6)
-                      <a class="btn btn-success" href="{{ route('proceso-venta.participar', $proceso->id) }}">
+                      <a class="btn btn-success" href="{{ route('proceso-venta.participar', $proceso->solicitud_proceso_id) }}">
                         <h6 class="text-white">Participar</h6>
                       </a>
                       <a class="btn btn-warning" href="{{ route('proceso-venta.participantes' , $proceso->id) }}">

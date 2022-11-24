@@ -64,7 +64,7 @@ class PaymentController extends Controller
                 $payment->payer_id = $arr['payer']['payer_info']['payer_id'];
                 $payment->payer_email = $arr['payer']['payer_info']['email'];
                 $payment->amount = $arr['transactions'][0]['amount']['total'];
-                $payment->currency = env('PAYPAL_CURRENCY');
+                $payment->currency = 'USD';
                 $payment->payment_status = $arr['state'];
                 $payment->venta_ex_id = $id;
                 //$payment->venta_lo_id = 'NULL';
@@ -83,6 +83,9 @@ class PaymentController extends Controller
                         $proceso_venta->estado = 'pagado';
                         $proceso_venta->save();
                     }
+
+                    //Solicitud estado pagado
+                    //proceso venta en ruta
                 }
 
                 //return "Payment is Successfull. Your Transaction Id is : " . $arr['id'];

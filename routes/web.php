@@ -112,16 +112,21 @@ Route::middleware('auth')->group(function(){
 
     //perdidos
     Route::resource('pedido','PedidoController');
+    Route::get('crear_pedido/{id}', 'CartController@crear_pedido')->name('cart.crear_pedido');
+    Route::post('store_pedido/{id}', 'CartController@store_pedido')->name('cart.store_pedido');
 
     //carrito
     Route::get('cart', 'CartController@cart')->name('cart.index');
     Route::get('checkout/{id}', 'CartController@checkout')->name('cart.checkout');
     
-
-    Route::get('crear_pedido/{id}', 'CartController@crear_pedido')->name('cart.crear_pedido');
-    Route::post('store_pedido/{id}', 'CartController@store_pedido')->name('cart.store_pedido');
-
+    
+    
 });  
+
+//seguimiento local
+Route::get('seguimiento', 'SeguimientoController@seguimiento')->name('seguimiento');
+Route::get('seguimiento_local', 'SeguimientoController@seguimiento_local')->name('seguimiento_local');
+Route::get('seguimiento_externo/', 'SeguimientoController@seguimiento_externo');
 
 //PAYPAL
 Route::post('pay', 'PaymentController@pay')->name('payment');

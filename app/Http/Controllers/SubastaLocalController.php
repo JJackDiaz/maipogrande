@@ -110,6 +110,8 @@ class SubastalocalController extends Controller
         foreach ($detalle_pedido as $key) {
             $pedido_id = $key->id;
             $direccion = $key->direccion;
+            $numero_casa = $key->numero;
+            $comuna = $key->comuna;
         }
 
         $existencia = DB::table('subasta_trans')
@@ -119,7 +121,7 @@ class SubastalocalController extends Controller
         if (count($existencia) < 1) {
 
         Subasta::create([
-            'direccion' => $direccion,
+            'direccion' => $direccion.' #'.$numero_casa.', '.$comuna,
             'estado' => 'activo',
             'fecha_inicio' => Carbon::now(),
             'tipo' => 'venta externa',

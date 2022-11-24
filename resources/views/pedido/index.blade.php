@@ -47,15 +47,17 @@
                   </a>
                   @endif
                   @if(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'subastado')
-                  <a class="btn btn-warning" href="{{ route('cart.checkout' , $pedido->numero_pedido) }}">
-                    <h6>Checkout</h6>
+                  <a class="btn btn-warning text-white" href="{{ route('cart.checkout' , $pedido->numero_pedido) }}">
+                    <h6>Ir a Pagar</h6>
                   </a>
                   @elseif(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'pagado')
                   <a class="btn btn-warning" href="">
                     <h6>Recibido</h6>
                   </a>
-                  @elseif(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'revisando')
-                  <h6>Procesando</h6>
+                  @elseif(Auth::user()->id_tipo_usuario== 4 && $pedido->estado == 'revisando')
+                    <div class="alert alert-primary" role="alert">
+                      Procesando pedido!
+                    </div>
                   @endif
                 </td>
             </tr>

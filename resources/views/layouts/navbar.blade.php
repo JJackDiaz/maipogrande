@@ -121,11 +121,17 @@
         </li> 
     @endif
 
+     {{-- Interno --}}
     @if(Auth::user()->id_tipo_usuario==4)
         <li class="nav-item"><a class="nav-link" href="{{ route('pedido.index') }}">
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
             </svg>Mis Pedidos</a>
+        </li> 
+        <li class="nav-item"><a class="nav-link" href="{{ route('pedido.index') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
+            </svg>Seguimiento</a>
         </li> 
     @endif
 

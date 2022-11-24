@@ -136,7 +136,6 @@ class CartController extends Controller
                             echo 'No quedan productos';
                         }
                     }
-                    
 
                     if (count($existencia) < 1) {
                         Pedido::create([
