@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function(){
     Route::DELETE('/solicitud/{solicitud}', 'solicitudController@destroy')->name('solicitud.destroy');
     Route::post('/solicitud/{solicitud}/activo', 'solicitudController@activo')->name('solicitud.activo');
     Route::get('/solicitud/{solicitud}/anular', 'solicitudController@anular')->name('solicitud.anular');
+    //Route::get('/buscar-ciudad/{id}', 'solicitudController@buscar_ciudad')->name('solicitud.buscar_ciudad');
 
     //subasta Externo
     Route::resource('subasta','SubastaExternoController');

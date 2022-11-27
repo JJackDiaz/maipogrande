@@ -70,7 +70,7 @@
                     @if ($proceso->estado == 'subastando')
                       <h6>Su pedido esta en proceso de subasta</h6>
                     @else
-                      @if ($proceso->estado == 'pagado')
+                      @if ($proceso->estado == 'en_ruta')
                         <div class="alert alert-primary" role="alert">
                           Pagado!
                         </div>

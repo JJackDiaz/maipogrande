@@ -47,16 +47,6 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-cart') }}"></use>
         </svg>Pedidos</a>
     </li> 
-    <li class="nav-item"><a class="nav-link" href="typography.html">
-        <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
-        </svg> Informes</a>
-    </li>
-    <li class="nav-item"><a class="nav-link" href="typography.html">
-        <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
-        </svg>Pagos</a>
-    </li>
     @endif
     {{-- PRODUCTOR --}}
     
@@ -127,11 +117,6 @@
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
             </svg>Mis Pedidos</a>
-        </li> 
-        <li class="nav-item"><a class="nav-link" href="{{ route('pedido.index') }}">
-            <svg class="nav-icon">
-                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
-            </svg>Seguimiento</a>
         </li> 
     @endif
 

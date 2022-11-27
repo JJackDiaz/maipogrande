@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Pedido;
+use App\ProcesoVenta;
 
 class SeguimientoController extends Controller
 {
@@ -12,7 +13,7 @@ class SeguimientoController extends Controller
         $externo = $request->numero_solictud;
         $local = $request->numero_pedido;
 
-        if ($local) {
+        if (isset($local)) {
             
             $pedido = Pedido::where('numero_pedido', $local)->get();
 
@@ -31,10 +32,18 @@ class SeguimientoController extends Controller
         }
         if(isset($externo)){
 
-            $aaa = $request->numero_solictud;
+            $proceso_venta = ProcesoVenta::where('solicitud_proceso_id', $externo)->get();
 
-
-            return view('seguimiento.seguimiento', compact('aaa'));
+            if (count($proceso_venta) == 1) {
+                foreach ($proceso_venta as $value) {
+                    if (isset($value->solicitud_proceso_id)) {
+                        $number = $value->solicitud_proceso_id;
+                        return view('seguimiento.seguimiento', compact('proceso_venta', 'number'));
+                    }
+                }
+            }else {
+                return redirect()->route('seguimiento')->with('error', 'No existe pedido!!!');
+            }
         }
 
         return view('seguimiento.seguimiento');

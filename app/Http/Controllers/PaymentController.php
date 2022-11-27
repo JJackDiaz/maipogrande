@@ -80,7 +80,7 @@ class PaymentController extends Controller
                         $proceso_venta_id = $proceso_producto->proceso_ven_id;
 
                         $proceso_venta = ProcesoVenta::find($proceso_venta_id);
-                        $proceso_venta->estado = 'pagado';
+                        $proceso_venta->estado = 'en_ruta';
                         $proceso_venta->save();
                     }
 

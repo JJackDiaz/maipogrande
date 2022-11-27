@@ -31,9 +31,13 @@
                         <div class="col-md-6">
                             <select class="form-select" name="producto" id="producto" value="producto">
                                 <option value=''>Selecciona Producto</option>
-                                @foreach($productos as $producto)
-                                <option value="{{ $producto->nombre }}">{{ $producto->nombre }}</option>
-                                @endforeach
+                                <option value="manzana">Manzana</option>
+                                <option value="pera">Pera</option>
+                                <option value="uva">Uva</option>
+                                <option value="melon">Melon</option>
+                                <option value="frutilla">Frutilla</option>
+                                <option value="banana">Banana</option>
+                                <option value="sandia">Sandia</option>
                             </select>
                             
                             @error('usuario_id')
@@ -75,6 +79,10 @@
                             @enderror
                         </div>     
                     </div>
+
+                    <form action="" method="get">
+                        <input type="submit" value="">
+                    </form>
 
                     <div class="form-group row m-2">
                         <label for="ciudad_id" class="col-md-4 col-form-label text-md-right">{{ __('Ciudad') }}</label>
