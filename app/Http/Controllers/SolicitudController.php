@@ -6,11 +6,17 @@ use App\Pais;
 use App\Ciudad;
 use App\Producto;
 use Auth;
+use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
 
 class SolicitudController extends Controller
 {
+
+    public $token;
+    public $paises;
+    public $ciudades;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -35,8 +41,28 @@ class SolicitudController extends Controller
     public function create()
     {
         $productos = Producto::all();
-        $paises = Pais::all();
+        //$paises = Pais::all();
         $ciudades = Ciudad::all();
+
+        //API PAISES
+        $response = Http::withHeaders([
+            "Accept" => "application/json",
+            "api-token" => "kNs7CAA720ZI85yknY7rSuDF_FQ1FtfuQZpDHHVA7waerr6l1Mc4DZV7YT1bqD209d8",
+            "user-email" => "jjackdiaz.10@gmail.com"
+        ])->get('https://www.universal-tutorial.com/api/getaccesstoken');
+
+        $array = (array)$response->json(["auth_token"]);
+
+        foreach ($array as $key => $value) {
+            $this->token = $value;
+        }
+
+        $pais = Http::withHeaders([
+            "Authorization" => 'Bearer '. $this->token,
+            "Accept" => "application/json"
+        ])->get('https://www.universal-tutorial.com/api/countries/');
+
+        $paises = $pais->json();
 
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
             return view('solicitud.create', compact('productos','paises','ciudades'));
@@ -74,12 +100,23 @@ class SolicitudController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function getStates(){
+
+        //se le madanda el pais
+        $states = Http::withHeaders([
+            "Authorization" => 'Bearer '. $this->token,
+            "Accept" => "application/json"
+        ])->get('https://www.universal-tutorial.com/api/states/'. $this->estado);
+    }
+
+    public function getCities(){
+
+        $cities = Http::withHeaders([
+            "Authorization" => 'Bearer '. $this->token,
+            "Accept" => "application/json"
+        ])->get('https://www.universal-tutorial.com/api/cities/'. $this->ciudades);
+    }
+
     public function show($id)
     {
         $solicitud = Solicitud::find($id);

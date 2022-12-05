@@ -6,6 +6,7 @@ use App\Payment;
 use App\VentaEx;
 use App\ProcesoProducto;
 use App\ProcesoVenta;
+use App\Solicitud;
 use Illuminate\Http\Request;
 use Omnipay\Omnipay;
 
@@ -81,11 +82,13 @@ class PaymentController extends Controller
 
                         $proceso_venta = ProcesoVenta::find($proceso_venta_id);
                         $proceso_venta->estado = 'en_ruta';
-                        $proceso_venta->save();
-                    }
 
-                    //Solicitud estado pagado
-                    //proceso venta en ruta
+                        if ($proceso_venta->save()) {
+                            $solicitud = Solicitud::find($proceso_venta->solicitud_proceso_id);
+                            $solicitud->estado_id = 5;
+                        }
+                        
+                    }
                 }
 
                 //return "Payment is Successfull. Your Transaction Id is : " . $arr['id'];

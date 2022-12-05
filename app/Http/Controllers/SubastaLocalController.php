@@ -124,7 +124,7 @@ class SubastalocalController extends Controller
             'direccion' => $direccion.' #'.$numero_casa.', '.$comuna,
             'estado' => 'activo',
             'fecha_inicio' => Carbon::now(),
-            'tipo' => 'venta externa',
+            'tipo' => 'venta local',
             'detalle_pedido_id' => $pedido_id,
         ]);
 

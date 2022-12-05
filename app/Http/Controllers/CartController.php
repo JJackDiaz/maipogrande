@@ -18,6 +18,7 @@ class CartController extends Controller
     public function shop()
     {
         $saldos = DB::table('saldo')
+        ->where('saldo.estado', 'publicado')
         ->join('producto', 'producto.id', '=', 'saldo.producto_id')
         ->get();
         //dd($saldos);

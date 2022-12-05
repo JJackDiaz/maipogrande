@@ -71,9 +71,16 @@
                       <h6>Su pedido esta en proceso de subasta</h6>
                     @else
                       @if ($proceso->estado == 'en_ruta')
-                        <div class="alert alert-primary" role="alert">
-                          Pagado!
+                        <div class="alert alert-primary" role="alert" >
+                          <h5 class="float-end">Pagado!</h5>
+                          <a class="btn btn-success" href="{{ route('proceso-venta.recibido', $proceso->id) }}">
+                            <h6 class="text-white">Recibir</h6>
+                          </a>
                         </div>
+                      @elseif ($proceso->estado == 'recibido')
+                        <div class="alert alert-primary" role="alert" >
+                          <h5 class="text-center">Recibido!</h5>
+                        </div>  
                       @else
                         <a class="btn btn-success" href="{{ route('proceso-venta.checkout-proceso', $proceso->id) }}">
                           <h6 class="text-white">Ir a Pagar</h6>

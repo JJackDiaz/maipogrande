@@ -50,12 +50,16 @@
                   <a class="btn btn-warning text-white" href="{{ route('cart.checkout' , $pedido->numero_pedido) }}">
                     <h6>Ir a Pagar</h6>
                   </a>
-                  @elseif(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'pagado')
-                  <a class="btn btn-warning" href="">
-                    <h6>Recibido</h6>
+                  @elseif(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'en_ruta')
+                  <a class="btn btn-warning" href="{{ route('pedido.recibido', $pedido->id) }}">
+                    <h6>Recibir</h6>
                   </a>
+                  @elseif(Auth::user()->id_tipo_usuario==4 && $pedido->estado == 'recibido')
+                    <div class="alert alert-primary text-center" role="alert">
+                      Recibido!
+                    </div>
                   @elseif(Auth::user()->id_tipo_usuario== 4 && $pedido->estado == 'revisando')
-                    <div class="alert alert-primary" role="alert">
+                    <div class="alert alert-primary text-center" role="alert">
                       Procesando pedido!
                     </div>
                   @endif

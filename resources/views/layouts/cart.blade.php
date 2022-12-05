@@ -29,9 +29,9 @@
                 <li class="nav-item"><a href="{{ url('/') }}" class="nav-link ">Inicio</a></li>
                 <li class="nav-item"><a href="{{ route('seguimiento') }}" class="nav-link ">Seguimiento</a></li>
                 <li class="nav-item"><a href="{{ url('shop') }}" class="nav-link ">Shop</a></li>
-                <li class="nav-item dropdown">
+                <li class="nav-item">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle"
-                       href="#" role="button" data-toggle="dropdown"
+                       href="{{ route('cart.index') }}" role="button"
                        aria-haspopup="true" aria-expanded="false"
                     >
                         <span class="badge badge-pill badge-dark">

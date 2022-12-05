@@ -68,7 +68,7 @@
                             <select class="form-select" name="pais_id" id="pais_id" value="pais_id">
                                 <option value=''>Selecciona Pais</option>
                                 @foreach($paises as $pais)
-                                <option value="{{ $pais->id }}">{{ $pais->nombre }}</option>
+                                <option id="pais" onchange="getStates({{ $pais['country_name'] }})" value="{{ $pais['country_name'] }}">{{ $pais['country_name'] }}</option>
                                 @endforeach
                             </select>
                             
@@ -79,10 +79,6 @@
                             @enderror
                         </div>     
                     </div>
-
-                    <form action="" method="get">
-                        <input type="submit" value="">
-                    </form>
 
                     <div class="form-group row m-2">
                         <label for="ciudad_id" class="col-md-4 col-form-label text-md-right">{{ __('Ciudad') }}</label>
@@ -128,5 +124,32 @@
         </div>
     </div>
 </div>
+@endsection
+@section('js')
+<script>
 
+document.getElementById("pais").addEventListener("click", myFunction);
+
+function myFunction() {
+  console.log(document.getElementById("pais").value);
+}
+
+function getStates(pais)
+{
+    //var url = $('#get-state').val();
+    //let pais = document.getElementById("pais").value;
+    //var pais = document.getElementById("pais").value; 
+
+    //console.log(pais);
+
+    // $.ajax({
+    //     url: url+'/'+productId+'/'+encodeURI(quantity),
+    //     type: "GET",
+    //     dataType: "json",
+    //     success:function(amount) {
+    //         setValue(quantity, amount);
+    //     }
+    // });
+};
+</script>
 @endsection

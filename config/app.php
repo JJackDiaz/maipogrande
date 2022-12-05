@@ -230,6 +230,7 @@ return [
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'PayPal' => Srmklive\PayPal\Facades\PayPal::class,
         
+        
 
     ],
 

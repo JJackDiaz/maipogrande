@@ -9,8 +9,9 @@ route::get('alerta', function () {
 
     $correo = new AlertaMailable;
 
-    Mail::to('jorgejackdiaz@gmail.com')->send($correo);
-    return "mensaje enviado";
+    Mail::to('jjackdiaz.10@gmail.com')->send(new $correo);
+    
+    return 'listo';
 });
 
 route::get('/', function () {
@@ -54,15 +55,13 @@ Route::middleware('auth')->group(function(){
     //usuarios
     Route::resource('usuario','UsuarioController');
     Route::resource('proceso-venta','ProcesoVentaController');
-    //contratos+
+    //contratos
     Route::resource('contrato','ContratoController');
     Route::get('/ver-contrato', 'ContratoController@ver_pdf')->name('ver-pdf');
     Route::get('/index', 'ContratoController@index')->name('contrato.index');
     Route::get('/contrato', 'ContratoController@contrato')->name('contrato.contrato');
     Route::post('/aceptar-contrato/{id}', 'ContratoController@aceptar_contrato')->name('contrato.aceptar_contrato');
     Route::get('/contrato-pdf', 'ContratoController@ver_pdf')->name('ver-pdf');
-    //solicitudes
-    Route::get('solicitud', 'SolicitudController@index')->name('solicitud.index');
 
     //Productos
     Route::resource('producto','ProductoController');
@@ -74,6 +73,7 @@ Route::middleware('auth')->group(function(){
     Route::get('participar_proceso/{id}', 'ProcesoVentaController@participar_proceso')->name('proceso-venta.participar_proceso');
     Route::get('participantes/{id}', 'ProcesoVentaController@participantes')->name('proceso-venta.participantes');
     Route::get('procesamiento/{id}', 'ProcesoVentaController@procesamiento')->name('proceso-venta.procesamiento');
+    Route::get('recibido/{id}', 'ProcesoVentaController@estado_recibido')->name('proceso-venta.recibido');
     
     Route::get('checkout-proceso/{id}', 'ProcesoVentaController@checkout_proceso')->name('proceso-venta.checkout-proceso');
 
@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/saldos', 'SaldoController@index')->name('saldo.index');
 
     //solicitud
+    Route::get('solicitud', 'SolicitudController@index')->name('solicitud.index');
     Route::get('/solicitud', 'solicitudController@index')->name('solicitud.index');
     Route::get('/solicitud/create', 'solicitudController@create')->name('solicitud.create');
     Route::post('/solicitud', 'solicitudController@store')->name('solicitud.store');
@@ -90,7 +91,6 @@ Route::middleware('auth')->group(function(){
     Route::DELETE('/solicitud/{solicitud}', 'solicitudController@destroy')->name('solicitud.destroy');
     Route::post('/solicitud/{solicitud}/activo', 'solicitudController@activo')->name('solicitud.activo');
     Route::get('/solicitud/{solicitud}/anular', 'solicitudController@anular')->name('solicitud.anular');
-    //Route::get('/buscar-ciudad/{id}', 'solicitudController@buscar_ciudad')->name('solicitud.buscar_ciudad');
 
     //subasta Externo
     Route::resource('subasta','SubastaExternoController');
@@ -113,8 +113,9 @@ Route::middleware('auth')->group(function(){
 
     //perdidos
     Route::resource('pedido','PedidoController');
-    Route::get('crear_pedido/{id}', 'CartController@crear_pedido')->name('cart.crear_pedido');
-    Route::post('store_pedido/{id}', 'CartController@store_pedido')->name('cart.store_pedido');
+    Route::get('recibir-pedido/{id}','PedidoController@estado_recibido')->name('pedido.recibido');
+    Route::get('crear-pedido/{id}', 'CartController@crear_pedido')->name('cart.crear_pedido');
+    Route::post('store-pedido/{id}', 'CartController@store_pedido')->name('cart.store_pedido');
 
     //carrito
     Route::get('cart', 'CartController@cart')->name('cart.index');
@@ -136,8 +137,13 @@ Route::get('/error', 'PaymentController@error')->name('error');
 
 //PAYPAL SHOP
 Route::post('pay-shop', 'PaymentShopController@pay')->name('payment-shop');
-Route::get('success-shop/{id}', 'PaymentShopController@success')->name('success-shop');;
-Route::get('error-shop', 'PaymentShopController@error')->name('error-shop');;
+Route::get('success-shop/{id}', 'PaymentShopController@success')->name('success-shop');
+Route::get('error-shop', 'PaymentShopController@error')->name('error-shop');
+
+
+
+
+Route::get('get-state', 'SolicitudController@getStates');
 
 
    /////////////////

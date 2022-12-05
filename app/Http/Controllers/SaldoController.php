@@ -16,6 +16,8 @@ class SaldoController extends Controller
 
         $cont = 1;
 
-        return view('saldo.index', compact('cont','saldos'));
+        $count = Saldo::where('estado', 'pendiente')->count();
+
+        return view('saldo.index', compact('cont','saldos','count'));
     }
 }

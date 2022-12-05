@@ -207,5 +207,14 @@ class ProcesoVentaController extends Controller
         
     }
 
+    public function estado_recibido($id){
+
+        $proceso_venta = ProcesoVenta::find($id);
+        $proceso_venta->estado = 'recibido';
+        $proceso_venta->save();
+
+        return redirect()->route('proceso-venta.index')->with('success', 'recibido');
+    }
+
 
 }

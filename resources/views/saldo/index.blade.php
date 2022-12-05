@@ -6,13 +6,16 @@
     <li class="breadcrumb-item active"><span>Venta Local</span></li>
 @endsection
 @section('content')
+<button type="button" class="btn btn-warning">
+  Listos para publicar <span class="badge text-bg-primary">{{ $count }}</span>
+</button>
 <table class="table table-warning table-striped-columns">
     <div class="col-12 text-left m-2">
     </div>
       <thead>
         <tr>
         <th scope="col">#</th>
-          <th scope="col">Nombre</th>
+          <th scope="col">Producto</th>
           <th scope="col">Precio</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Precio</th>
@@ -30,12 +33,7 @@
               <td>{{ $saldo->precio }}</td>
               <td>{{ $saldo->estado }}</td>
               <td>
-                <form action="#" method="POST">
-                
-                    <a class="btn btn-warning" href="#">
-                        <h6 class="text-white">Publicar</h6>
-                    </a>
-                    
+                <form action="#" method="POST">  
                     <a class="btn btn-success" href="#">
                         <svg class="icon">
                         <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
