@@ -11,7 +11,7 @@ class Pais extends Model
 
     protected $fillable = [
 
-        'id','nombre','created_at','updated_at'
+        'id','nombre','nombre_corto','created_at','updated_at'
 
     ];
 
