@@ -10,7 +10,7 @@ class Solicitud extends Model
     protected $pk = 'id';
 
     protected $fillable = [
-      'id','direccion','cantidad','producto','estado_id','usuario_id','pais_id','ciudad_id','created_at','updated_at'
+      'id','direccion','cantidad','producto','estado_id','usuario_id','pais_id','ciudad','created_at','updated_at'
     ];
 
     public function estado()

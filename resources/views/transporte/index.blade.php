@@ -9,7 +9,7 @@
 <table class="table table-warning table-striped-columns">
   @if(Auth::user()->id_tipo_usuario==5)
     <div class="col-12 text-left m-2">
-        <a href="create" class="btn btn-warning rounded-pill text-white">Crear Transporte</a>
+        <a href="{{ route('transporte.create') }}" class="btn btn-warning rounded-pill text-white">Crear Transporte</a>
       </div>
   @endif
   @if(Session::has('error'))

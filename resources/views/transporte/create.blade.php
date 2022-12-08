@@ -16,7 +16,7 @@
                     <div class="form-group row m-2">
                         <label for="descripcion" class="col-md-4 col-form-label text-md-right">{{ __('Detalles') }}</label>
                         <div class="col-md-6">
-                            <input id="descripcion" type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" value="{{ old('descripcion') }}" required autocomplete="descripcion" autofocus>
+                            <input id="descripcion" type="text" class="form-control @error('descripcion') is-invalid @enderror" name="descripcion" value="{{ old('descripcion') }}" required autocomplete="descripcion" autofocus placeholder="Camion 3/4">
 
                             @error('descripcion')
                                 <span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
                     <div class="form-group row m-2">
                         <label for="capacidad_kg" class="col-md-4 col-form-label text-md-right">{{ __('Capacidad Carga KG/Tonelada') }}</label>
                         <div class="col-md-6">
-                            <input id="capacidad_kg" type="number" class="form-control @error('capacidad_kg') is-invalid @enderror" name="capacidad_kg" value="{{ old('capacidad_kg') }}" required autocomplete="capacidad_kg" autofocus>
+                            <input id="capacidad_kg" type="number" class="form-control @error('capacidad_kg') is-invalid @enderror" name="capacidad_kg" value="{{ old('capacidad_kg') }}" required autocomplete="capacidad_kg" autofocus placeholder="15">
 
                             @error('capacidad_kg')
                                 <span class="invalid-feedback" role="alert">
@@ -42,7 +42,7 @@
                     <div class="form-group row m-2">
                         <label for="capacidad_vol" class="col-md-4 col-form-label text-md-right">{{ __('Capacidad Volumen') }}</label>
                         <div class="col-md-6">
-                            <input id="capacidad_vol" type="number" class="form-control @error('capacidad_vol') is-invalid @enderror" name="capacidad_vol" value="{{ old('capacidad_vol') }}" required autocomplete="capacidad_vol" autofocus>
+                            <input id="capacidad_vol" type="number" class="form-control @error('capacidad_vol') is-invalid @enderror" name="capacidad_vol" value="{{ old('capacidad_vol') }}" required autocomplete="capacidad_vol" autofocus placeholder="1000">
 
                             @error('capacidad_vol')
                                 <span class="invalid-feedback" role="alert">
@@ -55,7 +55,7 @@
                     <div class="form-group row m-2">
                         <label for="mts_2" class="col-md-4 col-form-label text-md-right">{{ __('Metros de largo (Espacio de carga)') }}</label>
                         <div class="col-md-6">
-                            <input id="mts_2" type="number" class="form-control @error('mts_2') is-invalid @enderror" name="mts_2" value="{{ old('mts_2') }}" required autocomplete="mts_2" autofocus>
+                            <input id="mts_2" type="number" class="form-control @error('mts_2') is-invalid @enderror" name="mts_2" value="{{ old('mts_2') }}" required autocomplete="mts_2" autofocus placeholder="10">
 
                             @error('mts_2')
                                 <span class="invalid-feedback" role="alert">

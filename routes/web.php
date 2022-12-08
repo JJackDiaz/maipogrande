@@ -8,70 +8,13 @@ use App\Ciudad;
 use App\Zona;
 use Illuminate\Support\Facades\Http;
 
-//Route::get('/', 'WelcomeController@index')->name('welcome');
-route::get('alerta', function () {
-
-    $correo = new AlertaMailable;
-
-    Mail::to('jjackdiaz.10@gmail.com')->send(new $correo);
-    
-    return 'listo';
-});
-
-// route::get('cargarciudad', function () {
-
-//     set_time_limit(800);
-
-//     //API PAISES
-//     $response = Http::withHeaders([
-//         "Accept" => "application/json",
-//         "api-token" => "kNs7CAA720ZI85yknY7rSuDF_FQ1FtfuQZpDHHVA7waerr6l1Mc4DZV7YT1bqD209d8",
-//         "user-email" => "jjackdiaz.10@gmail.com"
-//     ])->get('https://www.universal-tutorial.com/api/getaccesstoken');
-
-//     $array = (array)$response->json(["auth_token"]);
-
-//     foreach ($array as $key => $value) {
-//         $this->token = $value;
-//     }
-
-//     $pais_all = Pais::all();
-
-//     foreach ($pais_all as $pa) {
-
-//         //se le madanda el pais
-//         $states = Http::withHeaders([
-//         "Authorization" => 'Bearer '. $this->token,
-//         "Accept" => "application/json"
-//         ])->get('https://www.universal-tutorial.com/api/states/'. $pa->nombre);
-
-//         $zonas = $states->json();
-
-        
-//         foreach ($zonas as $zona) {
-
-//             $pais_final = Pais::where('nombre', $pa->nombre)->get();
-
-//             foreach ($pais_final as $value) {
-                
-//                 $z = new Ciudad();
-//                 $z->nombre_ci = $zona['state_name'];
-//                 $z->pais_id = $value->id;
-//                 $z->save();
-//             }
-//         }
-//     }
-//     return 'listo';
-// });
-
-
 // route::get('cargarpais', function () {
-
+    
 //     //API PAISES
 //     $response = Http::withHeaders([
 //         "Accept" => "application/json",
-//         "api-token" => "kNs7CAA720ZI85yknY7rSuDF_FQ1FtfuQZpDHHVA7waerr6l1Mc4DZV7YT1bqD209d8",
-//         "user-email" => "jjackdiaz.10@gmail.com"
+//         "api-token" => "XBQL0yRnz5P77EuFVM8oISGf2sP-T3fiXvaVJArJUaMpMvqxdw_d1ihtrNW7dUnRxQk",
+//         "user-email" => "jorgejack70@gmail.com"
 //     ])->get('https://www.universal-tutorial.com/api/getaccesstoken');
 
 //     $array = (array)$response->json(["auth_token"]);
@@ -85,8 +28,6 @@ route::get('alerta', function () {
 //         "Accept" => "application/json"
 //     ])->get('https://www.universal-tutorial.com/api/countries/');
 
-    
-
 //     $paises = $pais->json();
 
 //     foreach ($paises as $pais) {
@@ -98,6 +39,16 @@ route::get('alerta', function () {
 //     }
 //     return 'listo';
 // });
+//Route::get('/', 'WelcomeController@index')->name('welcome');
+route::get('alerta', function () {
+
+    $correo = new AlertaMailable;
+
+    Mail::to('jjackdiaz.10@gmail.com')->send(new $correo);
+    
+    return 'listo';
+});
+
 
 route::get('/', function () {
     return view('about');

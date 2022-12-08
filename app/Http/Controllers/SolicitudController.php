@@ -74,12 +74,13 @@ class SolicitudController extends Controller
     public function store(Request $request)
     {
         
+        //dd($request);
         $request->validate([
             'cantidad' => ['required', 'integer'],
             'producto' => ['required', 'string'],
             'direccion' => ['required', 'string'],
             'pais_id' => ['required', 'integer'],
-            'ciudad_id' => ['required', 'integer'],
+            'ciudad' => ['required', 'string'],
         ]);
 
 
@@ -89,7 +90,7 @@ class SolicitudController extends Controller
             'direccion' => $request->direccion,
             'pais_id' => $request->pais_id,
             'usuario_id' => Auth::user()->id,
-            'ciudad_id' => $request->ciudad_id,
+            'ciudad' => $request->ciudad,
             'estado_id' => 1
         ]);  
    
