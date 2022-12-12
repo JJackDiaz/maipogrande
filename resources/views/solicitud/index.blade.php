@@ -77,9 +77,13 @@
                     </a>
                   </form>
                 @elseif ($solicitud->estado_id == 2)
-                  <a class="btn btn-warning" href="{{ route('proceso-venta.crear_proceso_venta',$solicitud->id) }}">
-                    <h6 class="text-white">Crear Proceso Venta</h6>
-                  </a>
+                  <div class="alert alert-primary" role="alert" >
+                    <h6 class="text-center">Crea proceso en App escritorio!</h6>
+                  </div> 
+                @elseif ($solicitud->estado_id == 4)
+                  <div class="alert alert-primary" role="alert" >
+                    <h6 class="text-center">Subastando!</h6>
+                  </div> 
                 @endif
               @endif
               </td>

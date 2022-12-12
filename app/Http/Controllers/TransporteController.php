@@ -35,7 +35,7 @@ class TransporteController extends Controller
     public function create()
     {
         $tipo_transporte = TipoTransporte::all();
-        return view('transporte.create');
+        return view('transporte.create', compact('tipo_transporte'));
     }
 
     /**

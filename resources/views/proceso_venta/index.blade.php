@@ -56,9 +56,9 @@
                         <h6 class="text-white">Participantes</h6>
                       </a>
                       @if( $proceso->estado == 'subastando')  
-                        <a class="btn btn-success" href="{{ route('crear_subasta' , $proceso->solicitud_proceso_id) }}">
-                          <h6 class="text-white">Crear Subasta</h6>
-                        </a>
+                        <div class="alert alert-primary" role="alert" >
+                          <h5 class="text-center">Crea subasta en App escritorio!</h5>
+                        </div> 
                       @endif
                       <button type="submit" class="btn btn-danger">
                         <svg class="icon">
@@ -87,13 +87,17 @@
                         </a>
                       @endif
                     @endif
-                  @elseif (Auth::user()->id_tipo_usuario == 6)
+                  @elseif (Auth::user()->id_tipo_usuario == 6 && $proceso->estado == 'activo')
                       <a class="btn btn-success" href="{{ route('proceso-venta.participar', $proceso->solicitud_proceso_id) }}">
                         <h6 class="text-white">Participar</h6>
                       </a>
                       <a class="btn btn-warning" href="{{ route('proceso-venta.participantes' , $proceso->id) }}">
                         <h6 class="text-white">Participantes</h6>
                       </a>
+                  @elseif (Auth::user()->id_tipo_usuario == 6 && $proceso->estado == 'en_ruta')
+                    <div class="alert alert-primary" role="alert" >
+                      <h5 class="text-center">En ruta!</h5>
+                    </div> 
                   @endif
                 </td>
             </tr>

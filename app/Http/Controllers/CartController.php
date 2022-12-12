@@ -18,7 +18,7 @@ class CartController extends Controller
     public function shop()
     {
         $saldos = DB::table('saldo')
-        ->where('saldo.estado', 'publicado')
+        ->where('saldo.estado', 'PUBLICADO')
         ->join('producto', 'producto.id', '=', 'saldo.producto_id')
         ->get();
         //dd($saldos);
@@ -120,23 +120,24 @@ class CartController extends Controller
                         if ($producto->cantidad > 0) {
                             $producto->cantidad = ($producto->cantidad - $key['quantity']);
                             $producto->save();
+
+                            $saldos = Saldo::where('producto_id',$producto->id)->get();
+                
+                            foreach ($saldos as $saldo) {
+                                if ($saldo->cantidad > 0) {
+                                    $saldo->cantidad = $producto->cantidad;
+                                    $saldo->descripcion = 'Venta Local';
+                                    $saldo->save();
+                                }else{
+                                    echo 'No quedan productos';
+                                }
+                            }
+                            
                             }else{
                                 echo 'No quedan productos';
                             }
                     }
 
-
-                    $saldos = Saldo::where('producto_id',$producto->id)->get();
-                
-                    foreach ($saldos as $saldo) {
-                        if ($saldo->cantidad > 0) {
-                            $saldo->cantidad = $producto->cantidad;
-                            $saldo->descripcion = 'Venta Local';
-                            $saldo->save();
-                        }else{
-                            echo 'No quedan productos';
-                        }
-                    }
 
                     if (count($existencia) < 1) {
                         Pedido::create([

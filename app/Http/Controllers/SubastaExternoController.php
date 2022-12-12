@@ -152,11 +152,11 @@ class SubastaExternoController extends Controller
 
     public function subasta_participar($id, Request $request){
 
-        $existencia = DB::table('subasta_transporte_externo')
-        ->where('transporte_id', '=', $id)
-        ->get();
+        // $existencia = DB::table('subasta_transporte_externo')
+        // ->where('transporte_id', '=', $id)
+        // ->get();
 
-        if (count($existencia) < 1) {
+        // if (count($existencia) < 1) {
             $subasta_externo = SubastaExterno::create([
                 'valor' => $request->input('precio'),
                 'estado' => 'N', 
@@ -165,9 +165,9 @@ class SubastaExternoController extends Controller
             ]);
 
             return redirect()->route('subasta.index')->with('success', 'Participando');
-        }
+        // }
     
-        return redirect()->route('subasta.index')->with('error', 'Ya estas participando');
+        // return redirect()->route('subasta.index')->with('error', 'Ya estas participando');
     }
 
     public function seleccion_subasta($id){

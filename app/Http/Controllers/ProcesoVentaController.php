@@ -11,7 +11,9 @@ use App\Saldo;
 use App\VentaEx;
 use Auth;
 use DB;
+use Mail;
 use Carbon\Carbon;
+use App\Mail\AlertaMailable;
 
 use Illuminate\Http\Request;
 
@@ -159,6 +161,7 @@ class ProcesoVentaController extends Controller
 
                 $solicitud = Solicitud::where('id', $solicitud_id)->first();
                 $solicitud->estado_id = 4;
+                $user_id = $solicitud->usuario_id;
                 
                 if ($solicitud->save()) {
                     //cantidad solicitud
@@ -180,6 +183,15 @@ class ProcesoVentaController extends Controller
                     $proceso_producto->valor = $precio_total_proceso;
                     $proceso->valor = $precio_total_proceso;
                     $proceso->save();
+
+                    //correo
+                    $usuario = Usuario::find((int)$user_id);
+
+                    //dd($usuario->email);
+    
+                    $correo = new AlertaMailable;
+                    Mail::to($usuario->email)->send($correo);
+
                     $proceso_producto->save();
                     $productos->calidad = 'normal';
                     $productos->save();

@@ -72,9 +72,9 @@
                         
                             <select name="id_tipo_trans" id="id_tipo_trans" value="id_tipo_trans" class="form-control">
                                 <option value=''>Selecciona Tipo de vehículo</option>
-                                <option value="1">Camión</option>
-                                <option value="2">Camioneta</option>
-                                <option value="3">Furgon</option>
+                                @foreach($tipo_transporte as $tipo)
+                                <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
+                                @endforeach
                             </select>
 
                             @error('id_tipo_trans')

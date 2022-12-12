@@ -66,12 +66,12 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-vector') }}"></use>
         </svg>Proceso Venta</a>
     </li>
-    <li class="nav-item"><a class="nav-link" href="">
+    <li class="nav-item"><a class="nav-link" href="{{ route('ganancia.index') }}">
         <svg class="nav-icon">
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-bank') }}"></use>
         </svg>Ganancias</a>
     </li>
-        @endif
+    @endif
 
     {{-- EXTERNO --}}
     @if(Auth::user()->id_tipo_usuario==3)
@@ -117,6 +117,15 @@
             <svg class="nav-icon">
                 <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
             </svg>Mis Pedidos</a>
+        </li> 
+    @endif
+
+    {{-- CONSULTOR --}}
+    @if(Auth::user()->id_tipo_usuario==2)
+        <li class="nav-item"><a class="nav-link" href="">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-truck') }}"></use>
+            </svg>Informes</a>
         </li> 
     @endif
 

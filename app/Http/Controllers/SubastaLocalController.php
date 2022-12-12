@@ -213,6 +213,8 @@ class SubastalocalController extends Controller
                 'estado_lo' => 'pendiente',
             ]);
 
+            //var_dump($detalle_pedido->email);exit;
+            //Se creo pedido
             $correo = new AlertaMailable;
             Mail::to($detalle_pedido->email)->send($correo);
 

@@ -156,6 +156,9 @@ Route::middleware('auth')->group(function(){
     //carrito
     Route::get('cart', 'CartController@cart')->name('cart.index');
     Route::get('checkout/{id}', 'CartController@checkout')->name('cart.checkout');
+
+    //ganancias
+    Route::get('ganancias','GananciaController@index')->name('ganancia.index');
     
     
     
