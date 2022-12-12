@@ -55,10 +55,10 @@
                       <a class="btn btn-warning" href="{{ route('proceso-venta.participantes' , $proceso->id) }}">
                         <h6 class="text-white">Participantes</h6>
                       </a>
-                      @if( $proceso->estado == 'subastando')  
-                        <div class="alert alert-primary" role="alert" >
-                          <h5 class="text-center">Crea subasta en App escritorio!</h5>
-                        </div> 
+                      @if( $proceso->estado == 'subastando')
+                        <a class="btn btn-warning" role="alert">
+                          <h6 class="text-center text-white">Crea subasta en App escritorio!</h6>
+                        </a>
                       @endif
                       <button type="submit" class="btn btn-danger">
                         <svg class="icon">
