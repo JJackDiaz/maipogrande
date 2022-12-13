@@ -121,7 +121,7 @@
                             <div class="row">
                                 <form action="{{ route('cart.remove') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" value="{{ $item->id }}" id="id" name="id">
+                                    <input type="hidden" value="{{ $item->id }}" id="id_" name="id_">
                                     <button class="btn btn-dark btn-sm" style="margin-right: 10px;"><i class="fa fa-trash"></i></button>
                                 </form>
                             </div>

@@ -56,7 +56,7 @@
                         <h6 class="text-white">Participantes</h6>
                       </a>
                       @if( $proceso->estado == 'subastando')
-                        <a class="btn btn-warning" role="alert">
+                        <a class="btn btn-primary" role="alert">
                           <h6 class="text-center text-white">Crea subasta en App escritorio!</h6>
                         </a>
                       @endif

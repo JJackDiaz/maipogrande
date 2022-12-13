@@ -2,7 +2,7 @@
 @section('content')
 
         <!-- Section-->
-        <section class="container mt-5">
+        <section class="container" style="margin-top:  100px;">
             <div class="card text-center">
                 <div class="card-header">
                    Factura

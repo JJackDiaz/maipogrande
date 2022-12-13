@@ -35,25 +35,16 @@
               <td>{{ $Producto->fecha_cosecha }}</td>
               <td>${{ $Producto->precio_unitario }}</td>
               <td>
-                <form action="destroy" method="POST">
-                  <a class="btn btn-warning" href="show">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
-                    </svg></a>
-                  </a>
-                  <a class="btn btn-success" href="edit">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
-                    </svg></a>
-                  </a>
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger">
-                    <svg class="icon">
-                      <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-trash') }}"></use>
-                    </svg></a>
-                  </button>
-              </form>
+                <a class="btn btn-warning" href="{{ route('producto.show', $Producto->id) }}">
+                  <svg class="icon">
+                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-magnifying-glass') }}"></use>
+                  </svg></a>
+                </a>
+                <a class="btn btn-success" href="{{ route('producto.edit', $Producto->id) }}">
+                  <svg class="icon">
+                    <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
+                  </svg></a>
+                </a>
               </td>
           </tr>
           @endforeach

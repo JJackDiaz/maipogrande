@@ -83,7 +83,8 @@ class ProductoController extends Controller
      */
     public function show($id)
     {
-        //
+        $producto = Producto::find($id);
+        return view('producto.show',compact('producto'));
     }
 
     /**
@@ -92,9 +93,9 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Producto $producto)
     {
-        //
+        return view('producto.edit', compact('producto'));
     }
 
     /**
@@ -104,9 +105,11 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Producto $producto)
     {
-        //
+        $producto->update($request->all());
+
+        return redirect()->route('producto.index')->with('success', 'producto editado');
     }
 
     /**
@@ -115,8 +118,10 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
+
+        return redirect()->route('producto.index')->with('success', 'Producto eliminado');
     }
 }

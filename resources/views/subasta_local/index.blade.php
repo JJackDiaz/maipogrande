@@ -41,12 +41,19 @@
                 <td>{{ $subasta->estado  }}</td>
                 <td>{{ $subasta->detalle_pedido_id  }}</td>
                 <td>
-                  @if(Auth::user()->id_tipo_usuario==5)
+                  @if(Auth::user()->id_tipo_usuario==5 && $subasta->estado=='activo')
                   <a class="btn btn-success" href="{{ route('subasta.participar-local', $subasta->id ) }}">
                     <h6 class="text-white">Participar</h6>
                   </a>
-                  @endif
-                  @if(Auth::user()->id_tipo_usuario==1)
+                  @elseif(Auth::user()->id_tipo_usuario==5 && $subasta->estado=='subastado')
+                  <a class="btn btn-danger">
+                    <h6 class="text-white">Terminado</h6>
+                  </a>
+                  @elseif(Auth::user()->id_tipo_usuario==1 && $subasta->estado=='subastado')
+                  <a class="btn btn-danger">
+                    <h6 class="text-white">Terminado</h6>
+                  </a>
+                  @elseif(Auth::user()->id_tipo_usuario==1 && $subasta->estado="activo")
                     <form action="destroy" method="POST">
                       @csrf
                       @method('DELETE')

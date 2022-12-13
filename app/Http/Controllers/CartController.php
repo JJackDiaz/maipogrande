@@ -51,7 +51,7 @@ class CartController extends Controller
         ]);
 
         Cart::add(
-            $saldo->id,
+            $producto->id,
             $request->nombre,
             $request->precio,
             $request->cantidad,
@@ -101,7 +101,7 @@ class CartController extends Controller
         return view('checkout', compact('venta_lo'))->with(['cartCollection' => $cartCollection]);
     }
 
-    public function crear_pedido($id){
+    public function crear_pedido($id, Request $request){
 
         $cartCollection = array(\Cart::getContent());
 
@@ -119,6 +119,7 @@ class CartController extends Controller
                     foreach ($productos as $producto) {
                         if ($producto->cantidad > 0) {
                             $producto->cantidad = ($producto->cantidad - $key['quantity']);
+
                             $producto->save();
 
                             $saldos = Saldo::where('producto_id',$producto->id)->get();
@@ -133,9 +134,9 @@ class CartController extends Controller
                                 }
                             }
                             
-                            }else{
-                                echo 'No quedan productos';
-                            }
+                        }else{
+                            echo 'No quedan productos';
+                        }
                     }
 
 
