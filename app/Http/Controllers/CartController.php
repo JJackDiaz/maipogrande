@@ -130,6 +130,7 @@ class CartController extends Controller
                                 if ($saldo->cantidad > 0) {
                                     $saldo->cantidad = $producto->cantidad;
                                     $saldo->descripcion = 'Venta Local';
+                                    $id_saldo = $saldo->id;
                                     $saldo->save();
                                 }else{
                                     echo 'No quedan productos';
@@ -140,15 +141,14 @@ class CartController extends Controller
                             echo 'No quedan productos';
                         }
                     }
-
-
+                    //dd($id_saldo);
                     if (count($existencia) < 1) {
                         Pedido::create([
                             'numero_pedido' => $id,
                             'precio' => $key['price'],
                             'cantidad' => $key['quantity'],
                             'estado' => 'revisando',
-                            'saldo_id' => $key['id'],
+                            'saldo_id' => $id_saldo,
                             'usuario_id' => Auth::user()->id,
                         ]);
                         break;

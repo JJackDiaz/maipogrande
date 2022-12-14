@@ -41,7 +41,7 @@
                 <td>
                     <form action="{{ route('subasta.subasta-participar-local', $transporte->id ) }}" method="post">
                         @csrf
-                        <input type="number" id="precio" name="precio"  placeholder="$100.000" required>
+                        <input type="number" id="precio" name="precio"  placeholder="$100" class="form-class" required>
                         <input type="hidden" id="subasta_tran_id" name="subasta_tran_id" value="{{ $id_subasta }}">
                         <input type="hidden" id="transporte_id" name="transporte_id" value="{{ $transporte->id }}">
                 </td>

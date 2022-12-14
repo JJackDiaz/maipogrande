@@ -27,6 +27,7 @@
         <th scope="col">Metro Cuadro</th>
         <th scope="col">N° Tipo Transporte</th>
         <th scope="col">Ingresar Precio</th>
+        <th scope="col">Opción</th>
         </tr>
       </thead>
       <tbody>
@@ -41,7 +42,7 @@
                 <td>
                     <form action="{{ route('subasta.subasta-participar', $transporte->id ) }}" method="post">
                         @csrf
-                        <input type="number" id="precio" name="precio"  placeholder="$100.000" required>
+                        <input type="number" id="precio" name="precio"  placeholder="$100" class="form-control" required>
                         <input type="hidden" id="subasta_tran_id" name="subasta_tran_id" value="{{ $id_subasta }}">
                         <input type="hidden" id="transporte_id" name="transporte_id" value="{{ $transporte->id }}">
                 </td>

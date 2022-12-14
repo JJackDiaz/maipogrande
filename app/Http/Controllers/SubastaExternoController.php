@@ -138,6 +138,12 @@ class SubastaExternoController extends Controller
     public function subasta_participantes($id){
 
         $participantes = SubastaExterno::where('subasta_trans_id', $id)
+        ->select(
+            'subasta_transporte_externo.id',
+            'subasta_transporte_externo.estado',
+            'subasta_transporte_externo.valor',
+            'transporte.descripcion',
+        )
         ->join('transporte', 'transporte.id', '=', 'subasta_transporte_externo.transporte_id')
         ->get();
         $cont = 1;
@@ -176,7 +182,7 @@ class SubastaExternoController extends Controller
         // return redirect()->route('subasta.index')->with('error', 'Ya estas participando');
     }
 
-    public function seleccion_subasta($id){
+    public function seleccion_subasta($id, Request $request){
 
         //trae id de subasta externo
         $subastaExterno = SubastaExterno::find($id);
