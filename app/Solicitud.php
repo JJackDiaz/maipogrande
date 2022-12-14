@@ -24,4 +24,10 @@ class Solicitud extends Model
         //contiene muchos
         return $this->hasMany('App\ProcesoVenta');
     }
+
+    public function pais()
+    {
+        //contiene muchos
+        return $this->belongsTo('App\Pais');
+    }
 }

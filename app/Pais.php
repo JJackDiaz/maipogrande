@@ -19,4 +19,10 @@ class Pais extends Model
     {
         return $this->hasMany('App\Ciudad');
     }
+
+    public function solicitud()
+    {
+        //contiene un id de usuario
+        return $this->hasMany('App\Solicitud');
+    }
 }

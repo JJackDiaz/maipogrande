@@ -88,7 +88,8 @@ class TransporteController extends Controller
      */
     public function edit(Transporte $transporte)
     {
-        return view('transporte.edit', compact('transporte'));
+        $tipo_transporte = TipoTransporte::all();
+        return view('transporte.edit', compact('transporte','tipo_transporte'));
     }
 
     /**

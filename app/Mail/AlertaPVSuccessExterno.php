@@ -7,10 +7,11 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class EmailProcesoVentaSuccess extends Mailable
+class AlertaPVSuccessExterno extends Mailable
 {
     use Queueable, SerializesModels;
-    public $subject = 'Informacion Pedido';
+
+    public $subject = 'Información Pedido';
 
     /**
      * Create a new message instance.
@@ -29,6 +30,6 @@ class EmailProcesoVentaSuccess extends Mailable
      */
     public function build()
     {
-        return $this->view('notificacion.proceso_venta_subastando');
+        return $this->view('notificacion.pvSuccessExterno');
     }
 }

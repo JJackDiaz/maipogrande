@@ -10,10 +10,12 @@ use App\Transporte;
 use App\DetallePedido;
 use App\Pedido;
 use App\VentaLo;
+use App\Usuario;
 use Carbon\Carbon;
 use App\Mail\AlertaMailable;
 use Mail;
 use DB;
+use App\Mail\AlertaTransportista;
 
 class SubastalocalController extends Controller
 {
@@ -194,6 +196,17 @@ class SubastalocalController extends Controller
             
         }
 
+        //Datos envio para correo
+        $numero_soli = $detalle_pedido->numero_pedido;
+        $direccion = $detalle_pedido->direccion.' '.$detalle_pedido->numero;
+        $ciudad = $detalle_pedido->comuna;
+        $pais = 'Chile';
+        //Datos cliente 
+        $cliente = Usuario::find($detalle_pedido->usuario_id);
+        $nombre = $cliente->nombre_completo;
+        $email = $cliente->email;
+        $telefono = $cliente->telefono;
+
         $precio = $precio;
         $comision = (10*$precio)/100;
         $servicio = ((2*$precio)/100)+$subastaLocal->valor;
@@ -202,7 +215,11 @@ class SubastalocalController extends Controller
         $total = $comision + $servicio + $iva + $precio;
 
         if ($subastaLocal->save() && $subasta->save() && $detalle_pedido->save()) {
-            # code...
+            
+            //correo subasta
+            $correo = new AlertaTransportista($numero_soli,$direccion,$ciudad,$pais,$nombre,$email,$telefono);
+            Mail::to('jjackdiaz.10@gmail.com')->send($correo);
+
             VentaLo::create([
                 'numero_venta' => $detalle_pedido->numero_pedido,
                 'detalle' => 'Venta Nacional',
@@ -212,11 +229,6 @@ class SubastalocalController extends Controller
                 'total_venta' => $total,
                 'estado_lo' => 'pendiente',
             ]);
-
-            //var_dump($detalle_pedido->email);exit;
-            //Se creo pedido
-            $correo = new AlertaMailable;
-            Mail::to($detalle_pedido->email)->send($correo);
 
         }
         return redirect()->route('subasta_local.index')->with('success', 'Subasta Terminada');

@@ -13,9 +13,9 @@
     <thead>
         <tr>
         <th scope="col">#</th>
-        <th scope="col">Estado</th>
         <th scope="col">Transporte</th>
-        <th scope="col">Valor</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Estado</th>
         <th scope="col">Opción</th>
         </tr>
     </thead>
@@ -23,14 +23,19 @@
         @foreach ($participantes as $participante)
             <tr>
             <th scope="row"><?php echo $cont; $cont++; ?></th>
-                <td>{{ $participante->estado }}</td>
-                <td>{{ $participante->transporte_id  }}</td>
-                <td>${{ $participante->valor  }}</td>
+            <td>{{ $participante->descripcion  }}</td>
+            <td>${{ $participante->valor  }}</td>
+            <td>{{ $participante->estado }}</td>
                 <td>
-                    {{-- buton --}}
+                    @if($participante->estado == 'N')
                     <a class="btn btn-success" href="{{ route('subasta.seleccion', $participante->id ) }}">
                         <h6 class="text-white">Seleccionar</h6>
-                      </a>
+                    </a>
+                    @elseif($participante->estado == 'Y')
+                    <div class="alert alert-success" role="alert">
+                        <h6 class="text-primary text-center">Ganador!</h6>
+                    </div>
+                    @endif
                 </td>
             </tr>
         @endforeach

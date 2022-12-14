@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use App\Solicitud;
 use App\Pais;
 use App\Ciudad;
-use App\Producto;
+use App\TipoProducto;
 use Auth;
 use Illuminate\Support\Facades\Http;
+use Mail;
+use App\Mail\AlertaSolicitud;
 
 use Illuminate\Http\Request;
 
@@ -40,7 +42,7 @@ class SolicitudController extends Controller
 
     public function create()
     {
-        $productos = Producto::all();
+        $categorias = TipoProducto::all();
         $paises = Pais::all();
         $ciudades = Ciudad::all();
 
@@ -65,7 +67,7 @@ class SolicitudController extends Controller
         // $paises = $pais->json();
 
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
-            return view('solicitud.create', compact('productos','paises','ciudades'));
+            return view('solicitud.create', compact('categorias','paises','ciudades'));
         }else {
             return view('error.index'); 
         }
@@ -84,7 +86,7 @@ class SolicitudController extends Controller
         ]);
 
 
-        Solicitud::create([
+        $soli = Solicitud::create([
             'cantidad' => $request->cantidad,
             'producto' => $request->producto,
             'direccion' => $request->direccion,
@@ -93,6 +95,14 @@ class SolicitudController extends Controller
             'ciudad' => $request->ciudad,
             'estado_id' => 1
         ]);  
+
+        $numero_pedido = $soli->id;
+        $direccion = $request->direccion;
+        $ciudad = $request->ciudad;
+
+         //correo subasta
+         $correo = new AlertaSolicitud($numero_pedido,$direccion,$ciudad);
+         Mail::to('jjackdiaz.10@gmail.com')->send($correo);
    
         if(Auth::user()->id_tipo_usuario==3 || Auth::user()->id_tipo_usuario==1){        
             return redirect()->route('solicitud.index')->with('success', 'Solicitud creada');

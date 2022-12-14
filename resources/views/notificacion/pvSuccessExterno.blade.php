@@ -7,8 +7,11 @@
     <title>Subastando</title>
 </head>
 <body>
-    <h1>Su pedido se esta subastando</h1>
+    <h1>Solicitud aceptada y su pedido se esta subastando</h1>
     <p></p>
-    <p>Se notoficara cuando este pendiente de pago</p>
+    <p>Se notificara cuando este pendiente de pago</p>
+    <br><br>
+    <br>
+    MAIPO GRANDE 
 </body>
 </html>

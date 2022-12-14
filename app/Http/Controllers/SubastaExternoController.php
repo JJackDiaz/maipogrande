@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Subasta;
+use App\Solicitud;
 use App\SubastaExterno;
 use App\Transporte;
 use App\ProcesoProducto;
 use App\ProcesoVenta;
 use App\VentaEx;
+use App\Usuario;
 use Carbon\Carbon; 
 use DB;
+use Mail;
+use App\Mail\AlertaTransportista;
 
 class SubastaExternoController extends Controller
 {
@@ -133,7 +137,9 @@ class SubastaExternoController extends Controller
 
     public function subasta_participantes($id){
 
-        $participantes = SubastaExterno::where('subasta_trans_id', $id)->get();
+        $participantes = SubastaExterno::where('subasta_trans_id', $id)
+        ->join('transporte', 'transporte.id', '=', 'subasta_transporte_externo.transporte_id')
+        ->get();
         $cont = 1;
 
         return view('subasta.participantes', compact('participantes','cont'));
@@ -178,6 +184,18 @@ class SubastaExternoController extends Controller
         $proceso = ProcesoProducto::find($subasta->proceso_producto_id);
         $proceso_venta = ProcesoVenta::find($proceso->proceso_ven_id);
 
+        //Datos envio para correo
+        $solicitud = Solicitud::find($proceso_venta->solicitud_proceso_id);
+        $numero_soli = $solicitud->id;
+        $direccion = $solicitud->direccion;
+        $ciudad = $solicitud->ciudad;
+        $pais = $solicitud->pais->nombre;
+        //Datos cliente 
+        $cliente = Usuario::find($solicitud->usuario_id);
+        $nombre = $cliente->nombre_completo;
+        $email = $cliente->email;
+        $telefono = $cliente->telefono;
+
         $subastaExterno->estado = 'Y';
         //$subastaExterno->save();
 
@@ -196,7 +214,11 @@ class SubastaExternoController extends Controller
         $total = $comision + $servicio + $aduana + $precio;
 
         if ($subastaExterno->save() && $subasta->save() && $proceso->save() && $proceso_venta->save()) {
-            # code...
+
+            //correo subasta
+            $correo = new AlertaTransportista($numero_soli,$direccion,$ciudad,$pais,$nombre,$email,$telefono);
+            Mail::to('jjackdiaz.10@gmail.com')->send($correo);
+
             VentaEx::create([
                 'numero_venta' => rand(2,50),
                 'detalle' => 'Venta al extranjero',

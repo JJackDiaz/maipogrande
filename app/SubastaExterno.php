@@ -12,4 +12,10 @@ class SubastaExterno extends Model
     protected $fillable = [
       'id','direccion','valor','estado','subasta_trans_id','transporte_id','proceso_producto_id','created_at','updated_at'
     ];
+
+    public function transporte()
+    {
+        //contiene un id de usuario
+        return $this->belongsTo('App\Transporte');
+    }
 }

@@ -85,11 +85,6 @@
             <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
         </svg>Proceso venta</a>
     </li>
-    <li class="nav-item"><a class="nav-link" href="">
-        <svg class="nav-icon">
-            <use xlink:href="{{ asset('vendors/@coreui/icons/svg/free.svg#cil-apple') }}"></use>
-        </svg>Seguimiento</a>
-    </li> 
     @endif
 
     {{-- TRANSPORTISTA --}}

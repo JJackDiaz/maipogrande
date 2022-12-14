@@ -11,6 +11,8 @@ use App\Pedido;
 use DB;
 use Auth;
 use Cart;
+use Mail;
+use App\Mail\AlertaPedido;
 
 class CartController extends Controller
 {
@@ -183,6 +185,14 @@ class CartController extends Controller
             'estado' => 'pendiente',
             'usuario_id' => Auth::user()->id
         ]);
+
+        $numero_pedido = $request->id;
+        $direccion = $request->direccion;
+        $comuna = $request->comuna;
+
+         //correo subasta
+         $correo = new AlertaPedido($numero_pedido,$direccion,$comuna);
+         Mail::to('jjackdiaz.10@gmail.com')->send($correo);
       
         return redirect()->route('pedido.index')->with('success', 'Pedido creado');
     }

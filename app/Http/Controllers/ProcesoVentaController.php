@@ -13,7 +13,9 @@ use Auth;
 use DB;
 use Mail;
 use Carbon\Carbon;
-use App\Mail\AlertaMailable;
+use App\Mail\AlertaPVSuccessExterno;
+use App\Mail\AlertaPVSuccessAdmin;
+use App\Mail\AlertaPVSuccessproductor;
 
 use Illuminate\Http\Request;
 
@@ -100,20 +102,27 @@ class ProcesoVentaController extends Controller
 
     public function participar_proceso($id ,Request $request){
 
+        $pv = ProcesoVenta::where('solicitud_proceso_id' , $request->input('solicitud'))->get();
+
+        foreach ($pv as $value) {
+            
+            $id_proceso = $value->id;
+        }
+
         $existencia = DB::table('proceso_producto')
-        ->where('producto_id', '=', $id)
+        ->where('producto_id', '=', (int)$id)
         ->get();
 
         if (count($existencia) < 1) {
             $proceso = ProcesoProducto::create([
                 'estado' => 'N',
-                'proceso_ven_id' => $request->input('solicitud'),
-                'producto_id' => $id,
+                'proceso_ven_id' => $id_proceso,
+                'producto_id' => (int)$id,
             ]);
 
             if ($proceso) {
-                $producto = Producto::find($id);
-                $producto->codigo = $request->input('solicitud');
+                $producto = Producto::find((int)$id);
+                $producto->codigo = $id_proceso;
                 $producto->save();
             }
 
@@ -184,13 +193,29 @@ class ProcesoVentaController extends Controller
                     $proceso->valor = $precio_total_proceso;
                     $proceso->save();
 
-                    //correo
-                    $usuario = Usuario::find((int)$user_id);
+                    //cliente para correo
+                    $externo = Usuario::find((int)$user_id);
+                    $nombre = $externo->nombre_completo;
+                    $email = $externo->email;
+                    $telefono = $externo->telefono;
 
-                    //dd($usuario->email);
-    
-                    $correo = new AlertaMailable;
-                    Mail::to($usuario->email)->send($correo);
+                    $productor = Usuario::find($productos->usuario_id);
+                    $nombre_p = $productor->nombre_completo;
+                    $email_p = $productor->email;
+                    $producto_p = $productos->nombre;
+                    $cantidad_p = $solicitud->cantidad;
+
+                    //correo admin
+                    $correo = new AlertaPVSuccessAdmin($nombre, $email,$telefono, $nombre_p,$email_p,$producto_p,$cantidad_p);
+                    Mail::to('jjackdiaz.10@gmail.com')->send($correo);
+
+                    //correo productor
+                    $correo = new AlertaPVSuccessProductor($producto_p, $cantidad_p);
+                    Mail::to('jjackdiaz.10@gmail.com')->send($correo);
+                    
+                    //correo externo
+                    $correo = new AlertaPVSuccessExterno;
+                    Mail::to('jjackdiaz.10@gmail.com')->send($correo);
 
                     $proceso_producto->save();
                     $productos->calidad = 'normal';
@@ -208,9 +233,7 @@ class ProcesoVentaController extends Controller
                         
                     }
             
-                    return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');
-
-                    
+                    return redirect()->route('proceso-venta.index')->with('success', 'Proceso creada');  
                 }
 
             }

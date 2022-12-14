@@ -18,8 +18,8 @@
                         <div class="col-md-6">
                             <select class="form-select" name="producto" id="producto" value="producto">
                                 <option value=''>Selecciona Producto</option>
-                                @foreach($productos as $producto)
-                                    <option value="{{ $producto->nombre }}">{{ $producto->nombre }} - Cantidad: {{ $producto->cantidad }}KG</option>
+                                @foreach($categorias as $categoria)
+                                    <option value="{{ $categoria->descrip_pro }}">{{ $categoria->descrip_pro }}</option>
                                 @endforeach
                             </select>
                             
